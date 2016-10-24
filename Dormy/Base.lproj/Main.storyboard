@@ -330,6 +330,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="nameLabel" destination="7Re-J9-LS6" id="kKj-8Q-qf8"/>
+                        <outlet property="profPic" destination="V13-ds-9v4" id="1EW-9B-mU8"/>
                         <outlet property="textF" destination="FBE-Ee-ele" id="cN1-UM-4Wk"/>
                     </connections>
                 </viewController>

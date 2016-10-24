@@ -10,5 +10,6 @@ target 'Dormy' do
 pod 'Firebase'
 pod 'FirebaseAuth'
 pod 'Firebase/Database'
+pod 'Firebase/Storage'
 
 end

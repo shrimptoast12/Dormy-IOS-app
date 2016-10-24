@@ -13,6 +13,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var textF: UITextView!
+    @IBOutlet weak var profPic: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,11 +60,29 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     // Allows user to upload a profile picture
     @IBAction func uploadImage(sender: AnyObject) {
         let imagePicker = UIImagePickerController()
+        
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        var selectedImage:UIImage?
+        
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            selectedImage = editedImage
+        }
+        else if let originalImage = info["UIImagePickerControllerOriginlImage"] as? UIImage {
+            selectedImage = originalImage
+        }
+        
+        if let profilePic = selectedImage {
+            profPic.image = profilePic
+            let storageRef = FIRStorage.storage().reference()
+        }
+        
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     

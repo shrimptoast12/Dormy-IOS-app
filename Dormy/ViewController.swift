@@ -50,44 +50,6 @@ class ViewController: UIViewController {
     
     
     @IBAction func createAccountAction(sender: AnyObject) {
-        //        //if either text fields are empty. print error
-        //        if self.emailField.text == "" || self.passwordField.text == "" {
-        //            let alertController = UIAlertController(title: "Oops!", message: "Please enter email and password.", preferredStyle: .Alert)
-        //            let defaultAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-        //            alertController.addAction(defaultAction)
-        //            self.presentViewController(alertController, animated: true, completion: nil)
-        //        }
-        //        else {
-        //            FIRAuth.auth()?.createUserWithEmail(self.emailField.text!, password: self.passwordField.text!, completion: { (user, error) in
-        //                if error == nil {
-        //                    // gets the user's uid
-        //                    guard let uid = user?.uid else {
-        //                        return
-        //                    }
-        //
-        //                    self.logoutButton.alpha = 1.0
-        //                    self.usernameLabel.text = user!.email
-        //                    let values = ["email": self.emailField.text!]
-        //                    let ref = FIRDatabase.database().referenceFromURL("https://test-login-42da2.firebaseio.com/")
-        //                    let userRef = ref.child("users").child(uid)
-        //                    userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
-        //                        if err != nil {
-        //                            print(err)
-        //                            return
-        //                        }
-        //                        // else error doesn't occur and we successfully entered user into database
-        //                    })
-        //                    self.emailField.text = ""
-        //                    self.passwordField.text = ""
-        //                }
-        //                else {
-        //                    let alertController = UIAlertController(title: "Oops!", message: error?.localizedDescription, preferredStyle: .Alert)
-        //                    let defaultAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-        //                    alertController.addAction(defaultAction)
-        //                    self.presentViewController(alertController, animated: true, completion: nil)
-        //                }
-        //            })
-        //        }
     }
     
     @IBAction func loginAction(sender: AnyObject) {
