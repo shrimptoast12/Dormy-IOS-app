@@ -1,0 +1,387 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
+		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
+		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
+		F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68842571DBE4B8E00DA9CEC /* Main.storyboard */; };
+		F688425B1DBE4B8E00DA9CEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F688425A1DBE4B8E00DA9CEC /* Assets.xcassets */; };
+		F688425E1DBE4B8E00DA9CEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F688425C1DBE4B8E00DA9CEC /* LaunchScreen.storyboard */; };
+		F68842661DBE4C5700DA9CEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F68842651DBE4C5700DA9CEC /* GoogleService-Info.plist */; };
+		F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CD2B411DBE4F620078689A /* RegisterViewController.swift */; };
+		F6CD2B441DBE4F790078689A /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */; };
+		F6CD2B461DBE6EBC0078689A /* EditDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.release.xcconfig"; sourceTree = "<group>"; };
+		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
+		F68842501DBE4B8E00DA9CEC /* Dormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F68842551DBE4B8E00DA9CEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F68842581DBE4B8E00DA9CEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F688425A1DBE4B8E00DA9CEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F688425D1DBE4B8E00DA9CEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F688425F1DBE4B8E00DA9CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F68842651DBE4C5700DA9CEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F6CD2B411DBE4F620078689A /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDescriptionViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F688424D1DBE4B8E00DA9CEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		295E82036F73CFF2AA012527 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */,
+				11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F68842471DBE4B8E00DA9CEC = {
+			isa = PBXGroup;
+			children = (
+				F68842521DBE4B8E00DA9CEC /* Dormy */,
+				F68842511DBE4B8E00DA9CEC /* Products */,
+				295E82036F73CFF2AA012527 /* Pods */,
+				F733FE4D77FC3A1E57B460D9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F68842511DBE4B8E00DA9CEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F68842501DBE4B8E00DA9CEC /* Dormy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F68842521DBE4B8E00DA9CEC /* Dormy */ = {
+			isa = PBXGroup;
+			children = (
+				F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */,
+				F68842551DBE4B8E00DA9CEC /* ViewController.swift */,
+				F6CD2B411DBE4F620078689A /* RegisterViewController.swift */,
+				F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */,
+				F68842571DBE4B8E00DA9CEC /* Main.storyboard */,
+				F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */,
+				F688425A1DBE4B8E00DA9CEC /* Assets.xcassets */,
+				F688425C1DBE4B8E00DA9CEC /* LaunchScreen.storyboard */,
+				F688425F1DBE4B8E00DA9CEC /* Info.plist */,
+				F68842651DBE4C5700DA9CEC /* GoogleService-Info.plist */,
+			);
+			path = Dormy;
+			sourceTree = "<group>";
+		};
+		F733FE4D77FC3A1E57B460D9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F688424F1DBE4B8E00DA9CEC /* Dormy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F68842621DBE4B8E00DA9CEC /* Build configuration list for PBXNativeTarget "Dormy" */;
+			buildPhases = (
+				606C2794B0724091D37213D8 /* [CP] Check Pods Manifest.lock */,
+				F688424C1DBE4B8E00DA9CEC /* Sources */,
+				F688424D1DBE4B8E00DA9CEC /* Frameworks */,
+				F688424E1DBE4B8E00DA9CEC /* Resources */,
+				2F1559C2B4D0E19E9631F146 /* [CP] Embed Pods Frameworks */,
+				20BD8AEFD97AA4082485CC35 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dormy;
+			productName = Dormy;
+			productReference = F68842501DBE4B8E00DA9CEC /* Dormy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F68842481DBE4B8E00DA9CEC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = cs378;
+				TargetAttributes = {
+					F688424F1DBE4B8E00DA9CEC = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = F688424B1DBE4B8E00DA9CEC /* Build configuration list for PBXProject "Dormy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F68842471DBE4B8E00DA9CEC;
+			productRefGroup = F68842511DBE4B8E00DA9CEC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F688424F1DBE4B8E00DA9CEC /* Dormy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F688424E1DBE4B8E00DA9CEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F688425E1DBE4B8E00DA9CEC /* LaunchScreen.storyboard in Resources */,
+				F688425B1DBE4B8E00DA9CEC /* Assets.xcassets in Resources */,
+				F68842661DBE4C5700DA9CEC /* GoogleService-Info.plist in Resources */,
+				F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		20BD8AEFD97AA4082485CC35 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dormy/Pods-Dormy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2F1559C2B4D0E19E9631F146 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dormy/Pods-Dormy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		606C2794B0724091D37213D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F688424C1DBE4B8E00DA9CEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,
+				F6CD2B441DBE4F790078689A /* UserProfileViewController.swift in Sources */,
+				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
+				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
+				F6CD2B461DBE6EBC0078689A /* EditDescriptionViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F68842571DBE4B8E00DA9CEC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F68842581DBE4B8E00DA9CEC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F688425C1DBE4B8E00DA9CEC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F688425D1DBE4B8E00DA9CEC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F68842601DBE4B8E00DA9CEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F68842611DBE4B8E00DA9CEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F68842631DBE4B8E00DA9CEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Dormy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cs378.Dormy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F68842641DBE4B8E00DA9CEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Dormy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cs378.Dormy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F688424B1DBE4B8E00DA9CEC /* Build configuration list for PBXProject "Dormy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F68842601DBE4B8E00DA9CEC /* Debug */,
+				F68842611DBE4B8E00DA9CEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F68842621DBE4B8E00DA9CEC /* Build configuration list for PBXNativeTarget "Dormy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F68842631DBE4B8E00DA9CEC /* Debug */,
+				F68842641DBE4B8E00DA9CEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F68842481DBE4B8E00DA9CEC /* Project object */;
+}
