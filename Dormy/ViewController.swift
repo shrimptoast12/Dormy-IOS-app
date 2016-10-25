@@ -20,7 +20,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let user = FIRAuth.auth()?.currentUser {
             self.logoutButton.alpha = 1.0
             self.usernameLabel.text = user.email
