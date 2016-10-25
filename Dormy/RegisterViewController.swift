@@ -52,7 +52,7 @@ class RegisterViewController: UIViewController {
                     guard let uid = user?.uid else {
                         return
                     }
-                    let values = ["name": self.nicknameField.text!,"email": self.emailField.text!, "RA": "false", "descript": ""]
+                    let values = ["name": self.nicknameField.text!,"email": self.emailField.text!, "RA": "false", "descript": "", "imageURL": ""]
                     let ref = FIRDatabase.database().referenceFromURL("https://dormy-e6239.firebaseio.com/")
                     let userRef = ref.child("users").child(uid)
                     userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in

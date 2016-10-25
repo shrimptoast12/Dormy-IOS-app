@@ -39,11 +39,27 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             }
         }
         else {
-            let uid = FIRAuth.auth()?.currentUser?.uid
+            // grabs data from Firebase Database and loads up the user profile
+            let user = FIRAuth.auth()?.currentUser
+            let uid = user?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.nameLabel.text = dictionary["name"] as? String
                     self.textF.text = dictionary["descript"] as? String
+                    
+                    // loads the profile picture of the user from storage using the imageURL from database
+                    if let imageURL = dictionary["imageURL"] as? String {
+                        let url = NSURL(string: imageURL)
+                        NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
+                            if (error != nil) {
+                                print(error)
+                                return
+                            }
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.profPic?.image = UIImage(data: data!)
+                            })
+                        }).resume()
+                    }
                 }
                 
                 }, withCancelBlock: nil)
@@ -67,9 +83,11 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
+    // function that brings up the camera roll and lets user choose a picture
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         var selectedImage:UIImage?
         
+        // Let user edit an image
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
             selectedImage = editedImage
         }
@@ -77,12 +95,27 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             selectedImage = originalImage
         }
         
+        let uniqueImageName = NSUUID().UUIDString // create a unique string ID for every picture to upload to database
+        // load the picture onto Firebase Storage
         if let profilePic = selectedImage {
             profPic.image = profilePic
-            let storageRef = FIRStorage.storage().reference()
+            let storageRef = FIRStorage.storage().reference().child("profilePictures").child("\(uniqueImageName).png")
+            if let uploadData = UIImagePNGRepresentation(self.profPic.image!) {
+                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                    if error != nil {
+                        print(error)
+                        return
+                    }
+                    // Set the imageURL for a user inside Firebase Database
+                    let uid = FIRAuth.auth()?.currentUser?.uid
+                    
+                    if (uid != nil) {
+                        let imageURL = metadata?.downloadURL()?.absoluteString
+                        FIRDatabase.database().reference().child("users").child(uid!).child("imageURL").setValue(imageURL)
+                    }
+                })
+            }
         }
-        
-        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
