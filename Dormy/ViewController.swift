@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         }
         else {
             self.logoutButton.alpha = 0.0
-            self.usernameLabel.text = "Dormy"
+            self.usernameLabel.text = "dormy"
         }
     }
     
