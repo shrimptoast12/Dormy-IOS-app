@@ -16,6 +16,9 @@ class EditDescriptionViewController: UIViewController {
     @IBOutlet weak var myTextView: UITextView!
     
     @IBAction func cancel(sender: AnyObject) {
+        //TODO
+        //Would like to change this to an animation that slides back left
+        //Right now it slides up and down, you can see the status bar and the nav bar disconnect
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     override func viewDidLoad() {

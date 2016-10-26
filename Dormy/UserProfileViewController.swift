@@ -11,7 +11,7 @@ import Firebase
 
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    //@IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var roomNumber: UILabel!
@@ -26,10 +26,13 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        nameLabel.text = ""
+        roommateName.text = ""
+        roomNumber.text = ""
         // Do any additional setup after loading the view.
         checkUser()
         textF.delegate = self
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,7 +56,9 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             let uid = user?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.title = dictionary["name"] as? String
+                    self.nameLabel.text = dictionary["name"] as? String
+                    //TODO
+                    //Set the roommate and the room number
                     self.textF.text = dictionary["descript"] as? String
                     
                     // loads the profile picture of the user from storage using the imageURL from database

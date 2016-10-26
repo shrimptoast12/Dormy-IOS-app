@@ -84,8 +84,8 @@
 				F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */,
 				F68842571DBE4B8E00DA9CEC /* Main.storyboard */,
 				F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */,
-				F688425A1DBE4B8E00DA9CEC /* Assets.xcassets */,
 				F688425C1DBE4B8E00DA9CEC /* LaunchScreen.storyboard */,
+				F688425A1DBE4B8E00DA9CEC /* Assets.xcassets */,
 				F688425F1DBE4B8E00DA9CEC /* Info.plist */,
 				F68842651DBE4C5700DA9CEC /* GoogleService-Info.plist */,
 			);

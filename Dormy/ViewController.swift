@@ -18,11 +18,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
     
-    // Helper function to generate a UIColor based on RBG values. Arguments must be of type CGFloat
-    func RGB(r:CGFloat, g:CGFloat, b:CGFloat) ->UIColor {
-        return UIColor(red: r / 255.0, green: g / 255.0 , blue: b / 255.0 ,alpha: 1.0)
-    }
-    
     override func viewWillAppear(animated: Bool)
     {
         self.navigationController?.navigationBarHidden = true

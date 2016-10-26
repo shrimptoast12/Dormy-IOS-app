@@ -13,11 +13,22 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    // Helper function to generate a UIColor based on RBG values. Arguments must be of type CGFloat
+    func RGB(r:CGFloat, g:CGFloat, b:CGFloat) ->UIColor {
+        return UIColor(red: r / 255.0, green: g / 255.0 , blue: b / 255.0 ,alpha: 1.0)
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         FIRApp.configure()
+        UIApplication.sharedApplication().statusBarHidden = false
+        UIApplication.sharedApplication().statusBarStyle = .Default
+        
+        let statusBar: UIView = UIApplication.sharedApplication().valueForKey("statusBar") as! UIView
+        if statusBar.respondsToSelector(Selector("setBackgroundColor:")) {
+            statusBar.backgroundColor = RGB(240.0,g: 208.0,b: 138.0)
+        }
         return true
     }
 
