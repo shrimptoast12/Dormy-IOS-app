@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="prairiedog" translatesAutoresizingMaskIntoConstraints="NO" id="kHQ-Ri-559">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Prairie_dog_drawing_T" translatesAutoresizingMaskIntoConstraints="NO" id="kHQ-Ri-559">
                                 <rect key="frame" x="96" y="119" width="182" height="107"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X2F-wS-iUK">
@@ -77,6 +77,7 @@
                                     <constraint firstAttribute="width" constant="300" id="JIS-Qf-beQ"/>
                                     <constraint firstAttribute="height" constant="50" id="n9L-IB-E4C"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
                                     <action selector="createAccountAction:" destination="jkU-D4-5WD" eventType="touchUpInside" id="H3c-0c-ALZ"/>
@@ -516,7 +517,7 @@
     </scenes>
     <resources>
         <image name="Image" width="466" height="441"/>
+        <image name="Prairie_dog_drawing_T" width="523" height="600"/>
         <image name="empty_profile" width="600" height="600"/>
-        <image name="prairiedog" width="466" height="441"/>
     </resources>
 </document>
