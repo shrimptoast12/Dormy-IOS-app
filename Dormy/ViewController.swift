@@ -16,7 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
+    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var signUp: UIButton!
     
     override func viewWillAppear(animated: Bool)
     {
@@ -25,6 +27,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Button rounding and various UI setting
+        signUp.backgroundColor = UIColor.clearColor()
+        signUp.layer.cornerRadius = 5
+        signUp.layer.borderWidth = 1
+        signUp.layer.borderColor = UIColor.blackColor().CGColor
+        loginButton.layer.cornerRadius = 5
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = UIColor.clearColor().CGColor
+        
         if (FIRAuth.auth()?.currentUser) != nil {
             //The user has logged in already, skip the sign in page and go to their profile
             let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController

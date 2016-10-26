@@ -30,7 +30,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Em-2Y-n8e">
-                                <rect key="frame" x="37" y="363" width="300" height="50"/>
+                                <rect key="frame" x="37" y="361" width="300" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="OtG-T5-5PQ"/>
                                 </constraints>
@@ -51,18 +51,7 @@
                                     <action selector="loginAction:" destination="jkU-D4-5WD" eventType="touchUpInside" id="N3p-Ly-Tpx"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mNL-Px-uhL">
-                                <rect key="frame" x="77" y="479" width="220" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="fzH-ad-pU2"/>
-                                </constraints>
-                                <state key="normal" title="Create Account"/>
-                                <connections>
-                                    <action selector="createAccountAction:" destination="jkU-D4-5WD" eventType="touchUpInside" id="H3c-0c-ALZ"/>
-                                    <segue destination="xdg-CF-deC" kind="show" id="64v-yj-z5i"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCi-We-2kI">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCi-We-2kI">
                                 <rect key="frame" x="77" y="596" width="220" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="AJy-Ks-6FZ"/>
@@ -81,29 +70,41 @@
                                 <color key="textColor" red="0.65098039215686276" green="0.23137254901960785" blue="0.035294117647058823" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mNL-Px-uhL">
+                                <rect key="frame" x="37" y="474" width="300" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Cc0-zI-lLL"/>
+                                    <constraint firstAttribute="height" constant="50" id="XdO-ix-y85"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="mUn-Wb-Mbu"/>
+                                </constraints>
+                                <state key="normal" title="Sign Up"/>
+                                <connections>
+                                    <action selector="createAccountAction:" destination="jkU-D4-5WD" eventType="touchUpInside" id="H3c-0c-ALZ"/>
+                                    <segue destination="xdg-CF-deC" kind="show" id="64v-yj-z5i"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.94117647058823528" green="0.81568627450980391" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="mNL-Px-uhL" firstAttribute="leading" secondItem="SJV-j7-90Q" secondAttribute="leading" id="2KC-sg-S8U"/>
                             <constraint firstItem="3sM-li-NUY" firstAttribute="top" secondItem="XVY-Vy-HwD" secondAttribute="bottom" constant="16" id="2qE-l7-akr"/>
-                            <constraint firstItem="SJV-j7-90Q" firstAttribute="centerX" secondItem="mNL-Px-uhL" secondAttribute="centerX" id="6sM-kL-D4I"/>
                             <constraint firstItem="kHQ-Ri-559" firstAttribute="centerX" secondItem="0Gk-zZ-JmN" secondAttribute="centerX" id="AwP-gR-43Y"/>
-                            <constraint firstItem="mNL-Px-uhL" firstAttribute="trailing" secondItem="NCi-We-2kI" secondAttribute="trailing" id="Foe-7b-r0m"/>
                             <constraint firstItem="k0s-m1-PtX" firstAttribute="top" secondItem="NCi-We-2kI" secondAttribute="bottom" constant="41" id="N7l-TV-OM2"/>
+                            <constraint firstItem="mNL-Px-uhL" firstAttribute="centerX" secondItem="NCi-We-2kI" secondAttribute="centerX" id="Qjo-qd-tOS"/>
                             <constraint firstItem="3sM-li-NUY" firstAttribute="leading" secondItem="0Gk-zZ-JmN" secondAttribute="leadingMargin" constant="4" id="RQ6-gP-sQf"/>
                             <constraint firstItem="X2F-wS-iUK" firstAttribute="leading" secondItem="0Gk-zZ-JmN" secondAttribute="leadingMargin" constant="21" id="RRm-rn-wk3"/>
-                            <constraint firstItem="3Em-2Y-n8e" firstAttribute="top" secondItem="kHQ-Ri-559" secondAttribute="bottom" constant="39" id="SzW-xl-eBi"/>
+                            <constraint firstItem="mNL-Px-uhL" firstAttribute="top" secondItem="SJV-j7-90Q" secondAttribute="bottom" constant="3" id="Set-GV-1LE"/>
+                            <constraint firstItem="3Em-2Y-n8e" firstAttribute="top" secondItem="kHQ-Ri-559" secondAttribute="bottom" constant="37" id="SzW-xl-eBi"/>
                             <constraint firstItem="3sM-li-NUY" firstAttribute="centerX" secondItem="kHQ-Ri-559" secondAttribute="centerX" id="XXX-v2-O6P"/>
-                            <constraint firstItem="3Em-2Y-n8e" firstAttribute="top" secondItem="X2F-wS-iUK" secondAttribute="bottom" constant="4" id="Xhs-JO-Lmy"/>
+                            <constraint firstItem="3Em-2Y-n8e" firstAttribute="top" secondItem="X2F-wS-iUK" secondAttribute="bottom" constant="2" id="Xhs-JO-Lmy"/>
                             <constraint firstItem="X2F-wS-iUK" firstAttribute="centerY" secondItem="0Gk-zZ-JmN" secondAttribute="centerY" id="alT-dx-ctw"/>
-                            <constraint firstItem="SJV-j7-90Q" firstAttribute="top" secondItem="3Em-2Y-n8e" secondAttribute="bottom" constant="8" symbolic="YES" id="bbk-mh-qDM"/>
+                            <constraint firstItem="SJV-j7-90Q" firstAttribute="top" secondItem="3Em-2Y-n8e" secondAttribute="bottom" constant="10" id="bbk-mh-qDM"/>
                             <constraint firstItem="3Em-2Y-n8e" firstAttribute="trailing" secondItem="SJV-j7-90Q" secondAttribute="trailing" id="fpa-Z2-tTB"/>
                             <constraint firstItem="X2F-wS-iUK" firstAttribute="leading" secondItem="3Em-2Y-n8e" secondAttribute="leading" id="gKy-vL-dfc"/>
-                            <constraint firstItem="mNL-Px-uhL" firstAttribute="leading" secondItem="0Gk-zZ-JmN" secondAttribute="leadingMargin" constant="61" id="m4o-l6-zoB"/>
+                            <constraint firstItem="mNL-Px-uhL" firstAttribute="trailing" secondItem="SJV-j7-90Q" secondAttribute="trailing" id="j4P-GF-2Tw"/>
                             <constraint firstItem="X2F-wS-iUK" firstAttribute="trailing" secondItem="3Em-2Y-n8e" secondAttribute="trailing" id="nAd-PB-H0x"/>
-                            <constraint firstItem="mNL-Px-uhL" firstAttribute="top" secondItem="SJV-j7-90Q" secondAttribute="bottom" constant="8" symbolic="YES" id="neW-6n-qUg"/>
                             <constraint firstItem="kHQ-Ri-559" firstAttribute="leading" secondItem="0Gk-zZ-JmN" secondAttribute="leadingMargin" constant="19" id="ngy-PX-YOZ"/>
                             <constraint firstItem="kHQ-Ri-559" firstAttribute="centerX" secondItem="X2F-wS-iUK" secondAttribute="centerX" id="pQx-eN-PQw"/>
-                            <constraint firstItem="mNL-Px-uhL" firstAttribute="leading" secondItem="NCi-We-2kI" secondAttribute="leading" id="qaO-9f-yth"/>
                             <constraint firstItem="kHQ-Ri-559" firstAttribute="top" secondItem="XVY-Vy-HwD" secondAttribute="bottom" constant="42" id="tS6-ID-Ei3"/>
                             <constraint firstItem="3Em-2Y-n8e" firstAttribute="leading" secondItem="SJV-j7-90Q" secondAttribute="leading" id="xR7-PJ-SkC"/>
                         </constraints>
@@ -112,8 +113,10 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="emailField" destination="X2F-wS-iUK" id="I7I-7S-tEe"/>
+                        <outlet property="loginButton" destination="SJV-j7-90Q" id="uJS-Sb-io3"/>
                         <outlet property="logoutButton" destination="NCi-We-2kI" id="hzx-HZ-CRp"/>
                         <outlet property="passwordField" destination="3Em-2Y-n8e" id="cLV-MV-WP9"/>
+                        <outlet property="signUp" destination="mNL-Px-uhL" id="D5x-y7-7Pi"/>
                         <outlet property="usernameLabel" destination="3sM-li-NUY" id="Tdv-Kb-X7N"/>
                         <segue destination="fTt-ps-Ekg" kind="show" identifier="userSegue" id="cL9-On-a4w"/>
                     </connections>
@@ -238,9 +241,11 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="cancelButton" destination="bLs-NC-Nuc" id="gEz-mX-WMh"/>
                         <outlet property="emailField" destination="8mq-eM-rFQ" id="gRK-As-Tu9"/>
                         <outlet property="nicknameField" destination="iTG-ck-pFW" id="Afc-P4-0r6"/>
                         <outlet property="passwordField" destination="Sd1-ox-kaN" id="yJc-QE-Kg5"/>
+                        <outlet property="registerButton" destination="7Za-Oq-Byh" id="XKh-q0-kso"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P5W-Tu-7Sr" userLabel="First Responder" sceneMemberID="firstResponder"/>
