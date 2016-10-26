@@ -18,15 +18,27 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var logoutButton: UIButton!
     
+    // Helper function to generate a UIColor based on RBG values. Arguments must be of type CGFloat
+    func RGB(r:CGFloat, g:CGFloat, b:CGFloat) ->UIColor {
+        return UIColor(red: r / 255.0, green: g / 255.0 , blue: b / 255.0 ,alpha: 1.0)
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        self.navigationController?.navigationBarHidden = true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let user = FIRAuth.auth()?.currentUser {
-            self.logoutButton.alpha = 1.0
-            self.usernameLabel.text = user.email
+        if (FIRAuth.auth()?.currentUser) != nil {
+            //The user has logged in already, skip the sign in page and go to their profile
+            let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+            self.presentViewController(profileViewController, animated: true, completion: nil)
+
         }
         else {
             self.logoutButton.alpha = 0.0
-            self.usernameLabel.text = ""
+            self.usernameLabel.text = "Dormy"
         }
     }
     
@@ -76,12 +88,12 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func logoutAction(sender: AnyObject) {
-        try! FIRAuth.auth()?.signOut()
-        self.usernameLabel.text = ""
-        self.emailField.text = ""
-        self.passwordField.text = ""
-        self.logoutButton.alpha = 0.0
-    }
+//    @IBAction func logoutAction(sender: AnyObject) {
+//        try! FIRAuth.auth()?.signOut()
+//        self.usernameLabel.text = ""
+//        self.emailField.text = ""
+//        self.passwordField.text = ""
+//        self.logoutButton.alpha = 0.0
+//    }
 }
 

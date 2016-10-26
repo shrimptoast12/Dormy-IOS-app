@@ -11,10 +11,19 @@ import Firebase
 
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @IBOutlet weak var nameLabel: UILabel!
+    //@IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
+    @IBOutlet weak var roomNumber: UILabel!
+    @IBOutlet weak var roommateName: UILabel!
+    @IBOutlet weak var roommateProfPic: UIImageView!
     
+    @IBAction func logout(sender: AnyObject) {
+        try! FIRAuth.auth()?.signOut()
+        let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login") as! ViewController
+        self.presentViewController(loginViewController, animated: true, completion: nil)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +53,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             let uid = user?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.nameLabel.text = dictionary["name"] as? String
+                    self.title = dictionary["name"] as? String
                     self.textF.text = dictionary["descript"] as? String
                     
                     // loads the profile picture of the user from storage using the imageURL from database

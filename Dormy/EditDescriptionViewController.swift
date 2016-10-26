@@ -15,6 +15,9 @@ class EditDescriptionViewController: UIViewController {
 
     @IBOutlet weak var myTextView: UITextView!
     
+    @IBAction func cancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         myTextView.text = vc!.textF.text
