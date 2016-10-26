@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton! // I want to delete this, but it crashes on runtime?? -Ben
     @IBOutlet weak var signUp: UIButton!
     
     override func viewWillAppear(animated: Bool)
@@ -43,12 +43,8 @@ class ViewController: UIViewController {
             self.presentViewController(profileViewController, animated: true, completion: nil)
 
         }
-        else {
-            self.logoutButton.alpha = 0.0
-            self.usernameLabel.text = "dormy"
-        }
     }
-    
+    @IBAction func unwindFromRegister(sender: UIStoryboardSegue) {}
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -80,7 +76,6 @@ class ViewController: UIViewController {
         else {
             FIRAuth.auth()?.signInWithEmail(self.emailField.text!, password: self.passwordField.text!, completion: { (user, error) in
                 if error == nil {
-                    self.logoutButton.alpha = 1.0
                     self.usernameLabel.text = user!.email
                     self.performSegueWithIdentifier("userSegue", sender: nil)
                     
@@ -94,13 +89,5 @@ class ViewController: UIViewController {
             })
         }
     }
-    
-//    @IBAction func logoutAction(sender: AnyObject) {
-//        try! FIRAuth.auth()?.signOut()
-//        self.usernameLabel.text = ""
-//        self.emailField.text = ""
-//        self.passwordField.text = ""
-//        self.logoutButton.alpha = 0.0
-//    }
 }
 

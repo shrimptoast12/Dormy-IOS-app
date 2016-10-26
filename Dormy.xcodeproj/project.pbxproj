@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
+		78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */; };
 		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
 		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
 		F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68842571DBE4B8E00DA9CEC /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.release.xcconfig"; sourceTree = "<group>"; };
 		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoommateTableViewCell.swift; sourceTree = "<group>"; };
 		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
 		F68842501DBE4B8E00DA9CEC /* Dormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +59,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		78BE8CDE1DC16CCE00C0E6E2 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */,
+				78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */,
+				F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		F68842471DBE4B8E00DA9CEC = {
 			isa = PBXGroup;
 			children = (
@@ -78,12 +90,11 @@
 		F68842521DBE4B8E00DA9CEC /* Dormy */ = {
 			isa = PBXGroup;
 			children = (
+				78BE8CDE1DC16CCE00C0E6E2 /* Profile */,
 				F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */,
 				F68842551DBE4B8E00DA9CEC /* ViewController.swift */,
 				F6CD2B411DBE4F620078689A /* RegisterViewController.swift */,
-				F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */,
 				F68842571DBE4B8E00DA9CEC /* Main.storyboard */,
-				F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */,
 				F688425C1DBE4B8E00DA9CEC /* LaunchScreen.storyboard */,
 				F688425A1DBE4B8E00DA9CEC /* Assets.xcassets */,
 				F688425F1DBE4B8E00DA9CEC /* Info.plist */,
@@ -226,6 +237,7 @@
 				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,
 				F6CD2B441DBE4F790078689A /* UserProfileViewController.swift in Sources */,
 				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
+				78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */,
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
 				F6CD2B461DBE6EBC0078689A /* EditDescriptionViewController.swift in Sources */,
 			);

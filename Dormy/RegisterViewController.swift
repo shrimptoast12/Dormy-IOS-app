@@ -30,11 +30,13 @@ class RegisterViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func cancelButtonPressed(sender: AnyObject) {
+        self.performSegueWithIdentifier("unwindFromRegister", sender: self)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     /*
      // MARK: - Navigation
@@ -62,7 +64,13 @@ class RegisterViewController: UIViewController {
                     guard let uid = user?.uid else {
                         return
                     }
-                    let values = ["name": self.nicknameField.text!,"email": self.emailField.text!, "RA": "false", "descript": "", "imageURL": ""]
+                    let values = ["name": self.nicknameField.text!,
+                                    "email": self.emailField.text!,
+                                    "RA": "false",
+                                    "descript": "",
+                                    "imageURL": "",
+                                    "roommate" : "",
+                                    "roomNumber" : ""]
                     let ref = FIRDatabase.database().referenceFromURL("https://dormy-e6239.firebaseio.com/")
                     let userRef = ref.child("users").child(uid)
                     userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in

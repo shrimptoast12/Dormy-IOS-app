@@ -15,16 +15,15 @@ class EditDescriptionViewController: UIViewController {
 
     @IBOutlet weak var myTextView: UITextView!
     
-    @IBAction func cancel(sender: AnyObject) {
-        //TODO
-        //Would like to change this to an animation that slides back left
-        //Right now it slides up and down, you can see the status bar and the nav bar disconnect
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
+
+    @IBOutlet weak var roomNumberTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         myTextView.text = vc!.textF.text
         // Do any additional setup after loading the view.
+    }
+    @IBAction func cancelButtonPressed(sender: AnyObject) {
+        self.performSegueWithIdentifier("unwindFromDescript", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +42,10 @@ class EditDescriptionViewController: UIViewController {
         let uid = FIRAuth.auth()?.currentUser?.uid
         if (uid != nil) {
             let descript = self.myTextView.text!
+            let roomNumber = self.roomNumberTextField.text!
+            
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
+            FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)
         }
         self.dismissViewControllerAnimated(true, completion: nil)
     }

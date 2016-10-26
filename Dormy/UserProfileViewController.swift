@@ -15,9 +15,8 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var roomNumber: UILabel!
-    @IBOutlet weak var roommateName: UILabel!
-    @IBOutlet weak var roommateProfPic: UIImageView!
     
+    @IBOutlet weak var tableView: UITableView!
     @IBAction func logout(sender: AnyObject) {
         try! FIRAuth.auth()?.signOut()
         let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login") as! ViewController
@@ -27,8 +26,8 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     override func viewDidLoad() {
         super.viewDidLoad()
         nameLabel.text = ""
-        roommateName.text = ""
         roomNumber.text = ""
+        self.tableView.rowHeight = 50
         // Do any additional setup after loading the view.
         checkUser()
         textF.delegate = self
@@ -57,8 +56,21 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.nameLabel.text = dictionary["name"] as? String
-                    //TODO
-                    //Set the roommate and the room number
+                    
+//                    if dictionary["roommate"] as? String != nil {
+//                        self.roommateName.text = dictionary["roommate"] as? String
+//                    }
+//                    else {
+//                        self.roommateName.text = "no roommate"
+//                    }
+//                    
+                    if dictionary["roomNumber"] as? String != nil {
+                        self.roomNumber.text = dictionary["roomNumber"] as? String
+                    }
+                    else {
+                        self.roomNumber.text = "no room number"
+                    }
+                    
                     self.textF.text = dictionary["descript"] as? String
                     
                     // loads the profile picture of the user from storage using the imageURL from database
@@ -82,6 +94,9 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     // Allows user to edit their description
     @IBAction func editDescription(sender: AnyObject) {
+        
+        //I would like to change this so the animation doesn't go up and down
+        //It detaches from the status bar and it cuts the block of color in half -Ben
         let editView = self.storyboard?.instantiateViewControllerWithIdentifier("EditDescription") as! EditDescriptionViewController
         editView.vc = self
         self.presentViewController(editView, animated: true, completion: nil)
@@ -138,7 +153,8 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         let maxChar: Int = 432
         return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
-    
+    //Needed for hitting cancel in Edit Description to "swipe" animate
+    @IBAction func unwindFromDescript(sender: UIStoryboardSegue) {}
     
     /*
      // MARK: - Navigation
