@@ -31,7 +31,9 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("unwindFromRegister", sender: self)
+        let loginVC = storyboard?.instantiateViewControllerWithIdentifier("login")
+        self.presentViewController(loginVC!, animated: true, completion: nil)
+        //self.performSegueWithIdentifier("unwindFromRegister", sender: loginVC)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,7 +72,8 @@ class RegisterViewController: UIViewController {
                                     "descript": "",
                                     "imageURL": "",
                                     "roommate" : "",
-                                    "roomNumber" : ""]
+                                    "roomNumber" : "",
+                                    "availability" :  ""]
                     let ref = FIRDatabase.database().referenceFromURL("https://dormy-e6239.firebaseio.com/")
                     let userRef = ref.child("users").child(uid)
                     userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
@@ -79,6 +82,9 @@ class RegisterViewController: UIViewController {
                             return
                         }
                         // else error doesn't occur and we successfully entered user into database
+                        // Segues into the profile view controller
+                        let loginView = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+                        self.presentViewController(loginView, animated: true, completion: nil)
                     })
                 }
                 else {

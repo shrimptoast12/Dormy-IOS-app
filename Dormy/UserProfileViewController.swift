@@ -16,12 +16,27 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var roomNumber: UILabel!
     
+    @IBOutlet weak var availLabel: UILabel!
+    @IBOutlet weak var availSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
     @IBAction func logout(sender: AnyObject) {
         try! FIRAuth.auth()?.signOut()
         let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login") as! ViewController
         self.presentViewController(loginViewController, animated: true, completion: nil)
         
+    }
+    @IBAction func availSwitched(sender: AnyObject) {
+        if (availSwitch.on) {
+            self.availLabel.text = "Available"
+        }
+        else {
+            self.availLabel.text = "Unavailable"
+        }
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        if (uid != nil) {
+            let availability = self.availLabel.text!
+            FIRDatabase.database().reference().child("users").child(uid!).child("availability").setValue(availability)
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +100,29 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
                                 self.profPic?.image = UIImage(data: data!)
                             })
                         }).resume()
+                    }
+                    // If the user is an RA, let the user profile show availability
+                    let raFlag = dictionary["RA"] as? String
+                    self.availSwitch.hidden = true
+                    self.availLabel.hidden = true
+                    if (raFlag == "true") {
+                        // display the avaibility switch and label
+                        self.availSwitch.hidden = false
+                        self.availLabel.hidden = false
+                        
+                        // grab the RA's availibity and set the switch/label accordingly
+                        let availability = dictionary["availability"] as? String
+                        if (availability != "")
+                        {
+                            self.availLabel.text = availability
+                            if (availability == "Available")
+                            {
+                                self.availSwitch.on = true
+                            }
+                            else {
+                                self.availSwitch.on = false
+                            }
+                        }
                     }
                 }
                 
