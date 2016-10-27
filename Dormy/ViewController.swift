@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var logoutButton: UIButton! // I want to delete this, but it crashes on runtime?? -Ben
     @IBOutlet weak var signUp: UIButton!
     
     override func viewWillAppear(animated: Bool)
@@ -44,6 +43,8 @@ class ViewController: UIViewController {
 
         }
     }
+    // This lets the cancel slide left and right, not up and down
+    // Currently causes a bug in which the current user doesn't log out
     //@IBAction func unwindFromRegister(sender: UIStoryboardSegue) {}
     
     override func didReceiveMemoryWarning() {
