@@ -20,7 +20,14 @@ class EditDescriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         myTextView.text = vc!.textF.text
-        roomNumberTextField.text = vc!.roomNumber.text
+        let roomNum = vc!.roomNumber.text!
+        if roomNum == "no room number" {
+            roomNumberTextField.text = ""
+        }
+        else {
+            //Trims the "Room " out of "Room <number>"
+            roomNumberTextField.text = String(roomNum.characters.dropFirst(5))
+        }
     }
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("unwindFromDescript", sender: self)
@@ -46,7 +53,6 @@ class EditDescriptionViewController: UIViewController {
             
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
             FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)
-
         }
         // Work-around because I'm not that good at threading
         // Instantiates a new profile Storyboard in orer to reflect changes made in edit

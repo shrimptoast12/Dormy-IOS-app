@@ -19,18 +19,16 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var availLabel: UILabel!
     @IBOutlet weak var availSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
-    @IBAction func logout(sender: AnyObject) {
-        try! FIRAuth.auth()?.signOut()
-        let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login") as! ViewController
-        self.presentViewController(loginViewController, animated: true, completion: nil)
-        
-    }
+
     @IBAction func availSwitched(sender: AnyObject) {
         if (availSwitch.on) {
             self.availLabel.text = "Available"
+            self.availLabel.textColor = AppDelegate().RGB(58.0, g: 165.0, b: 63.0)
+
         }
         else {
             self.availLabel.text = "Unavailable"
+            self.availLabel.textColor = AppDelegate().RGB(227.0, g: 43.0, b: 35.0)
         }
         let uid = FIRAuth.auth()?.currentUser?.uid
         if (uid != nil) {
@@ -78,9 +76,10 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
 //                    else {
 //                        self.roommateName.text = "no roommate"
 //                    }
-//                    
-                    if dictionary["roomNumber"] as? String != nil {
-                        self.roomNumber.text = dictionary["roomNumber"] as? String
+//                  
+                    let roomNumber = dictionary["roomNumber"] as? String
+                    if roomNumber != nil && roomNumber != "" {
+                        self.roomNumber.text = "Room \(roomNumber!)"
                     }
                     else {
                         self.roomNumber.text = "no room number"
@@ -121,6 +120,9 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
                             }
                             else {
                                 self.availSwitch.on = false
+                                self.availLabel.text = "Unavailable"
+                                self.availLabel.textColor = AppDelegate().RGB(227.0, g: 43.0, b: 35.0)
+
                             }
                         }
                     }
