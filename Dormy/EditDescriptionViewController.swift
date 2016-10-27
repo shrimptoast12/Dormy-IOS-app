@@ -14,13 +14,13 @@ class EditDescriptionViewController: UIViewController {
     weak var vc:UserProfileViewController?
 
     @IBOutlet weak var myTextView: UITextView!
-    
-
     @IBOutlet weak var roomNumberTextField: UITextField!
+    @IBOutlet weak var roomateTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         myTextView.text = vc!.textF.text
-        // Do any additional setup after loading the view.
+        roomNumberTextField.text = vc!.roomNumber.text
     }
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("unwindFromDescript", sender: self)
@@ -46,8 +46,13 @@ class EditDescriptionViewController: UIViewController {
             
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
             FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)
+
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        // Work-around because I'm not that good at threading
+        // Instantiates a new profile Storyboard in orer to reflect changes made in edit
+        let profVC = storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+        self.presentViewController(profVC, animated: true, completion: nil)
+        //self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     /*

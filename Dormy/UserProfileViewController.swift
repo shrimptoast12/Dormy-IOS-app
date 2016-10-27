@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var textF: UITextView!
@@ -191,7 +191,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         let maxChar: Int = 432
         return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
-    //Needed for hitting cancel in Edit Description to "swipe" animate
+    // unwind seque for cancel description
     @IBAction func unwindFromDescript(sender: UIStoryboardSegue) {}
     
     /*
@@ -203,5 +203,17 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
      // Pass the selected object to the new view controller.
      }
      */
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+        
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
+        return UITableViewCell()
+    }
+        
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+
     
 }
