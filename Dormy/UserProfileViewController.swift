@@ -11,7 +11,7 @@ import Firebase
 
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var roommateName: String = ""
+    var roommateName: String? = ""
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
@@ -84,6 +84,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
 //                  
                     if dictionary["roommate"] != nil {
                         self.roommateName = (dictionary["roommate"] as? String)!
+                        self.tableView.reloadData()
                     }
                     let roomNumber = dictionary["roomNumber"] as? String
                     if roomNumber != nil && roomNumber != "" {
@@ -249,7 +250,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
         if roommateName != "" {
             let cell:RoommateTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! RoommateTableViewCell
-            cell.loadItem(self.roommateName, image: "empty_profile")
+            cell.loadItem(self.roommateName!, image: "empty_profile")
             return cell
         }
         else {
