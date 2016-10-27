@@ -28,6 +28,10 @@ class EditDescriptionViewController: UIViewController {
             //Trims the "Room " out of "Room <number>"
             roomNumberTextField.text = String(roomNum.characters.dropFirst(5))
         }
+        let roommateName = vc!.roommateName
+        if roommateName != "" {
+            self.roomateTextField.text = roommateName
+        }
     }
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("unwindFromDescript", sender: self)
@@ -50,15 +54,15 @@ class EditDescriptionViewController: UIViewController {
         if (uid != nil) {
             let descript = self.myTextView.text!
             let roomNumber = self.roomNumberTextField.text!
+            let roommate = self.roomateTextField.text!
             
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
             FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)
+            FIRDatabase.database().reference().child("users").child(uid!).child("roommate").setValue(roommate)
         }
-        // Work-around because I'm not that good at threading
-        // Instantiates a new profile Storyboard in orer to reflect changes made in edit
+        
         let profVC = storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
         self.presentViewController(profVC, animated: true, completion: nil)
-        //self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     /*

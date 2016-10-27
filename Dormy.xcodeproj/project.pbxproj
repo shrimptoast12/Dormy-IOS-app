@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
+		74D3E22F1DC1E62500272CC9 /* RoommateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 74D3E22E1DC1E62500272CC9 /* RoommateTableViewCell.xib */; };
 		78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */; };
 		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
 		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.release.xcconfig"; sourceTree = "<group>"; };
 		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		74D3E22E1DC1E62500272CC9 /* RoommateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoommateTableViewCell.xib; sourceTree = "<group>"; };
 		78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoommateTableViewCell.swift; sourceTree = "<group>"; };
 		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
 		F68842501DBE4B8E00DA9CEC /* Dormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +74,7 @@
 		F68842471DBE4B8E00DA9CEC = {
 			isa = PBXGroup;
 			children = (
+				74D3E22E1DC1E62500272CC9 /* RoommateTableViewCell.xib */,
 				F68842521DBE4B8E00DA9CEC /* Dormy */,
 				F68842511DBE4B8E00DA9CEC /* Products */,
 				295E82036F73CFF2AA012527 /* Pods */,
@@ -173,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F688425E1DBE4B8E00DA9CEC /* LaunchScreen.storyboard in Resources */,
+				74D3E22F1DC1E62500272CC9 /* RoommateTableViewCell.xib in Resources */,
 				F688425B1DBE4B8E00DA9CEC /* Assets.xcassets in Resources */,
 				F68842661DBE4C5700DA9CEC /* GoogleService-Info.plist in Resources */,
 				F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */,

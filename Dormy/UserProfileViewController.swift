@@ -11,11 +11,11 @@ import Firebase
 
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    var roommateName: String = ""
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var roomNumber: UILabel!
-    
     @IBOutlet weak var availLabel: UILabel!
     @IBOutlet weak var availSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
@@ -36,14 +36,19 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             FIRDatabase.database().reference().child("users").child(uid!).child("availability").setValue(availability)
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let nib = UINib(nibName: "RoommateTableViewCell", bundle: nil)
+        tableView.registerNib(nib, forCellReuseIdentifier: "profileCell")
+        tableView.tableFooterView = UIView()
         nameLabel.text = ""
         roomNumber.text = ""
         self.tableView.rowHeight = 50
-        // Do any additional setup after loading the view.
         checkUser()
         textF.delegate = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
 
     }
     
@@ -77,6 +82,9 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
 //                        self.roommateName.text = "no roommate"
 //                    }
 //                  
+                    if dictionary["roommate"] != nil {
+                        self.roommateName = (dictionary["roommate"] as? String)!
+                    }
                     let roomNumber = dictionary["roomNumber"] as? String
                     if roomNumber != nil && roomNumber != "" {
                         self.roomNumber.text = "Room \(roomNumber!)"
@@ -97,6 +105,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
                             }
                             dispatch_async(dispatch_get_main_queue(), {
                                 self.profPic?.image = UIImage(data: data!)
+                                self.tableView.reloadData()
                             })
                         }).resume()
                     }
@@ -229,14 +238,27 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
      // Pass the selected object to the new view controller.
      }
      */
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 1
     }
         
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
-        return UITableViewCell()
+        if roommateName != "" {
+            let cell:RoommateTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! RoommateTableViewCell
+            cell.loadItem(self.roommateName, image: "empty_profile")
+            return cell
+        }
+        else {
+            let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("basicCell", forIndexPath: indexPath) as UITableViewCell
+            cell.textLabel!.text = "no roomates..."
+            return cell
+        }
     }
-        
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }

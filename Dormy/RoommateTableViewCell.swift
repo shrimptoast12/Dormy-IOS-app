@@ -12,6 +12,11 @@ class RoommateTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profilePic: UIImageView!
+    
+    func loadItem(nameLabel: String, image: String) {
+        profilePic?.image = UIImage(named: image)
+        self.nameLabel?.text = nameLabel
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -74,6 +74,7 @@ class RegisterViewController: UIViewController {
                                     "roommate" : "",
                                     "roomNumber" : "",
                                     "availability" :  ""]
+
                     let ref = FIRDatabase.database().referenceFromURL("https://dormy-e6239.firebaseio.com/")
                     let userRef = ref.child("users").child(uid)
                     userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in

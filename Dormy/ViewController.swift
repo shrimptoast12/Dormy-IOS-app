@@ -40,7 +40,6 @@ class ViewController: UIViewController {
             //The user has logged in already, skip the sign in page and go to their profile
             let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
             self.presentViewController(profileViewController, animated: true, completion: nil)
-
         }
     }
     // This lets the cancel slide left and right, not up and down
