@@ -194,6 +194,30 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     //Needed for hitting cancel in Edit Description to "swipe" animate
     @IBAction func unwindFromDescript(sender: UIStoryboardSegue) {}
     
+    @IBAction func moreButton(sender: AnyObject) {
+        let alertController = UIAlertController(title: "Action Sheet", message: "Action Sheet With Three Buttons", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let bulletin = UIAlertAction(title: "Bulletin Board", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            // This will eventually segue to the bulletin board
+        })
+        let logout = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            try! FIRAuth.auth()?.signOut()
+            let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login") as! ViewController
+            self.presentViewController(loginViewController, animated: true, completion: nil)
+
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+            //exit action sheet
+        })
+        
+        alertController.addAction(bulletin)
+        alertController.addAction(logout)
+        alertController.addAction(cancel)
+
+        
+        presentViewController(alertController, animated: true, completion: nil)
+
+    }
     /*
      // MARK: - Navigation
      
