@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var nicknameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -28,6 +28,11 @@ class RegisterViewController: UIViewController {
         cancelButton.layer.borderColor = UIColor.clearColor().CGColor
         
         // Do any additional setup after loading the view.
+        
+        // set text field delegates so keyboard can dismiss after return
+        nicknameField.delegate = self
+        emailField.delegate = self
+        passwordField.delegate = self
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
@@ -39,16 +44,6 @@ class RegisterViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     @IBAction func registerAction(sender: AnyObject) {
         // if either text fields are empty. print error

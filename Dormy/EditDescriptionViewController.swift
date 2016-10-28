@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class EditDescriptionViewController: UIViewController {
+class EditDescriptionViewController: UIViewController, UITextViewDelegate {
     
     weak var vc:UserProfileViewController?
 
@@ -32,6 +32,13 @@ class EditDescriptionViewController: UIViewController {
         if roommateName != "" {
             self.roomateTextField.text = roommateName
         }
+        
+        myTextView.delegate = self
+        
+        // Give the text view a border
+        self.myTextView.layer.borderWidth = 1
+        self.myTextView.layer.borderColor = AppDelegate().RGB(80.0, g: 186.0, b: 99.0).CGColor
+        self.myTextView.layer.cornerRadius = 5
     }
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("unwindFromDescript", sender: self)
@@ -65,6 +72,11 @@ class EditDescriptionViewController: UIViewController {
         self.presentViewController(profVC, animated: true, completion: nil)
     }
 
+    // Makes the keyboard go away when you touch anywhere outside the text field or keyboard
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     /*
     // MARK: - Navigation
 

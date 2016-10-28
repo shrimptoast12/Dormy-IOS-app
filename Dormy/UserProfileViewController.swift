@@ -19,12 +19,13 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var availLabel: UILabel!
     @IBOutlet weak var availSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var descriptView: UITextView!
+    @IBOutlet weak var navBar: UINavigationBar!
 
     @IBAction func availSwitched(sender: AnyObject) {
         if (availSwitch.on) {
             self.availLabel.text = "Available"
             self.availLabel.textColor = AppDelegate().RGB(58.0, g: 165.0, b: 63.0)
-
         }
         else {
             self.availLabel.text = "Unavailable"
@@ -39,6 +40,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Set up stuff
         let nib = UINib(nibName: "RoommateTableViewCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "profileCell")
         tableView.tableFooterView = UIView()
@@ -46,10 +48,17 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         roomNumber.text = ""
         self.tableView.rowHeight = 50
         checkUser()
+        // set some delegates
         textF.delegate = self
         self.tableView.delegate = self
         self.tableView.dataSource = self
-
+        
+        // Add borders to descript
+        self.descriptView.layer.borderWidth = 1
+        self.descriptView.layer.borderColor = AppDelegate().RGB(80.0, g: 186.0, b: 99.0).CGColor
+        self.descriptView.layer.cornerRadius = 5
+        
+        self.navBar.titleTextAttributes = [NSForegroundColorAttributeName: AppDelegate().RGB(80.0, g: 186.0, b: 99.0)]
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,7 +67,6 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     }
     
     func checkUser() {
-        
         // signs out incorrect user
         if (FIRAuth.auth()?.currentUser?.uid == nil) {
             do {
@@ -73,15 +81,9 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             let uid = user?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.nameLabel.text = dictionary["name"] as? String
                     
-//                    if dictionary["roommate"] as? String != nil {
-//                        self.roommateName.text = dictionary["roommate"] as? String
-//                    }
-//                    else {
-//                        self.roommateName.text = "no roommate"
-//                    }
-//                  
+                    self.nameLabel.text = dictionary["name"] as? String
+
                     if dictionary["roommate"] != nil {
                         self.roommateName = (dictionary["roommate"] as? String)!
                         self.tableView.reloadData()
@@ -207,9 +209,12 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBAction func unwindFromDescript(sender: UIStoryboardSegue) {}
     
     @IBAction func moreButton(sender: AnyObject) {
-        let alertController = UIAlertController(title: "Action Sheet", message: "Action Sheet With Three Buttons", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let bulletin = UIAlertAction(title: "Bulletin Board", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            // This will eventually segue to the bulletin board
+        })
+        let sendMessage = UIAlertAction(title: "Send Message", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             // This will eventually segue to the bulletin board
         })
         let logout = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
@@ -223,6 +228,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         })
         
         alertController.addAction(bulletin)
+        alertController.addAction(sendMessage)
         alertController.addAction(logout)
         alertController.addAction(cancel)
 
@@ -230,15 +236,6 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         presentViewController(alertController, animated: true, completion: nil)
 
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

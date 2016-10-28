@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var usernameLabel: UILabel!
@@ -41,6 +41,10 @@ class ViewController: UIViewController {
             let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
             self.presentViewController(profileViewController, animated: true, completion: nil)
         }
+        
+        // set text field delegates to dismiss keyboard on return
+        emailField.delegate = self
+        passwordField.delegate = self
     }
     // This lets the cancel slide left and right, not up and down
     // Currently causes a bug in which the current user doesn't log out
@@ -77,7 +81,6 @@ class ViewController: UIViewController {
         else {
             FIRAuth.auth()?.signInWithEmail(self.emailField.text!, password: self.passwordField.text!, completion: { (user, error) in
                 if error == nil {
-                    self.usernameLabel.text = user!.email
                     self.performSegueWithIdentifier("userSegue", sender: nil)
                     
                 }
