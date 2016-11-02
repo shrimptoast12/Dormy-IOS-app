@@ -38,6 +38,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set up stuff
@@ -53,11 +54,21 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        // Add borders to descript
+        // Set UI elements
         self.descriptView.layer.borderWidth = 1
         self.descriptView.layer.borderColor = AppDelegate().RGB(80.0, g: 186.0, b: 99.0).CGColor
         self.descriptView.layer.cornerRadius = 5
         
+//        self.profPic.layer.cornerRadius = self.profPic.frame.size.width / 2;
+//        self.profPic.clipsToBounds = true
+//        self.profPic.layer.borderWidth = 3
+//        self.profPic.layer.borderColor = UIColor.whiteColor().CGColor
+        self.profPic.layer.borderWidth = 3.0
+        self.profPic.layer.masksToBounds = false
+        self.profPic.layer.borderColor = UIColor.whiteColor().CGColor
+        self.profPic.layer.cornerRadius = self.profPic.frame.size.width/2
+        self.profPic.clipsToBounds = true
+
         self.navBar.titleTextAttributes = [NSForegroundColorAttributeName: AppDelegate().RGB(80.0, g: 186.0, b: 99.0)]
     }
     
