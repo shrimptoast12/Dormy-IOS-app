@@ -11,6 +11,7 @@
 		74D3E22F1DC1E62500272CC9 /* RoommateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 74D3E22E1DC1E62500272CC9 /* RoommateTableViewCell.xib */; };
 		785471021DCAB62E00A4C35C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471011DCAB62E00A4C35C /* User.swift */; };
 		785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471031DCADD4C00A4C35C /* AllUsersViewController.swift */; };
+		785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471051DCAE7AD00A4C35C /* UserCell.swift */; };
 		78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */; };
 		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
 		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 		74D3E22E1DC1E62500272CC9 /* RoommateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoommateTableViewCell.xib; sourceTree = "<group>"; };
 		785471011DCAB62E00A4C35C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		785471031DCADD4C00A4C35C /* AllUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllUsersViewController.swift; sourceTree = "<group>"; };
+		785471051DCAE7AD00A4C35C /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoommateTableViewCell.swift; sourceTree = "<group>"; };
 		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
 		F68842501DBE4B8E00DA9CEC /* Dormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +79,7 @@
 			children = (
 				785471011DCAB62E00A4C35C /* User.swift */,
 				785471031DCADD4C00A4C35C /* AllUsersViewController.swift */,
+				785471051DCAE7AD00A4C35C /* UserCell.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
 				78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */,
 				785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */,
+				785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */,
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
 				F6CD2B461DBE6EBC0078689A /* EditDescriptionViewController.swift in Sources */,

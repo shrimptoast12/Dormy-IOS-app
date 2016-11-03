@@ -16,6 +16,8 @@ class AllUsersViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(handleCancel))
         fetchUser()
     }
@@ -48,11 +50,25 @@ class AllUsersViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cellId")
+        let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
         
         let user = users[indexPath.row]
         
         cell.textLabel?.text = user.name
+        
+        if let profileImageUrl = user.imageURL {
+            let url = NSURL(string: profileImageUrl)
+            NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
+                if error != nil {
+                    print(error)
+                    return
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.imageView?.image = UIImage(data: data!)
+                })
+                
+            }).resume()
+        }
         return cell
     }
 }
