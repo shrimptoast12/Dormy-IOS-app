@@ -59,10 +59,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         self.descriptView.layer.borderColor = AppDelegate().RGB(80.0, g: 186.0, b: 99.0).CGColor
         self.descriptView.layer.cornerRadius = 5
         
-//        self.profPic.layer.cornerRadius = self.profPic.frame.size.width / 2;
-//        self.profPic.clipsToBounds = true
-//        self.profPic.layer.borderWidth = 3
-//        self.profPic.layer.borderColor = UIColor.whiteColor().CGColor
+        //Round the profile picture
         self.profPic.layer.borderWidth = 3.0
         self.profPic.layer.masksToBounds = false
         self.profPic.layer.borderColor = UIColor.whiteColor().CGColor
@@ -216,8 +213,18 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         let maxChar: Int = 432
         return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
+    
     // unwind seque for cancel description
     @IBAction func unwindFromDescript(sender: UIStoryboardSegue) {}
+    
+    func viewAllUsers() {
+        let newMessageController = AllUsersViewController()
+        let navController = UINavigationController(rootViewController: newMessageController)
+        presentViewController(navController, animated: true, completion: nil)
+    }
+//    func goToMessages() {
+//        let newMessageBoardController = new MessageController()
+//    }
     
     @IBAction func moreButton(sender: AnyObject) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -225,8 +232,8 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         let bulletin = UIAlertAction(title: "Bulletin Board", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             // This will eventually segue to the bulletin board
         })
-        let sendMessage = UIAlertAction(title: "Send Message", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            // This will eventually segue to the bulletin board
+        let message = UIAlertAction(title: "Messages", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            self.viewAllUsers()
         })
         let logout = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             try! FIRAuth.auth()?.signOut()
@@ -239,7 +246,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         })
         
         alertController.addAction(bulletin)
-        alertController.addAction(sendMessage)
+        alertController.addAction(message)
         alertController.addAction(logout)
         alertController.addAction(cancel)
 
@@ -248,6 +255,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
 
     }
     
+    // TableView Protocol methods for showing the list of roommates
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

@@ -15,10 +15,19 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var myTextView: UITextView!
     @IBOutlet weak var roomNumberTextField: UITextField!
-    @IBOutlet weak var roomateTextField: UITextField!
+    @IBOutlet weak var roommatesButton: UIButton!
+    
+    @IBAction func editRoommates(sender: AnyObject) {
+        let newMessageController = AllUsersViewController()
+        let navController = UINavigationController(rootViewController: newMessageController)
+        presentViewController(navController, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        roommatesButton.layer.cornerRadius = 5
+        roommatesButton.layer.borderWidth = 1
+        roommatesButton.layer.borderColor = UIColor.clearColor().CGColor
         myTextView.text = vc!.textF.text
         let roomNum = vc!.roomNumber.text!
         if roomNum == "no room number" {
@@ -27,10 +36,6 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate {
         else {
             //Trims the "Room " out of "Room <number>"
             roomNumberTextField.text = String(roomNum.characters.dropFirst(5))
-        }
-        let roommateName = vc!.roommateName
-        if roommateName != "" {
-            self.roomateTextField.text = roommateName
         }
         
         myTextView.delegate = self
@@ -61,11 +66,11 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate {
         if (uid != nil) {
             let descript = self.myTextView.text!
             let roomNumber = self.roomNumberTextField.text!
-            let roommate = self.roomateTextField.text!
+           // let roommate = self.roomateTextField.text!
             
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
             FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)
-            FIRDatabase.database().reference().child("users").child(uid!).child("roommate").setValue(roommate)
+            //FIRDatabase.database().reference().child("users").child(uid!).child("roommate").setValue(roommate)
         }
         
         let profVC = storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
