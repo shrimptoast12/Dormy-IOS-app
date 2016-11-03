@@ -188,7 +188,9 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         if let profilePic = selectedImage {
             profPic.image = profilePic
             let storageRef = FIRStorage.storage().reference().child("profilePictures").child("\(uniqueImageName).png")
-            if let uploadData = UIImagePNGRepresentation(self.profPic.image!) {
+            
+            //Compression factor of 0.1 on User images
+            if let uploadData = UIImageJPEGRepresentation(self.profPic.image!, 0.1) {
                 storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
                         print(error)
