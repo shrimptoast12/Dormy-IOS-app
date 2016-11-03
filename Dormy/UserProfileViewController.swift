@@ -42,8 +42,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set up stuff
-        let nib = UINib(nibName: "RoommateTableViewCell", bundle: nil)
-        tableView.registerNib(nib, forCellReuseIdentifier: "profileCell")
+        tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
         tableView.tableFooterView = UIView()
         nameLabel.text = ""
         roomNumber.text = ""
@@ -265,12 +264,14 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
         if roommateName != "" {
-            let cell:RoommateTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("profileCell", forIndexPath: indexPath) as! RoommateTableViewCell
-            cell.loadItem(self.roommateName!, image: "empty_profile")
+            let cell:UserCell = self.tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
+            cell.profileImageView.image = UIImage(named: "empty_profile")
+            cell.textLabel?.text = roommateName
             return cell
         }
         else {
-            let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("basicCell", forIndexPath: indexPath) as UITableViewCell
+            let cell:UserCell = self.tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
+            cell.profileImageView.image = UIImage(named: "empty_profile")
             cell.textLabel!.text = "no roomates..."
             return cell
         }

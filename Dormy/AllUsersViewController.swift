@@ -17,7 +17,7 @@ class AllUsersViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
-
+        tableView.rowHeight = 55
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(handleCancel))
         fetchUser()
     }
@@ -55,7 +55,6 @@ class AllUsersViewController: UITableViewController {
         let user = users[indexPath.row]
         
         cell.textLabel?.text = user.name
-        
         if let profileImageUrl = user.imageURL {
             let url = NSURL(string: profileImageUrl)
             NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
@@ -64,9 +63,9 @@ class AllUsersViewController: UITableViewController {
                     return
                 }
                 dispatch_async(dispatch_get_main_queue(), {
-                    cell.imageView?.image = UIImage(data: data!)
+                    cell.profileImageView.image = UIImage(data: data!)
                 })
-                
+ 
             }).resume()
         }
         return cell
