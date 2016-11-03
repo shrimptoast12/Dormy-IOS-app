@@ -187,10 +187,10 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         // load the picture onto Firebase Storage
         if let profilePic = selectedImage {
             profPic.image = profilePic
-            let storageRef = FIRStorage.storage().reference().child("profilePictures").child("\(uniqueImageName).png")
+            let storageRef = FIRStorage.storage().reference().child("profilePictures").child("\(uniqueImageName).jpg")
             
             //Compression factor of 0.1 on User images
-            if let uploadData = UIImageJPEGRepresentation(self.profPic.image!, 0.1) {
+            if let profileImage = self.profPic.image, uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
                 storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
                         print(error)
