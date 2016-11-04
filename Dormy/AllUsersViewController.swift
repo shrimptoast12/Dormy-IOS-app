@@ -60,6 +60,20 @@ class AllUsersViewController: UITableViewController {
         }
         return cell
     }
+    
+    //
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        
+        goToChat()
+    }
+    
+    //go to chat log of selected user
+    func goToChat(){
+        let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        let navController = UINavigationController(rootViewController: chatLog)
+        presentViewController(navController, animated: true, completion: nil)
+    }
+    
 }
 
 let imageCache = NSCache()
