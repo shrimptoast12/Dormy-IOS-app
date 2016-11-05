@@ -218,15 +218,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     // unwind seque for cancel description
     @IBAction func unwindFromDescript(sender: UIStoryboardSegue) {}
     
-    func viewAllUsers() {
-        let newMessageController = AllUsersViewController()
-        let navController = UINavigationController(rootViewController: newMessageController)
-        presentViewController(navController, animated: true, completion: nil)
-    }
-//    func goToMessages() {
-//        let newMessageBoardController = new MessageController()
-//    }
-    
+
     @IBAction func moreButton(sender: AnyObject) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
@@ -234,7 +226,11 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             // This will eventually segue to the bulletin board
         })
         let message = UIAlertAction(title: "Messages", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            self.viewAllUsers()
+            let storyboard = UIStoryboard(name: "Messages", bundle: nil)
+            let messagesTableViewController = storyboard.instantiateViewControllerWithIdentifier("messagesTableViewController")
+                as! MessagesTableViewController
+            let navController = UINavigationController(rootViewController: messagesTableViewController)
+            self.presentViewController(navController, animated: true, completion: nil)
         })
         let logout = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             try! FIRAuth.auth()?.signOut()

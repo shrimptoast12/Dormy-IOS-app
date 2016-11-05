@@ -81,7 +81,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         else {
             FIRAuth.auth()?.signInWithEmail(self.emailField.text!, password: self.passwordField.text!, completion: { (user, error) in
                 if error == nil {
-                    self.performSegueWithIdentifier("userSegue", sender: nil)
+                    let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+                    self.presentViewController(profileViewController, animated: true, completion: nil)
                     
                 }
                 else {
