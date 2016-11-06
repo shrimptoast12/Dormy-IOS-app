@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
 		5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */; };
+		781A9D5C1DCFDEF200EFE1EA /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A9D5B1DCFDEF200EFE1EA /* SWRevealViewController.m */; };
+		781A9D5E1DCFE08700EFE1EA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781A9D5D1DCFE08700EFE1EA /* MenuController.swift */; };
 		785471021DCAB62E00A4C35C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471011DCAB62E00A4C35C /* User.swift */; };
 		785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471031DCADD4C00A4C35C /* AllUsersViewController.swift */; };
 		785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471051DCAE7AD00A4C35C /* UserCell.swift */; };
@@ -30,6 +32,10 @@
 		11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.release.xcconfig"; sourceTree = "<group>"; };
 		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		781A9D591DCFDEF200EFE1EA /* Dormy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dormy-Bridging-Header.h"; sourceTree = "<group>"; };
+		781A9D5A1DCFDEF200EFE1EA /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = "../../../Fall_2016/iOS/SWRevealViewController-master/SWRevealViewController/SWRevealViewController.h"; sourceTree = "<group>"; };
+		781A9D5B1DCFDEF200EFE1EA /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = "../../../Fall_2016/iOS/SWRevealViewController-master/SWRevealViewController/SWRevealViewController.m"; sourceTree = "<group>"; };
+		781A9D5D1DCFE08700EFE1EA /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		785471011DCAB62E00A4C35C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		785471031DCADD4C00A4C35C /* AllUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllUsersViewController.swift; sourceTree = "<group>"; };
 		785471051DCAE7AD00A4C35C /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
@@ -69,6 +75,17 @@
 				11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		781A9D581DCFDED600EFE1EA /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				781A9D5A1DCFDEF200EFE1EA /* SWRevealViewController.h */,
+				781A9D5B1DCFDEF200EFE1EA /* SWRevealViewController.m */,
+				781A9D591DCFDEF200EFE1EA /* Dormy-Bridging-Header.h */,
+				781A9D5D1DCFE08700EFE1EA /* MenuController.swift */,
+			);
+			name = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 		785470FB1DCAA60700A4C35C /* Messages */ = {
@@ -122,6 +139,7 @@
 		F68842521DBE4B8E00DA9CEC /* Dormy */ = {
 			isa = PBXGroup;
 			children = (
+				781A9D581DCFDED600EFE1EA /* SWRevealViewController */,
 				785471001DCAB60D00A4C35C /* User */,
 				785470FB1DCAA60700A4C35C /* Messages */,
 				78BE8CDE1DC16CCE00C0E6E2 /* Profile */,
@@ -280,6 +298,8 @@
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
 				5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */,
 				F6CD2B461DBE6EBC0078689A /* EditDescriptionViewController.swift in Sources */,
+				781A9D5E1DCFE08700EFE1EA /* MenuController.swift in Sources */,
+				781A9D5C1DCFDEF200EFE1EA /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,10 +415,13 @@
 			baseConfigurationReference = 9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Dormy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cs378.Dormy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dormy/Dormy-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -407,10 +430,12 @@
 			baseConfigurationReference = 11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Dormy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cs378.Dormy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dormy/Dormy-Bridging-Header.h";
 			};
 			name = Release;
 		};

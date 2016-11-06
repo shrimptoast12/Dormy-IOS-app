@@ -21,6 +21,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var descriptView: UITextView!
     @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var menuButton: UIBarButtonItem!
 
     @IBAction func availSwitched(sender: AnyObject) {
         if (availSwitch.on) {
@@ -41,6 +42,13 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if self.revealViewController() != nil {
+            menuButton.target = self.revealViewController()
+            menuButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
         // Set up stuff
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
         tableView.tableFooterView = UIView()
@@ -151,16 +159,6 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         }
     }
     
-    // Allows user to edit their description
-    @IBAction func editDescription(sender: AnyObject) {
-        
-        //I would like to change this so the animation doesn't go up and down
-        //It detaches from the status bar and it cuts the block of color in half -Ben
-        let editView = self.storyboard?.instantiateViewControllerWithIdentifier("EditDescription") as! EditDescriptionViewController
-        editView.vc = self
-        self.presentViewController(editView, animated: true, completion: nil)
-    }
-    
     // Allows user to upload a profile picture
     @IBAction func uploadImage(sender: AnyObject) {
         let imagePicker = UIImagePickerController()
@@ -225,12 +223,13 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         let bulletin = UIAlertAction(title: "Bulletin Board", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             // This will eventually segue to the bulletin board
         })
-        let message = UIAlertAction(title: "Messages", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            let storyboard = UIStoryboard(name: "Messages", bundle: nil)
-            let messagesTableViewController = storyboard.instantiateViewControllerWithIdentifier("messagesTableViewController")
-                as! MessagesTableViewController
-            let navController = UINavigationController(rootViewController: messagesTableViewController)
-            self.presentViewController(navController, animated: true, completion: nil)
+        let edit = UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            
+            //I would like to change this so the animation doesn't go up and down
+            //It detaches from the status bar and it cuts the block of color in half -Ben
+            let editView = self.storyboard?.instantiateViewControllerWithIdentifier("EditDescription") as! EditDescriptionViewController
+            editView.vc = self
+            self.presentViewController(editView, animated: true, completion: nil)
         })
         let logout = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             try! FIRAuth.auth()?.signOut()
@@ -243,7 +242,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         })
         
         alertController.addAction(bulletin)
-        alertController.addAction(message)
+        alertController.addAction(edit)
         alertController.addAction(logout)
         alertController.addAction(cancel)
 
