@@ -12,7 +12,6 @@ import Firebase
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var roommateName: String? = ""
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var roomNumber: UILabel!
@@ -20,7 +19,6 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBOutlet weak var availSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var descriptView: UITextView!
-    @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var menuButton: UIBarButtonItem!
 
     @IBAction func availSwitched(sender: AnyObject) {
@@ -39,9 +37,19 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         }
     }
     
+    func setUpNavBarColor() {
+        let nav = self.navigationController?.navigationBar
+        nav!.translucent = false
+        let img = UIImage()
+        self.navigationController!.navigationBar.shadowImage = img
+        self.navigationController!.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.setUpNavBarColor()
         
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
@@ -52,7 +60,6 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         // Set up stuff
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
         tableView.tableFooterView = UIView()
-        nameLabel.text = ""
         roomNumber.text = ""
         self.tableView.rowHeight = 50
         checkUser()
@@ -72,8 +79,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         self.profPic.layer.borderColor = UIColor.whiteColor().CGColor
         self.profPic.layer.cornerRadius = self.profPic.frame.size.width/2
         self.profPic.clipsToBounds = true
-
-        self.navBar.titleTextAttributes = [NSForegroundColorAttributeName: AppDelegate().RGB(80.0, g: 186.0, b: 99.0)]
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,7 +103,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     
-                    self.nameLabel.text = dictionary["name"] as? String
+                    self.navigationItem.title = dictionary["name"] as? String
 
                     if dictionary["roommate"] != nil {
                         self.roommateName = (dictionary["roommate"] as? String)!

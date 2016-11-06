@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Messages Table View Controller-->
+        <!--Messages-->
         <scene sceneID="qqf-B8-10b">
             <objects>
                 <tableViewController storyboardIdentifier="messagesTableViewController" id="GaI-4e-Qxu" customClass="MessagesTableViewController" customModule="Dormy" customModuleProvider="target" sceneMemberID="viewController">
@@ -29,7 +29,7 @@
                             <outlet property="delegate" destination="GaI-4e-Qxu" id="gR9-S8-f6m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rei-QK-7EE">
+                    <navigationItem key="navigationItem" title="Messages" id="rei-QK-7EE">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="784-6g-mmg">
                             <color key="tintColor" red="0.26751551029999998" green="0.688477695" blue="0.31216993929999998" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>

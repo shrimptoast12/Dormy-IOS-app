@@ -21,9 +21,20 @@ class MessagesTableViewController: UITableViewController {
     @IBAction func composeNewMessage(sender: AnyObject) {
         self.viewAllUsers()
     }
+    
+    func setUpNavBarColor() {
+        let nav = self.navigationController?.navigationBar
+        nav!.translucent = false
+        let img = UIImage()
+        self.navigationController!.navigationBar.shadowImage = img
+        self.navigationController!.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setUpNavBarColor()
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
             menuButton.action = "revealToggle:"
