@@ -13,9 +13,20 @@ class AllUsersViewController: UITableViewController {
     
     var users = [User]()
     
+    func setUpNavBarColor() {
+        let nav = self.navigationController?.navigationBar
+        nav?.translucent = false
+        let img = UIImage()
+        self.navigationController?.navigationBar.shadowImage = img
+        self.navigationController?.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.tintColor = AppDelegate().RGB(68.0, g: 176.0,b:80.0)
+        self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.setUpNavBarColor()
+
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
         tableView.rowHeight = 55
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(handleCancel))

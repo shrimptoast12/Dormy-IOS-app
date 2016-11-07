@@ -13,12 +13,8 @@ class MenuController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        //Note, I have no idea why, but static cells always appear darker than the colors they are programatically set to, whether through RGB() or the storyboard. I have tinkered around manually to have the first static cell match the rest of the colors. The values are RGB(238.0,212.0,152.0) with 88% opacity. Hex is EED498
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
