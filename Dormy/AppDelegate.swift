@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         UIApplication.sharedApplication().statusBarHidden = false
         UIApplication.sharedApplication().statusBarStyle = .Default
-        
         let statusBar: UIView = UIApplication.sharedApplication().valueForKey("statusBar") as! UIView
         if statusBar.respondsToSelector(Selector("setBackgroundColor:")) {
             statusBar.backgroundColor = RGB(240.0,g: 208.0,b: 138.0)

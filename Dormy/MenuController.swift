@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MenuController: UITableViewController {
 
@@ -18,6 +19,16 @@ class MenuController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == 4  {
+            try! FIRAuth.auth()?.signOut()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginViewController = storyboard.instantiateViewControllerWithIdentifier("login") as! ViewController
+            self.presentViewController(loginViewController, animated: true, completion: nil)
+
+        }
     }
 
     override func didReceiveMemoryWarning() {

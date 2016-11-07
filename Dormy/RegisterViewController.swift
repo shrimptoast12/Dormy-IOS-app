@@ -78,8 +78,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                             return
                         }
                         // else error doesn't occur and we successfully entered user into database
-                        // Segues into the profile view controller
-                        let loginView = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+                        // Segues into the app home page
+                        let loginView = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
                         self.presentViewController(loginView, animated: true, completion: nil)
                     })
                 }

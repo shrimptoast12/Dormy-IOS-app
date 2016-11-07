@@ -601,7 +601,7 @@
         <!--Reveal View Controller-->
         <scene sceneID="leg-DM-O30">
             <objects>
-                <viewController id="2LK-3J-NEN" customClass="SWRevealViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SWRevealViewController" id="2LK-3J-NEN" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CeU-FK-euu"/>
                         <viewControllerLayoutGuide type="bottom" id="T8H-3T-uIB"/>
@@ -777,7 +777,7 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="J0A-Ti-0Xk"/>
-        <segue reference="XKA-jc-tP4"/>
+        <segue reference="OVH-sS-OPB"/>
+        <segue reference="Q8g-91-Zc9"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -39,17 +39,15 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     func setUpNavBarColor() {
         let nav = self.navigationController?.navigationBar
-        nav!.translucent = false
+        nav?.translucent = false
         let img = UIImage()
-        self.navigationController!.navigationBar.shadowImage = img
-        self.navigationController!.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
-        self.navigationController!.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
+        self.navigationController?.navigationBar.shadowImage = img
+        self.navigationController?.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setUpNavBarColor()
         
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
@@ -79,6 +77,9 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         self.profPic.layer.borderColor = UIColor.whiteColor().CGColor
         self.profPic.layer.cornerRadius = self.profPic.frame.size.width/2
         self.profPic.clipsToBounds = true
+        
+        self.setUpNavBarColor()
+
         
     }
     

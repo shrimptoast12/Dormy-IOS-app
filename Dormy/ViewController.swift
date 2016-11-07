@@ -23,6 +23,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     {
         self.navigationController?.navigationBarHidden = true
     }
+    
+    func goToUserProfile() {
+        //let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+        //let navigationController = UINavigationController(rootViewController: profileViewController) as! SW
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +45,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         if (FIRAuth.auth()?.currentUser) != nil {
             //The user has logged in already, skip the sign in page and go to their profile
-            let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
-            self.presentViewController(profileViewController, animated: true, completion: nil)
+            self.goToUserProfile()
         }
         
         // set text field delegates to dismiss keyboard on return
@@ -81,8 +87,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         else {
             FIRAuth.auth()?.signInWithEmail(self.emailField.text!, password: self.passwordField.text!, completion: { (user, error) in
                 if error == nil {
-                    let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
-                    self.presentViewController(profileViewController, animated: true, completion: nil)
+//                    let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+//                    let navController = UINavigationController(rootViewController: profileViewController)
+//                    self.presentViewController(navController, animated: true, completion: nil)
+                    self.goToUserProfile()
                     
                 }
                 else {
