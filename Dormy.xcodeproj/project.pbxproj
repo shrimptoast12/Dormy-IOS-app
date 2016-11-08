@@ -20,6 +20,7 @@
 		F4DB1BA01DD284BE004BAE24 /* LaundryHelper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */; };
 		F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */; };
 		F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */; };
+		F4E5F5CF1DD290C7004F00E7 /* AddLaundryMachineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E5F5CE1DD290C7004F00E7 /* AddLaundryMachineViewController.swift */; };
 		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
 		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
 		F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68842571DBE4B8E00DA9CEC /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaundryHelper.storyboard; sourceTree = "<group>"; };
 		F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryHelperTableViewController.swift; sourceTree = "<group>"; };
 		F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryTableViewCell.swift; sourceTree = "<group>"; };
+		F4E5F5CE1DD290C7004F00E7 /* AddLaundryMachineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLaundryMachineViewController.swift; sourceTree = "<group>"; };
 		F68842501DBE4B8E00DA9CEC /* Dormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F68842551DBE4B8E00DA9CEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */,
 				F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */,
 				F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */,
+				F4E5F5CE1DD290C7004F00E7 /* AddLaundryMachineViewController.swift */,
 			);
 			name = LaundryHelper;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
 				F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */,
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
+				F4E5F5CF1DD290C7004F00E7 /* AddLaundryMachineViewController.swift in Sources */,
 				5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */,
 				F6CD2B461DBE6EBC0078689A /* EditDescriptionViewController.swift in Sources */,
 				781A9D5E1DCFE08700EFE1EA /* MenuController.swift in Sources */,

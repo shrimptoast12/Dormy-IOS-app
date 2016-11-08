@@ -10,29 +10,49 @@
         <scene sceneID="DwC-zP-XGK">
             <objects>
                 <tableViewController storyboardIdentifier="laundryHelperTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aST-66-40H" customClass="LaundryHelperTableViewController" customModule="Dormy" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="89" sectionHeaderHeight="28" sectionFooterHeight="28" id="VDn-Ii-YPz">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="106" sectionHeaderHeight="28" sectionFooterHeight="28" id="VDn-Ii-YPz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="laundryCell" rowHeight="89" id="Pin-q6-sm0" customClass="LaundryTableViewCell" customModule="Dormy" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="375" height="89"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="laundryCell" rowHeight="106" id="Pin-q6-sm0" customClass="LaundryTableViewCell" customModule="Dormy" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="375" height="106"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pin-q6-sm0" id="p3m-GB-yBW">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="88.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="106"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fn3-yd-R3w">
                                             <rect key="frame" x="16" y="8" width="71" height="70"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="71" id="NOq-1S-LcP"/>
+                                                <constraint firstAttribute="width" constant="71" id="0gW-KA-d1W"/>
+                                                <constraint firstAttribute="height" constant="70" id="DDe-0x-ocJ"/>
                                             </constraints>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fjj-39-Mof">
+                                            <rect key="frame" x="117" y="32" width="80" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="yaA-be-kVA"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t4C-pa-Zsc">
+                                            <rect key="frame" x="16" y="84" width="71" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="fn3-yd-R3w" firstAttribute="leading" secondItem="p3m-GB-yBW" secondAttribute="leadingMargin" constant="8" id="Ht0-y7-4ae"/>
-                                        <constraint firstItem="fn3-yd-R3w" firstAttribute="top" secondItem="p3m-GB-yBW" secondAttribute="topMargin" id="Klp-IS-A6m"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="fn3-yd-R3w" secondAttribute="bottom" constant="2.5" id="kwD-UU-Qf4"/>
+                                        <constraint firstItem="t4C-pa-Zsc" firstAttribute="trailing" secondItem="fn3-yd-R3w" secondAttribute="trailing" id="DhS-lE-uup"/>
+                                        <constraint firstItem="fn3-yd-R3w" firstAttribute="leading" secondItem="p3m-GB-yBW" secondAttribute="leadingMargin" constant="8" id="LJJ-mW-YCg"/>
+                                        <constraint firstItem="fn3-yd-R3w" firstAttribute="top" secondItem="p3m-GB-yBW" secondAttribute="topMargin" id="SvW-PV-gpb"/>
+                                        <constraint firstItem="t4C-pa-Zsc" firstAttribute="top" secondItem="fn3-yd-R3w" secondAttribute="bottom" constant="6" id="h1x-UN-SNF"/>
+                                        <constraint firstItem="Fjj-39-Mof" firstAttribute="leading" secondItem="fn3-yd-R3w" secondAttribute="trailing" constant="30" id="hf6-NN-DNN"/>
+                                        <constraint firstItem="t4C-pa-Zsc" firstAttribute="leading" secondItem="fn3-yd-R3w" secondAttribute="leading" id="lDt-RC-I64"/>
+                                        <constraint firstItem="fn3-yd-R3w" firstAttribute="centerY" secondItem="Fjj-39-Mof" secondAttribute="centerY" id="w3Q-Nl-u1O"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -46,13 +66,65 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="LTV-vW-3g4">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="EZb-U7-tox"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="c4p-mI-MaF">
+                            <connections>
+                                <action selector="addMachineAction:" destination="aST-66-40H" id="uek-2k-HO7"/>
+                                <segue destination="vnv-9c-6i4" kind="show" id="m4d-sH-XD9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="addMachine" destination="c4p-mI-MaF" id="Ol1-sh-kVO"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Eh-zZ-IIM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1255.5" y="432.5"/>
+            <point key="canvasLocation" x="1273.5" y="432.5"/>
+        </scene>
+        <!--Add Laundry Machine View Controller-->
+        <scene sceneID="8Nu-Q6-RXV">
+            <objects>
+                <viewController id="vnv-9c-6i4" customClass="AddLaundryMachineViewController" customModule="Dormy" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RJy-xY-TSB"/>
+                        <viewControllerLayoutGuide type="bottom" id="wWJ-aN-Vf2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bw4-Ex-7Oh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="sIR-yi-BZg">
+                                <rect key="frame" x="75" y="135" width="225" height="29"/>
+                                <segments>
+                                    <segment title="Washer"/>
+                                    <segment title="Dryer"/>
+                                </segments>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose What You Want to Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n58-WL-Gqk">
+                                <rect key="frame" x="20" y="72" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCn-u6-jI3">
+                                <rect key="frame" x="172" y="301" width="30" height="30"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addMachineAction:" destination="vnv-9c-6i4" eventType="touchUpInside" id="6Vi-bc-8T2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="machineSegment" destination="sIR-yi-BZg" id="4wN-YN-esd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Te6-31-tnL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1739.5" y="432.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ifk-5T-ajV">

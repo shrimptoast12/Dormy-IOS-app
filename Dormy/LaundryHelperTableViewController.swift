@@ -11,8 +11,10 @@ import Firebase
 
 class LaundryHelperTableViewController: UITableViewController {
     
+    @IBOutlet weak var addMachine: UIBarButtonItem!
     var users = [String]()
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,16 +24,20 @@ class LaundryHelperTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.title = "Laundry Helper"
-        //        let ref = FIRDatabase.database().referenceFromURL("https://dormy-e6239.firebaseio.com/")
-        //        let uid = FIRAuth.auth()?.currentUser?.uid
-        //        let laundry = ref.child("laundry").child(uid!)
-        //        let values = ["image": "https://firebasestorage.googleapis.com/v0/b/dormy-e6239.appspot.com/o/laundryIcon%2Fwasher.png?alt=media&token=ff3f17ba-fd5c-4190-86f6-967c5c59333d"]
-        //        laundry.updateChildValues(values, withCompletionBlock: { (err, ref) in
-        //            if err != nil {
-        //                print(err)
-        //                return
-        //            }
-        //        })
+        let user = FIRAuth.auth()?.currentUser
+        let uid = user?.uid
+        FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let raFlag = dictionary["RA"] as? String
+                self.addMachine.enabled = false
+                self.addMachine.tintColor = UIColor.clearColor()
+                if (raFlag == "true") {
+                    self.addMachine.enabled = true
+                    self.addMachine.tintColor = nil
+                }
+            }
+            
+            }, withCancelBlock: nil)
     }
     
     
@@ -87,6 +93,8 @@ class LaundryHelperTableViewController: UITableViewController {
         return cell
     }
     
+    @IBAction func addMachineAction(sender: AnyObject) {
+    }
     
     /*
      // Override to support conditional editing of the table view.
