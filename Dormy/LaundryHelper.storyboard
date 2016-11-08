@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Laundry Helper Table View Controller-->
+        <scene sceneID="DwC-zP-XGK">
+            <objects>
+                <tableViewController storyboardIdentifier="laundryHelperTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aST-66-40H" customClass="LaundryHelperTableViewController" customModule="Dormy" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="89" sectionHeaderHeight="28" sectionFooterHeight="28" id="VDn-Ii-YPz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="laundryCell" rowHeight="89" id="Pin-q6-sm0" customClass="LaundryTableViewCell" customModule="Dormy" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="375" height="89"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pin-q6-sm0" id="p3m-GB-yBW">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="88.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fn3-yd-R3w">
+                                            <rect key="frame" x="16" y="8" width="71" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="71" id="NOq-1S-LcP"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="fn3-yd-R3w" firstAttribute="leading" secondItem="p3m-GB-yBW" secondAttribute="leadingMargin" constant="8" id="Ht0-y7-4ae"/>
+                                        <constraint firstItem="fn3-yd-R3w" firstAttribute="top" secondItem="p3m-GB-yBW" secondAttribute="topMargin" id="Klp-IS-A6m"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="fn3-yd-R3w" secondAttribute="bottom" constant="2.5" id="kwD-UU-Qf4"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="laundryIcon" destination="fn3-yd-R3w" id="4lR-9d-mFK"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="aST-66-40H" id="KXy-db-p4E"/>
+                            <outlet property="delegate" destination="aST-66-40H" id="j28-Ae-frX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="LTV-vW-3g4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="EZb-U7-tox"/>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Eh-zZ-IIM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1255.5" y="432.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ifk-5T-ajV">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DkB-KU-nb0" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sTs-sx-Cta">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aST-66-40H" kind="relationship" relationship="rootViewController" id="jYN-hI-Tdy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n2u-IX-yAn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="444" y="433"/>
+        </scene>
+    </scenes>
+</document>

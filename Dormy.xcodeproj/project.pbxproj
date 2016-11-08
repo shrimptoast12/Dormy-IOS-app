@@ -17,9 +17,9 @@
 		7875C89B1DCEA05900715A89 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7875C89A1DCEA05900715A89 /* Messages.storyboard */; };
 		7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */; };
 		78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */; };
-		F4DB1B9A1DD2815C004BAE24 /* LaundryHelper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DB1B991DD2815C004BAE24 /* LaundryHelper.storyboard */; };
-		F4DB1B9C1DD28176004BAE24 /* LaundryHelperTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1B9B1DD28176004BAE24 /* LaundryHelperTableViewController.swift */; };
-		F4DB1B9E1DD28185004BAE24 /* LaundryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1B9D1DD28185004BAE24 /* LaundryTableViewCell.swift */; };
+		F4DB1BA01DD284BE004BAE24 /* LaundryHelper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */; };
+		F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */; };
+		F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */; };
 		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
 		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
 		F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68842571DBE4B8E00DA9CEC /* Main.storyboard */; };
@@ -46,9 +46,9 @@
 		7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
 		78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoommateTableViewCell.swift; sourceTree = "<group>"; };
 		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
-		F4DB1B991DD2815C004BAE24 /* LaundryHelper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaundryHelper.storyboard; path = "../../../Downloads/Dormy-IOS-app/Dormy/LaundryHelper.storyboard"; sourceTree = "<group>"; };
-		F4DB1B9B1DD28176004BAE24 /* LaundryHelperTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaundryHelperTableViewController.swift; path = "../../../Downloads/Dormy-IOS-app/Dormy/LaundryHelperTableViewController.swift"; sourceTree = "<group>"; };
-		F4DB1B9D1DD28185004BAE24 /* LaundryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaundryTableViewCell.swift; path = "../../../Downloads/Dormy-IOS-app/Dormy/LaundryTableViewCell.swift"; sourceTree = "<group>"; };
+		F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaundryHelper.storyboard; sourceTree = "<group>"; };
+		F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryHelperTableViewController.swift; sourceTree = "<group>"; };
+		F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryTableViewCell.swift; sourceTree = "<group>"; };
 		F68842501DBE4B8E00DA9CEC /* Dormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F68842551DBE4B8E00DA9CEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -127,9 +127,9 @@
 		F4DB1B961DD28102004BAE24 /* LaundryHelper */ = {
 			isa = PBXGroup;
 			children = (
-				F4DB1B9D1DD28185004BAE24 /* LaundryTableViewCell.swift */,
-				F4DB1B9B1DD28176004BAE24 /* LaundryHelperTableViewController.swift */,
-				F4DB1B991DD2815C004BAE24 /* LaundryHelper.storyboard */,
+				F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */,
+				F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */,
+				F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */,
 			);
 			name = LaundryHelper;
 			sourceTree = "<group>";
@@ -241,7 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4DB1B9A1DD2815C004BAE24 /* LaundryHelper.storyboard in Resources */,
+				F4DB1BA01DD284BE004BAE24 /* LaundryHelper.storyboard in Resources */,
 				F688425E1DBE4B8E00DA9CEC /* LaunchScreen.storyboard in Resources */,
 				F688425B1DBE4B8E00DA9CEC /* Assets.xcassets in Resources */,
 				F68842661DBE4C5700DA9CEC /* GoogleService-Info.plist in Resources */,
@@ -309,13 +309,13 @@
 				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,
 				F6CD2B441DBE4F790078689A /* UserProfileViewController.swift in Sources */,
 				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
-				F4DB1B9E1DD28185004BAE24 /* LaundryTableViewCell.swift in Sources */,
+				F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */,
 				7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */,
 				78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */,
 				785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */,
 				785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */,
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
-				F4DB1B9C1DD28176004BAE24 /* LaundryHelperTableViewController.swift in Sources */,
+				F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */,
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
 				5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */,
 				F6CD2B461DBE6EBC0078689A /* EditDescriptionViewController.swift in Sources */,
