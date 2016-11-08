@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 import Firebase
 
-class ChatLogController: UICollectionViewController {
+class ChatLogController: UICollectionViewController, UITextFieldDelegate {
+    
+    var chatPartner: String = ""
     
     let msgField: UITextField = {
         let textField = UITextField()
@@ -22,15 +24,51 @@ class ChatLogController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatLogController.tapHandler(_:)))
+        view.addGestureRecognizer(tapRecognizer)
         createMessageInput()
         addNavItems()
         collectionView?.backgroundColor = UIColor.whiteColor()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
+    }
+    
+    //Handling the keyboard entry
+    func keyboardWillShow(sender: NSNotification) {
+        let userInfo: [NSObject : AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+        if keyboardSize.height == offset.height {
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    self.view.frame.origin.y -= keyboardSize.height
+            })
+        } else {
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    self.view.frame.origin.y += keyboardSize.height - offset.height
+            })
+        }
+    }
+    
+    //Handle the keyboard dismissal
+    func keyboardWillHide(sender: NSNotification) {
+        let userInfo: [NSObject: AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        self.view.frame.origin.y += keyboardSize.height
     }
     
     //Format the navigation bar
     func addNavItems(){
     
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        msgField.resignFirstResponder()
+        return true
+    }
+    
+    func tapHandler(gesture: UITapGestureRecognizer){
+        msgField.resignFirstResponder()
     }
     
     //create view to contain message input textbox
@@ -81,6 +119,13 @@ class ChatLogController: UICollectionViewController {
     }
     
     func sendButtonHandler(){
-        let msg: String? = msgField.text
+        
+        let userID = FIRAuth.auth()?.currentUser?.uid
+        let ref = FIRDatabase.database().reference().child("users").child(userID!).child("messages").child() //need user name
+        
+        
+        
+        
+        msgField.resignFirstResponder()
     }
 }

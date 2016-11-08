@@ -82,6 +82,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                         let loginView = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
                         self.presentViewController(loginView, animated: true, completion: nil)
                     })
+                    
                 }
                 else {
                     let alertController = UIAlertController(title: "Oops!", message: error?.localizedDescription, preferredStyle: .Alert)

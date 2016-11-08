@@ -74,13 +74,15 @@ class AllUsersViewController: UITableViewController {
     
     //
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        goToChat()
+        let user: User = users[indexPath.row]
+        goToChat(user)
     }
     
     //go to chat log of selected user
-    func goToChat(){
+    func goToChat(user: User){
         let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
         let navController = UINavigationController(rootViewController: chatLog)
+        chatLog.chatPartner = user.name!
         presentViewController(navController, animated: true, completion: nil)
     }
     
