@@ -238,6 +238,13 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             editView.vc = self
             self.presentViewController(editView, animated: true, completion: nil)
         })
+        let laundryHelper = UIAlertAction(title: "Laundry Helper", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            let storyboard = UIStoryboard(name: "LaundryHelper", bundle: nil)
+            let laundryHelperTableViewController = storyboard.instantiateViewControllerWithIdentifier("laundryHelperTable")
+                as! LaundryHelperTableViewController
+            let navController = UINavigationController(rootViewController: laundryHelperTableViewController)
+            self.presentViewController(navController, animated: true, completion: nil)
+        })
         let logout = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             try! FIRAuth.auth()?.signOut()
             let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login") as! ViewController
@@ -250,6 +257,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         
         alertController.addAction(bulletin)
         alertController.addAction(edit)
+        alertController.addAction(laundryHelper)
         alertController.addAction(logout)
         alertController.addAction(cancel)
 

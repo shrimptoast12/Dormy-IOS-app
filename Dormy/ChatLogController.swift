@@ -121,7 +121,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     func sendButtonHandler(){
         
         let userID = FIRAuth.auth()?.currentUser?.uid
-        let ref = FIRDatabase.database().reference().child("users").child(userID!).child("messages").child() //need user name
+        //let ref = FIRDatabase.database().reference().child("users").child(userID!).child("messages").child() //need user name
         
         
         
