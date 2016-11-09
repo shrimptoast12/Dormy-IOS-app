@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
 		5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */; };
+		5EFA31AB1DD38EFA008047F2 /* userMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA31AA1DD38EFA008047F2 /* userMsgCell.swift */; };
+		5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA31AC1DD390F6008047F2 /* Message.swift */; };
 		781A9D5E1DCFE08700EFE1EA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781A9D5D1DCFE08700EFE1EA /* MenuController.swift */; };
 		783074C01DD0194700326E0B /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 783074BF1DD0194700326E0B /* SWRevealViewController.m */; };
 		785471021DCAB62E00A4C35C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471011DCAB62E00A4C35C /* User.swift */; };
@@ -36,6 +38,8 @@
 		11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.release.xcconfig"; sourceTree = "<group>"; };
 		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		5EFA31AA1DD38EFA008047F2 /* userMsgCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userMsgCell.swift; sourceTree = "<group>"; };
+		5EFA31AC1DD390F6008047F2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		781A9D591DCFDEF200EFE1EA /* Dormy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dormy-Bridging-Header.h"; sourceTree = "<group>"; };
 		781A9D5D1DCFE08700EFE1EA /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		783074BE1DD0194700326E0B /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 				5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */,
 				7875C89A1DCEA05900715A89 /* Messages.storyboard */,
 				7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */,
+				5EFA31AA1DD38EFA008047F2 /* userMsgCell.swift */,
+				5EFA31AC1DD390F6008047F2 /* Message.swift */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -308,8 +314,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EFA31AB1DD38EFA008047F2 /* userMsgCell.swift in Sources */,
 				783074C01DD0194700326E0B /* SWRevealViewController.m in Sources */,
 				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,
+				5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */,
 				F6CD2B441DBE4F790078689A /* UserProfileViewController.swift in Sources */,
 				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
 				F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */,

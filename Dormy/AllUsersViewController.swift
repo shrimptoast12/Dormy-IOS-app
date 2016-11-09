@@ -38,7 +38,7 @@ class AllUsersViewController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User()
-                
+                user.id = snapshot.key
                 user.setValuesForKeysWithDictionary(dictionary)
                 self.users.append(user)
                 
@@ -81,9 +81,15 @@ class AllUsersViewController: UITableViewController {
     //go to chat log of selected user
     func goToChat(user: User){
         let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
         let navController = UINavigationController(rootViewController: chatLog)
-        chatLog.chatPartner = user.name!
+        chatLog.chatPartner = user
         presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    //add back button to navigation bar
+    func goBack(){
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
