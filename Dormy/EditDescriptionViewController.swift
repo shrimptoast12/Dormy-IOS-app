@@ -71,7 +71,7 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
             for id in self.roommatesIdList {
                 //RIGHT NOW OVERWRITES THE LAST ELEMENT EACH TIME
                 FIRDatabase.database().reference().child("users").child(uid!).child("roommate").setValue(id)
-            }
+             }
             
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
             FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)

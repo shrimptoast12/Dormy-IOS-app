@@ -12,7 +12,7 @@ import Firebase
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var coloredProfileView: UIView!
-    var roommateName: String? = ""
+    var roommateId: String? = ""
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var roomNumber: UILabel!
@@ -60,7 +60,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
         tableView.tableFooterView = UIView()
         roomNumber.text = ""
-        self.tableView.rowHeight = 50
+        self.tableView.rowHeight = 55
         checkUser()
         // set some delegates
         textF.delegate = self
@@ -112,8 +112,8 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
                     self.navigationItem.title = dictionary["name"] as? String
 
                     if dictionary["roommate"] != nil {
-                        self.roommateName = (dictionary["roommate"] as? String)!
-                        self.tableView.reloadData()
+                        self.roommateId = dictionary["roommate"] as? String
+                        self.tableView.reloadData() //necessary
                     }
                     let roomNumber = dictionary["roomNumber"] as? String
                     if roomNumber != nil && roomNumber != "" {
@@ -232,9 +232,6 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     @IBAction func moreButton(sender: AnyObject) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        let bulletin = UIAlertAction(title: "Bulletin Board", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            // This will eventually segue to the bulletin board
-        })
         let edit = UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             
             //I would like to change this so the animation doesn't go up and down
@@ -250,20 +247,12 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             let navController = UINavigationController(rootViewController: laundryHelperTableViewController)
             self.presentViewController(navController, animated: true, completion: nil)
         })
-        let logout = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            try! FIRAuth.auth()?.signOut()
-            let loginViewController = self.storyboard?.instantiateViewControllerWithIdentifier("login") as! ViewController
-            self.presentViewController(loginViewController, animated: true, completion: nil)
-
-        })
         let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
             //exit action sheet
         })
         
-        alertController.addAction(bulletin)
         alertController.addAction(edit)
         alertController.addAction(laundryHelper)
-        alertController.addAction(logout)
         alertController.addAction(cancel)
 
         
@@ -278,20 +267,24 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-        
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
-        if roommateName != "" {
-            let cell:UserCell = self.tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
-            cell.profileImageView.image = UIImage(named: "empty_profile")
-            cell.textLabel?.text = roommateName
-            return cell
+        let cell:UserCell = self.tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
+        
+        if self.roommateId != "" {
+            let ref = FIRDatabase.database().reference().child("users").child(self.roommateId!)
+            ref.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    cell.textLabel!.text = dictionary["name"] as? String
+                    cell.profileImageView.loadImageUsingCacheWithUrlString(dictionary["imageURL"] as! String)
+                }
+            }, withCancelBlock: nil)
         }
-        else {
-            let cell:UserCell = self.tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
+        else { //The user does not have any roommates on file
             cell.profileImageView.image = UIImage(named: "empty_profile")
             cell.textLabel!.text = "no roomates..."
-            return cell
         }
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

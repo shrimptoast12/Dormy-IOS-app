@@ -70,7 +70,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                                     "roomNumber" : "",
                                     "availability" :  ""]
 
-                    let ref = FIRDatabase.database().referenceFromURL("https://dormy-e6239.firebaseio.com/")
+                    let ref = FIRDatabase.database().reference()
                     let userRef = ref.child("users").child(uid)
                     userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                         if err != nil {

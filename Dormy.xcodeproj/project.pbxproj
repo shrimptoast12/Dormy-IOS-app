@@ -16,7 +16,6 @@
 		785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471051DCAE7AD00A4C35C /* UserCell.swift */; };
 		7875C89B1DCEA05900715A89 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7875C89A1DCEA05900715A89 /* Messages.storyboard */; };
 		7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */; };
-		78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */; };
 		F4DB1BA01DD284BE004BAE24 /* LaundryHelper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */; };
 		F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */; };
 		F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */; };
@@ -45,7 +44,6 @@
 		785471051DCAE7AD00A4C35C /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		7875C89A1DCEA05900715A89 /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
 		7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
-		78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoommateTableViewCell.swift; sourceTree = "<group>"; };
 		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
 		F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaundryHelper.storyboard; sourceTree = "<group>"; };
 		F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryHelperTableViewController.swift; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */,
-				78BE8CDF1DC16D2600C0E6E2 /* RoommateTableViewCell.swift */,
 				F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */,
 			);
 			name = Profile;
@@ -314,7 +311,6 @@
 				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
 				F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */,
 				7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */,
-				78BE8CE01DC16D2600C0E6E2 /* RoommateTableViewCell.swift in Sources */,
 				785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */,
 				785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */,
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
