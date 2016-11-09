@@ -6,9 +6,14 @@
 //  Copyright © 2016 cs378. All rights reserved.
 //
 
+import Foundation
 import UIKit
+import Firebase
 
 class MessagesTableViewController: UITableViewController {
+    
+    var msgUsers = [User]()
+    var firstMsg = [Message]()
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     //Being used to select for whom to compose a message
@@ -41,7 +46,13 @@ class MessagesTableViewController: UITableViewController {
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        
+        tableView.rowHeight = 55
+        tableView.registerClass(userMsgCell.self, forCellReuseIdentifier: "cellId")
+        
+        fetchUsers()
 
+        print(msgUsers.count)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -49,32 +60,79 @@ class MessagesTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //get user data
+    func fetchUsers(){
+        let userId = FIRAuth.auth()?.currentUser?.uid
+        let ref = FIRDatabase.database().reference().child("user-messages").child(userId!)
+        ref.observeEventType(.ChildAdded, withBlock: {(snapshot) in
+            
+            let msgUserId = snapshot.key
+            print(msgUserId)
+            let allUsersRef = FIRDatabase.database().reference().child("users").child(msgUserId)
+            
+            allUsersRef.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let user = User()
+                    user.id = snapshot.key
+                    user.setValuesForKeysWithDictionary(dictionary)
+                    self.msgUsers.append(user)
+                    print(user.name!)
+                    print(user.id!)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.tableView.reloadData()
+                    })
+                }
+                
+            }, withCancelBlock: nil)
+        })
+    }
+    
+    //handle the selection of cell
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        let user: User = msgUsers[indexPath.row]
+        goToChat(user)
+    }
+    
+    //go to chat log of selected user
+    func goToChat(user: User){
+        let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        let navController = UINavigationController(rootViewController: chatLog)
+        chatLog.chatPartner = user
+        presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    //add back button to navigation bar
+    func goBack(){
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - Table view data source
+    
+    //specify the number of sections
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
     }
 
-    // MARK: - Table view data source
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 1
-//    }
-
+    //specify number of rows
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return msgUsers.count
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! userMsgCell
+        
+        let user = msgUsers[indexPath.row]
+        cell.textLabel!.text = user.name!
+        if let profileImageUrl = user.imageURL {
+            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
         return cell
     }
-    */
+        
 
     /*
     // Override to support conditional editing of the table view.
@@ -110,15 +168,4 @@ class MessagesTableViewController: UITableViewController {
         return true
     }
     */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

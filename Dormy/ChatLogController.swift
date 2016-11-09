@@ -12,7 +12,7 @@ import Firebase
 
 class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     
-    var chatPartner: String = ""
+    var chatPartner: User?
     
     let msgField: UITextField = {
         let textField = UITextField()
@@ -32,6 +32,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
+        
+        msgField.delegate = self
     }
     
     //Handling the keyboard entry
@@ -41,11 +43,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
         if keyboardSize.height == offset.height {
             UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    self.view.frame.origin.y -= keyboardSize.height
+                self.view.frame.origin.y -= keyboardSize.height
             })
         } else {
             UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    self.view.frame.origin.y += keyboardSize.height - offset.height
+                self.view.frame.origin.y += keyboardSize.height - offset.height
             })
         }
     }
@@ -59,7 +61,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     
     //Format the navigation bar
     func addNavItems(){
-    
+        print((chatPartner?.name)!)
+        self.navigationItem.title = (chatPartner?.name)!
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool{
@@ -78,7 +81,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(containerView)
-    
+        
         //Add constraints to the view
         containerView.leftAnchor.constraintEqualToAnchor(view.leftAnchor).active = true
         containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
@@ -99,7 +102,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         
         
         containerView.addSubview(msgField)
-    
+        
         msgField.leftAnchor.constraintEqualToAnchor(containerView.leftAnchor, constant: 10).active = true
         msgField.centerYAnchor.constraintEqualToAnchor(containerView.centerYAnchor).active = true
         msgField.rightAnchor.constraintEqualToAnchor(sendMsgButton.leftAnchor).active = true
@@ -114,18 +117,35 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         msgBoxLine.leftAnchor.constraintEqualToAnchor(containerView.leftAnchor).active = true
         msgBoxLine.widthAnchor.constraintEqualToAnchor(containerView.widthAnchor).active = true
         msgBoxLine.heightAnchor.constraintEqualToConstant(1).active = true
-
-
+        
+        
     }
     
     func sendButtonHandler(){
-        
-        let userID = FIRAuth.auth()?.currentUser?.uid
-        //let ref = FIRDatabase.database().reference().child("users").child(userID!).child("messages").child() //need user name
-        
-        
-        
-        
+        let ref = FIRDatabase.database().reference().child("messages")
+        let child = ref.childByAutoId()
+        print(chatPartner!.name)
+        print(chatPartner!.id)
+        let toId = chatPartner!.id
+        let fromId = FIRAuth.auth()!.currentUser!.uid
+        let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+        print(toId)
+        let values: [String: AnyObject] = ["text": msgField.text!,"toId": toId!, "fromId": fromId, "timestamp": timeStamp]
+        child.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                print (error)
+                return
+            }
+            
+            let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child(toId!)
+            let messageId = child.key
+            userMessagesRef.updateChildValues([messageId: 1])
+            
+            let recipient = FIRDatabase.database().reference().child("user-messages").child(toId!).child(fromId)
+            recipient.updateChildValues([messageId: 1])
+        }
         msgField.resignFirstResponder()
+        msgField.text = ""
     }
+    
 }
