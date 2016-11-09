@@ -17,4 +17,5 @@ class User: NSObject {
     var name:String?
     var roomNumber:String?
     var roommate:String?
+    var id:String?
 }

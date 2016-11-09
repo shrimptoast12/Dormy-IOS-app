@@ -9,25 +9,25 @@
 import UIKit
 import Firebase
 
-class EditDescriptionViewController: UIViewController, UITextViewDelegate {
+class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    var roommatesIdList = [String]()
+    var users = [User]()
+
     weak var vc:UserProfileViewController?
 
     @IBOutlet weak var myTextView: UITextView!
     @IBOutlet weak var roomNumberTextField: UITextField!
     @IBOutlet weak var roommatesButton: UIButton!
-    
-    @IBAction func editRoommates(sender: AnyObject) {
-        let newMessageController = AllUsersViewController()
-        let navController = UINavigationController(rootViewController: newMessageController)
-        presentViewController(navController, animated: true, completion: nil)
-    }
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        roommatesButton.layer.cornerRadius = 5
-        roommatesButton.layer.borderWidth = 1
-        roommatesButton.layer.borderColor = UIColor.clearColor().CGColor
+        
+        tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
+        tableView.rowHeight = 55
+        tableView.allowsMultipleSelection = true
+        
         myTextView.text = vc!.textF.text
         let roomNum = vc!.roomNumber.text!
         if roomNum == "no room number" {
@@ -44,6 +44,7 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate {
         self.myTextView.layer.borderWidth = 1
         self.myTextView.layer.borderColor = AppDelegate().RGB(80.0, g: 186.0, b: 99.0).CGColor
         self.myTextView.layer.cornerRadius = 5
+        fetchUser()
     }
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("unwindFromDescript", sender: self)
@@ -66,21 +67,77 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate {
         if (uid != nil) {
             let descript = self.myTextView.text!
             let roomNumber = self.roomNumberTextField.text!
-           // let roommate = self.roomateTextField.text!
+            
+            for id in self.roommatesIdList {
+                //RIGHT NOW OVERWRITES THE LAST ELEMENT EACH TIME
+                FIRDatabase.database().reference().child("users").child(uid!).child("roommate").setValue(id)
+            }
             
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
             FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)
-            //FIRDatabase.database().reference().child("users").child(uid!).child("roommate").setValue(roommate)
         }
         
-        let profVC = storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
+        let profVC = storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
         self.presentViewController(profVC, animated: true, completion: nil)
     }
+    
+    func fetchUser() {
+        FIRDatabase.database().reference().child("users").observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let user = User()
+                user.id = snapshot.key
+                
+                user.setValuesForKeysWithDictionary(dictionary)
+                self.users.append(user)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
+                
+            }
+            
+            }, withCancelBlock: nil)
+        
+    }
+
 
     // Makes the keyboard go away when you touch anywhere outside the text field or keyboard
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
+    // TableView Protocol methods for showing the list of users
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
+        cell.selectionStyle = .None
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        
+        if let profileImageUrl = user.imageURL {
+            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        }
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let roommate = users[indexPath.row]
+        if (cell?.accessoryType == UITableViewCellAccessoryType.Checkmark){
+            cell!.accessoryType = UITableViewCellAccessoryType.None;
+            self.roommatesIdList.removeAtIndex(self.roommatesIdList.indexOf(roommate.id!)!)
+        }
+        else{
+            self.roommatesIdList.append(roommate.id!)
+            cell!.accessoryType = UITableViewCellAccessoryType.Checkmark;
+            
+        }
+    }
+    
+
     
     /*
     // MARK: - Navigation

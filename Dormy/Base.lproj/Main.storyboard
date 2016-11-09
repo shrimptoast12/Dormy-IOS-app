@@ -506,73 +506,88 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Me:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s4T-7I-bvV">
-                                <rect key="frame" x="20" y="199" width="79" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Number:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JvZ-RD-2Mn">
-                                <rect key="frame" x="20" y="94" width="123" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="123" id="V6D-7E-lVk"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F8e-w9-4Uh">
-                                <rect key="frame" x="164" y="95" width="139" height="30"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7Us-kO-8cI">
+                                <rect key="frame" x="20" y="341" width="335" height="313"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="xjC-0H-jEH" id="7q3-d7-B9G"/>
+                                    <outlet property="delegate" destination="xjC-0H-jEH" id="UaJ-rL-ADy"/>
+                                </connections>
+                            </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Room Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F8e-w9-4Uh">
+                                <rect key="frame" x="121" y="79" width="133" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8DS-y0-FkD">
-                                <rect key="frame" x="20" y="228" width="335" height="178"/>
+                                <rect key="frame" x="20" y="155" width="335" height="140"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="4YX-f3-kXF"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOn-BV-SM8">
-                                <rect key="frame" x="20" y="144" width="335" height="37"/>
-                                <color key="backgroundColor" red="0.93466746807098389" green="0.81192857027053833" blue="0.52286338806152344" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="choose your roommates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djF-ae-2M2">
+                                <rect key="frame" x="95" y="312" width="185" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="tvg-fU-pfk"/>
+                                    <constraint firstAttribute="height" constant="21" id="p7N-P6-OBr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                <state key="normal" title="Edit Roommates"/>
-                                <connections>
-                                    <action selector="editRoommates:" destination="xjC-0H-jEH" eventType="touchUpInside" id="GYf-CU-ogE"/>
-                                </connections>
-                            </button>
+                                <color key="textColor" red="0.26751551029999998" green="0.688477695" blue="0.31216993929999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="about me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sm-Fn-Lfm">
+                                <rect key="frame" x="149" y="126" width="77" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="77" id="51A-GH-X1x"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <color key="textColor" red="0.26751551029999998" green="0.688477695" blue="0.31216993929999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="room number:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="peL-4V-Yjg">
+                                <rect key="frame" x="13" y="83" width="100" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="LfV-mj-9TU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <color key="textColor" red="0.26751551029999998" green="0.688477695" blue="0.31216993929999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.26751551032066345" green="0.68847769498825073" blue="0.31216993927955627" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="s4T-7I-bvV" firstAttribute="leading" secondItem="8DS-y0-FkD" secondAttribute="leading" id="126-em-nFZ"/>
-                            <constraint firstItem="JvZ-RD-2Mn" firstAttribute="centerY" secondItem="F8e-w9-4Uh" secondAttribute="centerY" id="2ZV-Ts-Fav"/>
-                            <constraint firstItem="F8e-w9-4Uh" firstAttribute="leading" secondItem="JvZ-RD-2Mn" secondAttribute="trailing" constant="21" id="FDr-m8-1A7"/>
-                            <constraint firstItem="s4T-7I-bvV" firstAttribute="top" secondItem="lOn-BV-SM8" secondAttribute="bottom" constant="18" id="JQb-Rj-YBD"/>
-                            <constraint firstItem="qJH-bU-aNz" firstAttribute="top" secondItem="8DS-y0-FkD" secondAttribute="bottom" constant="261" id="LGq-y4-bBZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="F8e-w9-4Uh" secondAttribute="trailing" constant="56" id="UEO-Uq-Edj"/>
-                            <constraint firstItem="lOn-BV-SM8" firstAttribute="top" secondItem="F8e-w9-4Uh" secondAttribute="bottom" constant="19" id="YDX-Kr-Vwk"/>
-                            <constraint firstItem="lOn-BV-SM8" firstAttribute="trailing" secondItem="8DS-y0-FkD" secondAttribute="trailing" id="Yge-Qt-F0U"/>
-                            <constraint firstItem="JvZ-RD-2Mn" firstAttribute="leading" secondItem="MIa-P1-8Ez" secondAttribute="leadingMargin" constant="4" id="Zs8-ry-SgG"/>
-                            <constraint firstAttribute="trailing" secondItem="BNX-ee-JtB" secondAttribute="trailing" id="aon-gX-2UT"/>
-                            <constraint firstItem="JvZ-RD-2Mn" firstAttribute="top" secondItem="BNX-ee-JtB" secondAttribute="bottom" constant="30" id="c60-Gk-FsA"/>
-                            <constraint firstItem="BNX-ee-JtB" firstAttribute="leading" secondItem="MIa-P1-8Ez" secondAttribute="leading" id="dcL-SI-ZcU"/>
-                            <constraint firstItem="lOn-BV-SM8" firstAttribute="leading" secondItem="s4T-7I-bvV" secondAttribute="leading" id="efL-Wa-sh3"/>
-                            <constraint firstItem="JvZ-RD-2Mn" firstAttribute="leading" secondItem="lOn-BV-SM8" secondAttribute="leading" id="gPE-lJ-05x"/>
-                            <constraint firstItem="lOn-BV-SM8" firstAttribute="top" secondItem="JvZ-RD-2Mn" secondAttribute="bottom" constant="18" id="rTS-2F-GsU"/>
-                            <constraint firstItem="BNX-ee-JtB" firstAttribute="top" secondItem="cc8-Rv-5eY" secondAttribute="bottom" id="vG3-YR-qVv"/>
-                            <constraint firstItem="BNX-ee-JtB" firstAttribute="centerX" secondItem="lOn-BV-SM8" secondAttribute="centerX" id="x5M-Ru-1qX"/>
-                            <constraint firstItem="8DS-y0-FkD" firstAttribute="top" secondItem="s4T-7I-bvV" secondAttribute="bottom" constant="8" symbolic="YES" id="yFy-jl-Xpj"/>
+                            <constraint firstItem="qJH-bU-aNz" firstAttribute="top" secondItem="7Us-kO-8cI" secondAttribute="bottom" constant="13" id="0yA-tD-d8t"/>
+                            <constraint firstItem="BNX-ee-JtB" firstAttribute="top" secondItem="cc8-Rv-5eY" secondAttribute="bottom" id="9gJ-ly-EfC"/>
+                            <constraint firstItem="8DS-y0-FkD" firstAttribute="top" secondItem="peL-4V-Yjg" secondAttribute="bottom" constant="51" id="BBa-zH-rZa"/>
+                            <constraint firstItem="0sm-Fn-Lfm" firstAttribute="centerX" secondItem="8DS-y0-FkD" secondAttribute="centerX" id="CrC-a2-wBP"/>
+                            <constraint firstItem="8DS-y0-FkD" firstAttribute="centerX" secondItem="djF-ae-2M2" secondAttribute="centerX" id="Dkx-Km-80Z"/>
+                            <constraint firstAttribute="trailing" secondItem="BNX-ee-JtB" secondAttribute="trailing" id="LN5-0T-mka"/>
+                            <constraint firstItem="peL-4V-Yjg" firstAttribute="leading" secondItem="MIa-P1-8Ez" secondAttribute="leadingMargin" constant="-3" id="LPc-HS-Asg"/>
+                            <constraint firstItem="F8e-w9-4Uh" firstAttribute="leading" secondItem="peL-4V-Yjg" secondAttribute="trailing" constant="8" symbolic="YES" id="OP8-Oi-lik"/>
+                            <constraint firstItem="8DS-y0-FkD" firstAttribute="top" secondItem="0sm-Fn-Lfm" secondAttribute="bottom" constant="8" symbolic="YES" id="P39-HA-NZ1"/>
+                            <constraint firstItem="0sm-Fn-Lfm" firstAttribute="top" secondItem="F8e-w9-4Uh" secondAttribute="bottom" constant="17" id="Qxq-xW-XXK"/>
+                            <constraint firstItem="8DS-y0-FkD" firstAttribute="trailing" secondItem="7Us-kO-8cI" secondAttribute="trailing" id="Tjv-gK-hR1"/>
+                            <constraint firstItem="F8e-w9-4Uh" firstAttribute="top" secondItem="BNX-ee-JtB" secondAttribute="bottom" constant="15" id="VSW-78-Pwb"/>
+                            <constraint firstItem="BNX-ee-JtB" firstAttribute="leading" secondItem="MIa-P1-8Ez" secondAttribute="leading" id="W23-K0-7lt"/>
+                            <constraint firstItem="peL-4V-Yjg" firstAttribute="top" secondItem="BNX-ee-JtB" secondAttribute="bottom" constant="19" id="bmy-uc-nrm"/>
+                            <constraint firstItem="peL-4V-Yjg" firstAttribute="centerY" secondItem="F8e-w9-4Uh" secondAttribute="centerY" id="cd5-Gt-Xew"/>
+                            <constraint firstItem="8DS-y0-FkD" firstAttribute="leading" secondItem="MIa-P1-8Ez" secondAttribute="leadingMargin" constant="4" id="dqr-pN-LIO"/>
+                            <constraint firstItem="F8e-w9-4Uh" firstAttribute="centerX" secondItem="0sm-Fn-Lfm" secondAttribute="centerX" id="l20-XN-EaT"/>
+                            <constraint firstItem="8DS-y0-FkD" firstAttribute="leading" secondItem="7Us-kO-8cI" secondAttribute="leading" id="nYh-1h-Ijc"/>
+                            <constraint firstItem="7Us-kO-8cI" firstAttribute="top" secondItem="djF-ae-2M2" secondAttribute="bottom" constant="8" symbolic="YES" id="oam-WA-Lji"/>
+                            <constraint firstItem="djF-ae-2M2" firstAttribute="leading" secondItem="MIa-P1-8Ez" secondAttribute="leadingMargin" constant="79" id="pSt-YP-eeT"/>
+                            <constraint firstItem="BNX-ee-JtB" firstAttribute="centerX" secondItem="F8e-w9-4Uh" secondAttribute="centerX" id="rzJ-Tb-OjC"/>
+                            <constraint firstItem="djF-ae-2M2" firstAttribute="top" secondItem="8DS-y0-FkD" secondAttribute="bottom" constant="17" id="wg2-Va-axa"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="myTextView" destination="8DS-y0-FkD" id="Bx4-et-VjP"/>
                         <outlet property="roomNumberTextField" destination="F8e-w9-4Uh" id="iJi-v3-9gC"/>
-                        <outlet property="roommatesButton" destination="lOn-BV-SM8" id="cN9-2f-d3h"/>
+                        <outlet property="tableView" destination="7Us-kO-8cI" id="eUx-b0-WS4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hwd-6j-f0W" userLabel="First Responder" sceneMemberID="firstResponder"/>

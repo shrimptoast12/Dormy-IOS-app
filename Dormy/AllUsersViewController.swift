@@ -38,6 +38,7 @@ class AllUsersViewController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User()
+                
                 user.setValuesForKeysWithDictionary(dictionary)
                 self.users.append(user)
                 
