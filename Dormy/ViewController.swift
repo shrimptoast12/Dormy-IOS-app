@@ -25,8 +25,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     func goToUserProfile() {
-        //let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
-        //let navigationController = UINavigationController(rootViewController: profileViewController) as! SW
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
         self.presentViewController(vc, animated: true, completion: nil)
     }
@@ -87,9 +85,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         else {
             FIRAuth.auth()?.signInWithEmail(self.emailField.text!, password: self.passwordField.text!, completion: { (user, error) in
                 if error == nil {
-//                    let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("profile") as! UserProfileViewController
-//                    let navController = UINavigationController(rootViewController: profileViewController)
-//                    self.presentViewController(navController, animated: true, completion: nil)
                     self.goToUserProfile()
                     
                 }

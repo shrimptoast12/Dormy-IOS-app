@@ -39,7 +39,6 @@ class AllUsersViewController: UITableViewController {
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User()
                 user.setValuesForKeysWithDictionary(dictionary)
-                print(user.name, user.email)
                 self.users.append(user)
                 
                 dispatch_async(dispatch_get_main_queue(), {
