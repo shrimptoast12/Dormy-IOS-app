@@ -11,6 +11,7 @@ import Firebase
 
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var coloredProfileView: UIView!
     var roommateName: String? = ""
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
@@ -72,6 +73,10 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         self.descriptView.layer.cornerRadius = 5
         
         //Round the profile picture
+        self.coloredProfileView.leftAnchor.constraintEqualToAnchor(view.leftAnchor).active = true
+        self.coloredProfileView.rightAnchor.constraintEqualToAnchor(view.rightAnchor).active = true
+        self.coloredProfileView.widthAnchor.constraintEqualToAnchor(view.widthAnchor).active = true
+        self.coloredProfileView.heightAnchor.constraintEqualToConstant(154)
         self.profPic.layer.borderWidth = 3.0
         self.profPic.layer.masksToBounds = false
         self.profPic.layer.borderColor = UIColor.whiteColor().CGColor

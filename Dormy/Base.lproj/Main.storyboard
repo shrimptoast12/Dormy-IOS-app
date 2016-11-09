@@ -456,6 +456,7 @@
                     <connections>
                         <outlet property="availLabel" destination="6dn-JK-0It" id="42h-g2-KJS"/>
                         <outlet property="availSwitch" destination="bRF-Dy-qAn" id="3kM-g6-D3N"/>
+                        <outlet property="coloredProfileView" destination="cZG-A2-qD7" id="n2M-T4-P6a"/>
                         <outlet property="descriptView" destination="FBE-Ee-ele" id="bLe-tv-xDB"/>
                         <outlet property="menuButton" destination="Tlz-NQ-juE" id="b3c-cp-dsF"/>
                         <outlet property="profPic" destination="V13-ds-9v4" id="1EW-9B-mU8"/>
