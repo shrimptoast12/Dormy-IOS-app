@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class User: NSObject {
     var RA:String?
@@ -16,6 +17,16 @@ class User: NSObject {
     var imageURL: String?
     var name:String?
     var roomNumber:String?
-    var roommate:String?
+    var roommateIdList = [String]()
     var id:String?
+    
+    func setUserWithDictionary(dictionary:NSDictionary, uid:String) {
+        RA = dictionary["RA"] as? String
+        availability = dictionary["availability"] as? String
+        descript = dictionary["descript"] as? String
+        email = dictionary["email"] as? String
+        imageURL = dictionary["imageURL"] as? String
+        name = dictionary["name"] as? String
+        roomNumber = dictionary["roomNumber"] as? String
+   }
 }

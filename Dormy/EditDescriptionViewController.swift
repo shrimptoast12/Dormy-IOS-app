@@ -68,11 +68,12 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
             let descript = self.myTextView.text!
             let roomNumber = self.roomNumberTextField.text!
             
+            //delete old roommate list somewhere
+            let ref = FIRDatabase.database().reference().child("users").child(uid!).child("roommates")
+            let childRef = ref.childByAutoId()
             for id in self.roommatesIdList {
-                //RIGHT NOW OVERWRITES THE LAST ELEMENT EACH TIME
-                FIRDatabase.database().reference().child("users").child(uid!).child("roommate").setValue(id)
-             }
-            
+                childRef.updateChildValues(["roommateId" : id])
+            }
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
             FIRDatabase.database().reference().child("users").child(uid!).child("roomNumber").setValue(roomNumber)
         }
@@ -80,7 +81,7 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
         let profVC = storyboard?.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
         self.presentViewController(profVC, animated: true, completion: nil)
     }
-    
+
     func fetchUser() {
         FIRDatabase.database().reference().child("users").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
@@ -88,7 +89,7 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
                 let user = User()
                 user.id = snapshot.key
                 
-                user.setValuesForKeysWithDictionary(dictionary)
+                user.setUserWithDictionary(dictionary,uid: user.id!)
                 self.users.append(user)
                 
                 dispatch_async(dispatch_get_main_queue(), {
@@ -122,6 +123,7 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
         }
         return cell
     }
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)

@@ -11,8 +11,8 @@ import Firebase
 
 class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    var currentUser = User()
     @IBOutlet weak var coloredProfileView: UIView!
-    var roommateId: String? = ""
     @IBOutlet weak var textF: UITextView!
     @IBOutlet weak var profPic: UIImageView!
     @IBOutlet weak var roomNumber: UILabel!
@@ -108,13 +108,18 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             let uid = user?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.currentUser.setUserWithDictionary(dictionary, uid: uid!)
+                    //Save the roommate id's into an array
+                    if let roommates = dictionary["roommates"] as? NSDictionary {
+                        for (_,value) in roommates {
+                            let id = (value["roommateId"] as! String)
+                            self.currentUser.roommateIdList.append(id)
+                        }
+                    }
+                    self.tableView.reloadData()
                     
                     self.navigationItem.title = dictionary["name"] as? String
 
-                    if dictionary["roommate"] != nil {
-                        self.roommateId = dictionary["roommate"] as? String
-                        self.tableView.reloadData() //necessary
-                    }
                     let roomNumber = dictionary["roomNumber"] as? String
                     if roomNumber != nil && roomNumber != "" {
                         self.roomNumber.text = "Room \(roomNumber!)"
@@ -265,24 +270,29 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.currentUser.roommateIdList.count > 0 {
+            return self.currentUser.roommateIdList.count
+        }
         return 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
         let cell:UserCell = self.tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
         
-        if self.roommateId != "" {
-            let ref = FIRDatabase.database().reference().child("users").child(self.roommateId!)
+        if self.currentUser.roommateIdList.isEmpty {
+            cell.profileImageView.image = UIImage(named: "empty_profile")
+            cell.textLabel!.text = "no roomates..."
+        }
+        else { //Load the roommates into the tableview
+            let roommateId = self.currentUser.roommateIdList[indexPath.row]
+            let ref = FIRDatabase.database().reference().child("users").child(roommateId)
             ref.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     cell.textLabel!.text = dictionary["name"] as? String
                     cell.profileImageView.loadImageUsingCacheWithUrlString(dictionary["imageURL"] as! String)
                 }
-            }, withCancelBlock: nil)
-        }
-        else { //The user does not have any roommates on file
-            cell.profileImageView.image = UIImage(named: "empty_profile")
-            cell.textLabel!.text = "no roomates..."
+                }, withCancelBlock: nil)
+
         }
         return cell
     }
