@@ -282,10 +282,14 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             ref.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     cell.textLabel!.text = dictionary["name"] as? String
-                    cell.profileImageView.loadImageUsingCacheWithUrlString(dictionary["imageURL"] as! String)
-                }
-                }, withCancelBlock: nil)
-
+                    
+                    if (dictionary["imageURL"] as! String == "" ) {
+                        cell.profileImageView.image = UIImage(named: "empty_profile")
+                    }
+                    else {
+                        cell.profileImageView.loadImageUsingCacheWithUrlString(dictionary["imageURL"] as! String)
+                    }
+                }}, withCancelBlock: nil)
         }
         return cell
     }

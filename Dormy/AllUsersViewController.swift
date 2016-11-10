@@ -68,8 +68,13 @@ class AllUsersViewController: UITableViewController {
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
         
-        if let profileImageUrl = user.imageURL {
-            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        if user.imageURL == "" {
+            cell.profileImageView.image = UIImage(named: "empty_profile")
+        }
+        else {
+            if let profileImageUrl = user.imageURL {
+                cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+            }
         }
         return cell
     }
