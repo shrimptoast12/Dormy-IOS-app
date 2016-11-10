@@ -109,11 +109,12 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     self.currentUser.setUserWithDictionary(dictionary, uid: uid!)
+                    self.currentUser.id = snapshot.key 
                     //Save the roommate id's into an array
                     if let roommates = dictionary["roommates"] as? NSDictionary {
                         for (_,value) in roommates {
                             let id = (value["roommateId"] as! String)
-                            self.currentUser.roommateIdList.append(id)
+                            self.currentUser.roommatesIdList.append(id)
                         }
                     }
                     self.tableView.reloadData()
@@ -243,6 +244,7 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             //It detaches from the status bar and it cuts the block of color in half -Ben
             let editView = self.storyboard?.instantiateViewControllerWithIdentifier("EditDescription") as! EditDescriptionViewController
             editView.vc = self
+            editView.roommatesIdList = self.currentUser.roommatesIdList
             self.presentViewController(editView, animated: true, completion: nil)
         })
         
@@ -263,8 +265,8 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.currentUser.roommateIdList.count > 0 {
-            return self.currentUser.roommateIdList.count
+        if self.currentUser.roommatesIdList.count > 0 {
+            return self.currentUser.roommatesIdList.count
         }
         return 1
     }
@@ -272,12 +274,12 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) ->UITableViewCell {
         let cell:UserCell = self.tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
         
-        if self.currentUser.roommateIdList.isEmpty {
+        if self.currentUser.roommatesIdList.isEmpty {
             cell.profileImageView.image = UIImage(named: "empty_profile")
             cell.textLabel!.text = "no roomates..."
         }
         else { //Load the roommates into the tableview
-            let roommateId = self.currentUser.roommateIdList[indexPath.row]
+            let roommateId = self.currentUser.roommatesIdList[indexPath.row]
             let ref = FIRDatabase.database().reference().child("users").child(roommateId)
             ref.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {

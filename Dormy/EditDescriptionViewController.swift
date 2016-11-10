@@ -11,10 +11,10 @@ import Firebase
 
 class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var roommatesIdList = [String]()
     var users = [User]()
 
     weak var vc:UserProfileViewController?
+    var roommatesIdList = [String]()
 
     @IBOutlet weak var myTextView: UITextView!
     @IBOutlet weak var roomNumberTextField: UITextField!
@@ -68,10 +68,11 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
             let descript = self.myTextView.text!
             let roomNumber = self.roomNumberTextField.text!
             
-            //delete old roommate list somewhere
+            
             let ref = FIRDatabase.database().reference().child("users").child(uid!).child("roommates")
-            let childRef = ref.childByAutoId()
+            ref.removeValue()
             for id in self.roommatesIdList {
+                let childRef = ref.childByAutoId()
                 childRef.updateChildValues(["roommateId" : id])
             }
             FIRDatabase.database().reference().child("users").child(uid!).child("descript").setValue(descript)
@@ -90,7 +91,10 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
                 user.id = snapshot.key
                 
                 user.setUserWithDictionary(dictionary,uid: user.id!)
-                self.users.append(user)
+                //Do not allow the user to add themselves
+                if (user.id != self.vc?.currentUser.id) {
+                    self.users.append(user)
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableView.reloadData()
@@ -117,6 +121,13 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
         cell.selectionStyle = .None
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
+        
+        //Have existing roommates checked in the edit view
+        if (self.roommatesIdList.contains(user.id!)) {
+            cell.selected = true
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            print(user.name)
+        }
         
         if user.imageURL == "" {
             cell.profileImageView.image = UIImage(named: "empty_profile")
