@@ -632,6 +632,7 @@
                         <segue destination="xue-U7-Kg6" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="wED-qY-xCM"/>
                         <segue destination="Nh4-3I-ebv" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="9ON-zV-fr8"/>
                         <segue destination="Ql7-fC-9bB" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="8ju-8q-n1g"/>
+                        <segue destination="7pu-n4-T88" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="RX1-Jy-005"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BOf-aW-Aw4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -707,8 +708,28 @@
                                             <segue destination="Ql7-fC-9bB" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="J0A-Ti-0Xk"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileMenuCell" textLabel="KrP-8d-35r" style="IBUITableViewCellStyleDefault" id="amd-fF-ZRb">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LaundryHelperCell" textLabel="5OQ-i3-BhM" style="IBUITableViewCellStyleDefault" id="WXi-9G-wt6">
                                         <rect key="frame" x="0.0" y="176" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WXi-9G-wt6" id="Nma-Gw-dy1">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="laundry helper" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5OQ-i3-BhM">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                                    <color key="textColor" red="0.26751551029999998" green="0.688477695" blue="0.31216993929999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="7pu-n4-T88" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="P9y-0O-cwr"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileMenuCell" textLabel="KrP-8d-35r" style="IBUITableViewCellStyleDefault" id="amd-fF-ZRb">
+                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="amd-fF-ZRb" id="e31-p9-smf">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -728,7 +749,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogOutMenuCell" textLabel="Amm-1R-oKP" style="IBUITableViewCellStyleDefault" id="yTN-dt-rGs">
-                                        <rect key="frame" x="0.0" y="220" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="264" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yTN-dt-rGs" id="YO5-QG-aTT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -785,6 +806,14 @@
             </objects>
             <point key="canvasLocation" x="69.5" y="1438"/>
         </scene>
+        <!--LaundryHelper-->
+        <scene sceneID="e7Q-cY-QsS">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LaundryHelper" referencedIdentifier="LaundryHelper" id="7pu-n4-T88" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qs9-Uh-6XP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="67.5" y="1698"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Image" width="466" height="441"/>
@@ -793,7 +822,8 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9ON-zV-fr8"/>
-        <segue reference="8ju-8q-n1g"/>
+        <segue reference="XKA-jc-tP4"/>
+        <segue reference="P9y-0O-cwr"/>
+        <segue reference="J0A-Ti-0Xk"/>
     </inferredMetricsTieBreakers>
 </document>

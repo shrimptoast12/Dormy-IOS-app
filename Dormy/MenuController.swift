@@ -19,7 +19,7 @@ class MenuController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //Log out cell tapped
-        if indexPath.row == 4  {
+        if indexPath.row == 5  {
             try! FIRAuth.auth()?.signOut()
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginViewController = storyboard.instantiateViewControllerWithIdentifier("login") as! ViewController

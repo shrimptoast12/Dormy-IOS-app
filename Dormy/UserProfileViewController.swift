@@ -245,19 +245,12 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
             editView.vc = self
             self.presentViewController(editView, animated: true, completion: nil)
         })
-        let laundryHelper = UIAlertAction(title: "Laundry Helper", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            let storyboard = UIStoryboard(name: "LaundryHelper", bundle: nil)
-            let laundryHelperTableViewController = storyboard.instantiateViewControllerWithIdentifier("laundryHelperTable")
-                as! LaundryHelperTableViewController
-            let navController = UINavigationController(rootViewController: laundryHelperTableViewController)
-            self.presentViewController(navController, animated: true, completion: nil)
-        })
+        
         let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
             //exit action sheet
         })
         
         alertController.addAction(edit)
-        alertController.addAction(laundryHelper)
         alertController.addAction(cancel)
 
         
