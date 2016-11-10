@@ -12,30 +12,23 @@ import Firebase
 class LaundryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var laundryIcon: UIImageView!
+    @IBOutlet weak var availabilityLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var reserveButton: UIButton!
+    @IBOutlet weak var freeButton: UIButton!
+    
+    @IBOutlet weak var currentUseLabel: UILabel!
+    @IBOutlet weak var startTimeLabel: UILabel!
+    @IBOutlet weak var endTimeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        //   let storageRef = FIRStorage.storage().reference().child("laundryIcon").child("washer.png")
-        
-        //Compression factor of 0.1 on laundry icon
-        //        if let uploadData = UIImagePNGRepresentation(self.laundryIcon.image!) {
-        //            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
-        //                if error != nil {
-        //                    print(error)
-        //                    return
-        //                }
-        //                // Set the imageURL for a laundry icon
-        //                let ref = FIRDatabase.database().referenceFromURL("https://dormy-e6239.firebaseio.com/")
-        //                let laundryRef = ref.child("laundry").child("image")
-        //
-        //
-        //                    let imageURL = metadata?.downloadURL()?.absoluteString
-        //                    FIRDatabase.database().reference().child("laundry").child("image").setValue(imageURL)
-        //
-        //            })
-        //        }
-        
+        self.reserveButton.hidden = true
     }
+    
+    @IBAction func reserveAction(sender: AnyObject) {
+    }
+    
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

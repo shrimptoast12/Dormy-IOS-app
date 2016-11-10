@@ -11,10 +11,11 @@ import Firebase
 
 class LaundryHelperTableViewController: UITableViewController {
     
-    @IBOutlet weak var addMachine: UIBarButtonItem!
-    var users = [String]()
+    var machines = [LaundryMachine]()
     
-
+    @IBOutlet weak var addMachine: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +25,7 @@ class LaundryHelperTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.title = "Laundry Helper"
+        self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
         let user = FIRAuth.auth()?.currentUser
         let uid = user?.uid
         FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
@@ -37,6 +39,22 @@ class LaundryHelperTableViewController: UITableViewController {
                 }
             }
             
+            }, withCancelBlock: nil)
+        fetchMachine()
+    }
+    
+    func fetchMachine() {
+        FIRDatabase.database().reference().child("laundry").child("dorm-name").observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let machine = LaundryMachine()
+                machine.setValuesForKeysWithDictionary(dictionary)
+                self.machines.append(machine)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
+            }
             }, withCancelBlock: nil)
     }
     
@@ -56,18 +74,21 @@ class LaundryHelperTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return machines.count
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // set the cell as a custom Laundry cell
         let cell = tableView.dequeueReusableCellWithIdentifier("laundryCell", forIndexPath: indexPath) as! LaundryTableViewCell
-        //cell.laundryIcon?.image = UIImage(named: "dryer")
-        
-        FIRDatabase.database().reference().child("laundry").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            
+        cell.laundryIcon?.image = UIImage(named: "dryer")
+        cell.freeButton.hidden = true
+        // Set up the cell by retrieving data from Firebase and updating the labels
+        let machineNum = "Machine \(indexPath.row + 1)"
+        FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
-                if let laundryImageURL = dictionary["dryerIcon"] as? String {
+                
+                if let laundryImageURL = dictionary["machineIcon"] as? String {
                     let url = NSURL(string: laundryImageURL)
                     NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
                         if (error != nil) {
@@ -80,20 +101,131 @@ class LaundryHelperTableViewController: UITableViewController {
                         })
                     }).resume()
                 }
+                
+                // Set the machine's availability per cell
+                let availability = dictionary["availibility"] as? String
+                cell.availabilityLabel?.text = availability
+                cell.availabilityLabel.textColor = UIColor.greenColor()
+                if (availability == "Available") {
+                    cell.reserveButton.hidden = false
+                    cell.currentUseLabel.hidden = true
+                    cell.startTimeLabel.hidden = true
+                    cell.endTimeLabel.hidden = true
+                    cell.freeButton.hidden = true
+                }
+                else if (availability == "Unavailable") {
+                    cell.reserveButton.hidden = true
+                    let inUseBy = dictionary["inUseBy"] as? String
+                    let startTime = dictionary["startTime"] as? String
+                    let endTime = dictionary["endTime"] as? String
+                    
+                    // update the labels if the machine is unavailable
+                    cell.availabilityLabel?.text = "Unavailable"
+                    cell.availabilityLabel.textColor = UIColor.redColor()
+                    cell.currentUseLabel?.text = "Currently In Use By: \(inUseBy!)"
+                    cell.startTimeLabel?.text = "Start time: \(startTime!)"
+                    cell.endTimeLabel?.text = "Approx. Finish: \(endTime!)"
+                    cell.currentUseLabel.hidden = false
+                    cell.startTimeLabel.hidden = false
+                    cell.endTimeLabel.hidden = false
+                    
+                    // Only show the free button to the user that actually reserved the machine
+                    // grab the current user's name
+                    let uid = FIRAuth.auth()?.currentUser?.uid
+                    var currentUserName = ""
+                    FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot2) in
+                        if let dictionary = snapshot2.value as? [String: AnyObject] {
+                            currentUserName = (dictionary["name"] as? String)!
+                            if (currentUserName == inUseBy!) {
+                                cell.freeButton.hidden = false
+                            }
+                        }
+                        }, withCancelBlock: nil)
+                }
+                
+                // Set the machine's name label per cell
+                let name = dictionary["name"] as? String
+                cell.nameLabel?.text = name
             }
             
             }, withCancelBlock: nil)
         
-        //  if let profileImageURL = ref {
-        
-        //}
-        
         // Configure the cell...
+        // makes the reserveButton show an alert message when pressed
+        cell.reserveButton.tag = indexPath.row + 1
+        cell.reserveButton.addTarget(self, action: #selector(LaundryHelperTableViewController.showReserveAlert(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        // makes the free button free the laundry machine
+        cell.freeButton.tag = indexPath.row + 1
+        cell.freeButton.addTarget(self, action: #selector(LaundryHelperTableViewController.freeLaundryMachine(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         return cell
     }
     
     @IBAction func addMachineAction(sender: AnyObject) {
+    }
+    
+    // Shows an alert to ask if user really wants to reserve the machine
+    func showReserveAlert (sender:UIButton!) {
+        let machineNum = "Machine \(sender.tag)"
+        var currentUserName = ""
+        var machineType  = ""
+        
+        // grabs the current time
+        let startTime = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+        let calender = NSCalendar.currentCalendar()
+        // grab the current user's name
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                currentUserName = (dictionary["name"] as? String)!
+            }
+            }, withCancelBlock: nil)
+        
+        // grabs the machine type the user wants to reserve
+        FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                machineType = (dictionary["machineType"] as? String)!
+            }
+            }, withCancelBlock: nil)
+        
+        let alertController = UIAlertController(title: "Important", message: "Are you sure you want to reserve?", preferredStyle: .Alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .Default) { (action:UIAlertAction) in
+            FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("inUseBy").setValue(currentUserName)
+            FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("startTime").setValue(startTime)
+            FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("availibility").setValue("Unavailable")
+            if (machineType == "Dryer") {
+                let date = calender.dateByAddingUnit(.Hour, value: 1, toDate: NSDate(), options: [])
+                let endTime = NSDateFormatter.localizedStringFromDate(date!, dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+                FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("endTime").setValue(endTime)
+            }
+            else if (machineType == "Washer") {
+                let date = calender.dateByAddingUnit(.Minute, value: 30, toDate: NSDate(), options: [])
+                let endTime = NSDateFormatter.localizedStringFromDate(date!, dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+                FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("endTime").setValue(endTime)
+            }
+            self.tableView.reloadData()
+        }
+        let defaultAction = UIAlertAction(title: "No", style: .Default, handler: nil)
+        alertController.addAction(yesAction)
+        alertController.addAction(defaultAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func freeLaundryMachine (sender: UIButton!) {
+        let machineNum = "Machine \(sender.tag)"
+        
+        let alertController = UIAlertController(title: "Important", message: "Are you sure you want to free this machine?", preferredStyle: .Alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .Default) { (action:UIAlertAction) in
+            FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("inUseBy").setValue("")
+            FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("startTime").setValue("")
+            FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("availibility").setValue("Available")
+            FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("endTime").setValue("")
+            self.tableView.reloadData()
+        }
+        let defaultAction = UIAlertAction(title: "No", style: .Default, handler: nil)
+        alertController.addAction(yesAction)
+        alertController.addAction(defaultAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     /*
