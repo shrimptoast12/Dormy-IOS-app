@@ -7,8 +7,30 @@
 //
 
 import UIKit
+import Firebase
 
 class userMsgCell: UITableViewCell {
+    
+    var message: Message? {
+        didSet {
+            if let toId = message?.toId {
+                let ref = FIRDatabase.database().reference().child("users").child(toId)
+                ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                    if let dictionary = snapshot.value as? [String: AnyObject] {
+                        self.textLabel?.text = dictionary["name"] as? String
+                        
+                        if let imageUrl = dictionary["imageURL"] as? String {
+                            self.profileImageView.loadImageUsingCacheWithUrlString(imageUrl)
+                        }
+                    }
+                    
+                    }, withCancelBlock: nil)
+            }
+            detailTextLabel?.text = message?.text
+            timeLabel.text = message?.timeStamp
+            
+        }
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -27,17 +49,29 @@ class userMsgCell: UITableViewCell {
         return imageView
     }()
     
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.lightGrayColor()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
         
         addSubview(profileImageView)
+        addSubview(timeLabel)
         
-        //ios 9 constraint anchors
-        //need x,y,width,height anchors
+        //set up the cell for individual profiles
         profileImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 8).active = true
         profileImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
         profileImageView.widthAnchor.constraintEqualToConstant(48).active = true
         profileImageView.heightAnchor.constraintEqualToConstant(48).active = true
+        
+        timeLabel.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+        timeLabel.centerYAnchor.constraintEqualToAnchor(textLabel?.centerYAnchor).active = true
+        timeLabel.widthAnchor.constraintEqualToConstant(100).active = true
+        timeLabel.heightAnchor.constraintEqualToAnchor(textLabel?.heightAnchor).active = true
     }
     
     required init?(coder aDecoder: NSCoder) {

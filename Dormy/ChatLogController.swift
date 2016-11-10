@@ -139,7 +139,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         print(chatPartner!.id)
         let toId = chatPartner!.id
         let fromId = FIRAuth.auth()!.currentUser!.uid
-        let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+        let timeStamp = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         print(toId)
         let values: [String: AnyObject] = ["text": msgField.text!,"toId": toId!, "fromId": fromId, "timeStamp": timeStamp]
         child.updateChildValues(values) { (error, ref) in

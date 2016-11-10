@@ -14,6 +14,7 @@ class MessagesTableViewController: UITableViewController {
     
     var msgUsers = [User]()
     var firstMsg = [Message]()
+    var messageGroup = [String: Message]()
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     //Being used to select for whom to compose a message
@@ -67,7 +68,14 @@ class MessagesTableViewController: UITableViewController {
             if let dictionary = snapshot.value as? [String: AnyObject] {
                let message = Message()
                 message.setValuesForKeysWithDictionary(dictionary)
-                self.firstMsg.append(message)
+                //self.firstMsg.append(message)
+                if let toId = message.toId {
+                    self.messageGroup[toId] = message
+                    self.firstMsg = Array(self.messageGroup.values)
+                    self.firstMsg.sortInPlace({ (firstMessage, secondMessage) -> Bool in
+                        return firstMessage.timeStamp > secondMessage.timeStamp
+                    })
+                }
                 dispatch_async(dispatch_get_main_queue(), { 
                     self.tableView.reloadData()
                 })
@@ -140,19 +148,11 @@ class MessagesTableViewController: UITableViewController {
 //        if let profileImageUrl = user.imageURL {
 //            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
 //        }
-        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cellId")
+        //let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cellId")
+        let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! userMsgCell
         let message = firstMsg[indexPath.row]
+        cell.message = message
         
-        if let toId = message.toId {
-            let ref = FIRDatabase.database().reference().child("users").child(toId)
-            ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                        cell.textLabel?.text = dictionary["name"] as? String
-                }
-                
-            }, withCancelBlock: nil)
-        }
-        cell.detailTextLabel?.text = message.text
         return cell
     }
         
