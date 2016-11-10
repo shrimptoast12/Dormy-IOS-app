@@ -41,8 +41,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         addNavItems()
         collectionView?.backgroundColor = UIColor.whiteColor()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
         
         msgField.delegate = self
     }
@@ -141,19 +141,19 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         let fromId = FIRAuth.auth()!.currentUser!.uid
         let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
         print(toId)
-        let values: [String: AnyObject] = ["text": msgField.text!,"toId": toId!, "fromId": fromId, "timestamp": timeStamp]
+        let values: [String: AnyObject] = ["text": msgField.text!,"toId": toId!, "fromId": fromId, "timeStamp": timeStamp]
         child.updateChildValues(values) { (error, ref) in
             if error != nil {
                 print (error)
                 return
             }
-            
-            let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child(toId!)
-            let messageId = child.key
-            userMessagesRef.updateChildValues([messageId: 1])
-            
-            let recipient = FIRDatabase.database().reference().child("user-messages").child(toId!).child(fromId)
-            recipient.updateChildValues([messageId: 1])
+//            
+//            let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child(toId!)
+//            let messageId = child.key
+//            userMessagesRef.updateChildValues([messageId: 1])
+//            
+//            let recipient = FIRDatabase.database().reference().child("user-messages").child(toId!).child(fromId)
+//            recipient.updateChildValues([messageId: 1])
         }
         msgField.resignFirstResponder()
         msgField.text = ""

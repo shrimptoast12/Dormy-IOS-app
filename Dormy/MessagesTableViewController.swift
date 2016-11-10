@@ -62,30 +62,40 @@ class MessagesTableViewController: UITableViewController {
 
     //get user data
     func fetchUsers(){
-        let userId = FIRAuth.auth()?.currentUser?.uid
-        let ref = FIRDatabase.database().reference().child("user-messages").child(userId!)
-        ref.observeEventType(.ChildAdded, withBlock: {(snapshot) in
+        let ref = FIRDatabase.database().reference().child("messages")
+        ref.observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+               let message = Message()
+                message.setValuesForKeysWithDictionary(dictionary)
+                self.firstMsg.append(message)
+                dispatch_async(dispatch_get_main_queue(), { 
+                    self.tableView.reloadData()
+                })
+            }
             
-            let msgUserId = snapshot.key
-            print(msgUserId)
-            let allUsersRef = FIRDatabase.database().reference().child("users").child(msgUserId)
-            
-            allUsersRef.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
-                
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    let user = User()
-                    user.id = snapshot.key
-                    user.setValuesForKeysWithDictionary(dictionary)
-                    self.msgUsers.append(user)
-                    print(user.name!)
-                    print(user.id!)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.tableView.reloadData()
-                    })
-                }
-                
-            }, withCancelBlock: nil)
-        })
+        }, withCancelBlock: nil)
+//        ref.observeEventType(.ChildAdded, withBlock: {(snapshot) in
+//            
+//            let msgUserId = snapshot.key
+//            print(msgUserId)
+//            let allUsersRef = FIRDatabase.database().reference().child("users").child(msgUserId)
+//            
+//            allUsersRef.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+//                
+//                if let dictionary = snapshot.value as? [String: AnyObject] {
+//                    let user = User()
+//                    user.id = snapshot.key
+//                    user.setValuesForKeysWithDictionary(dictionary)
+//                    self.msgUsers.append(user)
+//                    print(user.name!)
+//                    print(user.id!)
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        self.tableView.reloadData()
+//                    })
+//                }
+//                
+//            }, withCancelBlock: nil)
+//        })
     }
     
     //handle the selection of cell
@@ -97,7 +107,7 @@ class MessagesTableViewController: UITableViewController {
     //go to chat log of selected user
     func goToChat(user: User){
         let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-        chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MessagesTableViewController.goBack))
         let navController = UINavigationController(rootViewController: chatLog)
         chatLog.chatPartner = user
         presentViewController(navController, animated: true, completion: nil)
@@ -119,17 +129,30 @@ class MessagesTableViewController: UITableViewController {
     //specify number of rows
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return msgUsers.count
+        return firstMsg.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! userMsgCell
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! userMsgCell
+//        
+//        let user = msgUsers[indexPath.row]
+//        cell.textLabel!.text = user.name!
+//        if let profileImageUrl = user.imageURL {
+//            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+//        }
+        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cellId")
+        let message = firstMsg[indexPath.row]
         
-        let user = msgUsers[indexPath.row]
-        cell.textLabel!.text = user.name!
-        if let profileImageUrl = user.imageURL {
-            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+        if let toId = message.toId {
+            let ref = FIRDatabase.database().reference().child("users").child(toId)
+            ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                        cell.textLabel?.text = dictionary["name"] as? String
+                }
+                
+            }, withCancelBlock: nil)
         }
+        cell.detailTextLabel?.text = message.text
         return cell
     }
         
