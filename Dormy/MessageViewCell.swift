@@ -19,7 +19,18 @@ class MessageViewCell: UICollectionViewCell {
         return textView
     }()
     
+    let profileImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 24
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .ScaleAspectFill
+        return imageView
+    }()
+    
     var backgroundTextViewWidth: NSLayoutConstraint?
+    var backgroundTextRightAnchor: NSLayoutConstraint?
+    var backgroundTextLeftAnchor: NSLayoutConstraint?
     
     let backgroundTextView: UIView = {
         let view = UIView()
@@ -35,7 +46,10 @@ class MessageViewCell: UICollectionViewCell {
         
         // add the background color for the message
         addSubview(backgroundTextView)
-        backgroundTextView.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: -8).active = true
+        backgroundTextRightAnchor = backgroundTextView.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: -8)
+        backgroundTextRightAnchor?.active = true
+        backgroundTextLeftAnchor = backgroundTextView.leftAnchor.constraintEqualToAnchor(profileImage.rightAnchor, constant: 8)
+        
         backgroundTextView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
         backgroundTextViewWidth = backgroundTextView.widthAnchor.constraintEqualToConstant(200)
         backgroundTextViewWidth?.active = true
@@ -49,6 +63,13 @@ class MessageViewCell: UICollectionViewCell {
         messageText.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
         messageText.widthAnchor.constraintEqualToConstant(200).active = true
         messageText.heightAnchor.constraintEqualToAnchor(self.heightAnchor).active = true
+        
+        // add profile image into messsaging with appropriate constraints
+        addSubview(profileImage)
+        profileImage.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 8).active = true
+        profileImage.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+        profileImage.heightAnchor.constraintEqualToConstant(48).active = true
+        profileImage.widthAnchor.constraintEqualToConstant(48).active = true
     }
     
     required init?(coder aDecoder: NSCoder) {

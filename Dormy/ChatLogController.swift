@@ -214,17 +214,39 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return NSString(string: message).boundingRectWithSize(size, options: options, attributes: attributes, context: nil)
     }
     
+    // return how many message cells to create
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
     
+    // d
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath) as! MessageViewCell
-        let actualText = messages[indexPath.item].text
-        cell.messageText.text = actualText
+        let actualText = messages[indexPath.item]
+        cell.messageText.text = actualText.text
+        // set if it is the sender's message or receiver's message
+        if let imageURL = self.chatPartner?.imageURL {
+            cell.profileImage.loadImageUsingCacheWithUrlString(imageURL)
+        }
+        
+        // if it is not the current user, then make the text bubbles gray
+        if (actualText.fromId != FIRAuth.auth()?.currentUser?.uid) {
+            cell.backgroundTextView.backgroundColor = UIColor.lightGrayColor()
+            cell.backgroundTextRightAnchor?.active = false
+            cell.backgroundTextLeftAnchor?.active = true
+            cell.profileImage.hidden = false
+        }
+        else {
+            cell.backgroundTextView.backgroundColor = AppDelegate().RGB(68.0, g: 176.0,b:80.0)
+            cell.messageText.textColor = UIColor.whiteColor()
+            cell.backgroundTextRightAnchor?.active = true
+            cell.backgroundTextLeftAnchor?.active = false
+            cell.profileImage.hidden = true
+        }
+
         
         // modify the text's size
-        cell.backgroundTextViewWidth?.constant = adjustMessageSize(actualText!).width + 40
+        cell.backgroundTextViewWidth?.constant = adjustMessageSize(actualText.text!).width + 40
         
         return cell
     }
