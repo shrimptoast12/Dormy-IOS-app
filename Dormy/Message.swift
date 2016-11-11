@@ -8,10 +8,23 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class Message: NSObject {
     var fromId: String?
     var text: String?
     var timeStamp: String?
     var toId: String?
+    
+    func returnId() -> String? {
+        let id:String?
+        
+        if(fromId ==  FIRAuth.auth()?.currentUser?.uid) {
+            id = toId
+        }
+        else {
+            id = fromId
+        }
+        return id
+    }
 }

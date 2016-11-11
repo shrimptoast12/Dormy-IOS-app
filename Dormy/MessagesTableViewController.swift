@@ -1,4 +1,4 @@
-//
+ //
 //  MessagesTableViewController.swift
 //  Dormy
 //
@@ -51,8 +51,11 @@ class MessagesTableViewController: UITableViewController {
         tableView.rowHeight = 55
         tableView.registerClass(userMsgCell.self, forCellReuseIdentifier: "cellId")
         
-        fetchUsers()
-
+        //fetchUsers()
+        firstMsg.removeAll()
+        messageGroup.removeAll()
+        tableView.reloadData()
+        fetchUserData()
         print(msgUsers.count)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -61,9 +64,40 @@ class MessagesTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    func fetchUserData() {
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+            return
+        }
+        let ref = FIRDatabase.database().reference().child("user-messages1").child(uid)
+        ref.observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            
+            let messageId = snapshot.key
+            let allMessagesRef = FIRDatabase.database().reference().child("messages1").child(messageId)
+            allMessagesRef.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let message = Message()
+                    message.setValuesForKeysWithDictionary(dictionary)
+                    //self.firstMsg.append(message)
+                    if let toId = message.toId {
+                        self.messageGroup[toId] = message
+                        self.firstMsg = Array(self.messageGroup.values)
+                        self.firstMsg.sortInPlace({ (firstMessage, secondMessage) -> Bool in
+                            return firstMessage.timeStamp > secondMessage.timeStamp
+                        })
+                    }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.tableView.reloadData()
+                    })
+                }
+                }, withCancelBlock: nil)
+            
+            }, withCancelBlock: nil)
+    }
+    
     //get user data
     func fetchUsers(){
-        let ref = FIRDatabase.database().reference().child("messages")
+        
+        let ref = FIRDatabase.database().reference().child("messages1")
         ref.observeEventType(.ChildAdded, withBlock: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
                let message = Message()
@@ -108,8 +142,30 @@ class MessagesTableViewController: UITableViewController {
     
     //handle the selection of cell
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        let user: User = msgUsers[indexPath.row]
-        goToChat(user)
+        let message = firstMsg[indexPath.row]
+        print(message.text, message.toId, message.fromId)
+        
+        guard let otherChatUserId = message.returnId() else {
+            return
+        }
+        
+        let ref = FIRDatabase.database().reference().child("users").child(otherChatUserId)
+        ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else {
+                return
+            }
+            let user = User()
+            user.RA = dictionary["RA"] as? String
+            user.availability = dictionary["availability"] as? String
+            user.descript = dictionary["descript"] as? String
+            user.email = dictionary["email"] as? String
+            user.imageURL = dictionary["imageURL"] as? String
+            user.name = dictionary["name"] as? String
+            self.goToChat(user)
+            
+            }, withCancelBlock: nil)
+        //let user: User = msgUsers[indexPath.row]
+        //goToChat(user)
     }
     
     //go to chat log of selected user

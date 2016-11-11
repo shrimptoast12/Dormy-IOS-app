@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 
-class ChatLogController: UICollectionViewController, UITextFieldDelegate {
+class ChatLogController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
     
     var chatPartner: User?
     
@@ -43,6 +43,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         
         //NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
+        collectionView?.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
         
         msgField.delegate = self
     }
@@ -133,7 +134,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     }
     
     func sendButtonHandler(){
-        let ref = FIRDatabase.database().reference().child("messages")
+        let ref = FIRDatabase.database().reference().child("messages1")
         let child = ref.childByAutoId()
         print(chatPartner!.name)
         print(chatPartner!.id)
@@ -147,6 +148,12 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
                 print (error)
                 return
             }
+            let messageRef = FIRDatabase.database().reference().child("user-messages1").child(fromId)
+            let messageId = child.key
+            messageRef.updateChildValues([messageId: 1])
+            
+            let recipient = FIRDatabase.database().reference().child("user-messages1").child(toId!)
+            recipient.updateChildValues([messageId: 1])
 //            
 //            let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child(toId!)
 //            let messageId = child.key
@@ -157,6 +164,20 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         }
         msgField.resignFirstResponder()
         msgField.text = ""
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: view.frame.height, height: 80)
+    }
+    
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath)
+        cell.backgroundColor = UIColor.blueColor()
+        return cell
     }
     
 }

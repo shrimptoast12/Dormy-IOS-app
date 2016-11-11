@@ -13,8 +13,9 @@ class userMsgCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            if let toId = message?.toId {
-                let ref = FIRDatabase.database().reference().child("users").child(toId)
+            
+            if let actualId = message?.returnId() {
+                let ref = FIRDatabase.database().reference().child("users").child(actualId)
                 ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                     if let dictionary = snapshot.value as? [String: AnyObject] {
                         self.textLabel?.text = dictionary["name"] as? String
@@ -28,7 +29,6 @@ class userMsgCell: UITableViewCell {
             }
             detailTextLabel?.text = message?.text
             timeLabel.text = message?.timeStamp
-            
         }
     }
 
