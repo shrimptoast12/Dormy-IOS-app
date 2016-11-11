@@ -12,7 +12,33 @@ import Firebase
 
 class ChatLogController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
     
-    var chatPartner: User?
+    var chatPartner: User? {
+        didSet {
+            guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+                return
+            }
+            let ref = FIRDatabase.database().reference().child("user-messages1").child(uid)
+            ref.observeEventType(.ChildAdded, withBlock: { (snapshot) in
+                let id = snapshot.key
+                let messageRef = FIRDatabase.database().reference().child("messages1").child(id)
+                messageRef.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                    let dictionary = snapshot.value as? [String : AnyObject]
+                    let message = Message()
+                    message.setValuesForKeysWithDictionary(dictionary!)
+                    //print("to ID: \(message.toId)")
+                    //print("return ID: \(message.returnId())")
+                    if (self.chatPartner?.id == message.returnId()) {
+                        self.messages.append(message)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.collectionView?.reloadData()
+                        })
+                    }
+                    }, withCancelBlock: nil)
+                }, withCancelBlock: nil)
+        }
+    }
+    
+    var messages = [Message]()
     
     let msgField: UITextField = {
         let textField = UITextField()
@@ -43,7 +69,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         //NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
-        collectionView?.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView?.registerClass(MessageViewCell.self, forCellWithReuseIdentifier: "cellId")
+        // Allows scrolling
+        collectionView?.alwaysBounceVertical = true
+        
+        // adjust part of message controller and pad it to let messages display nicer
+        collectionView?.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 60, right: 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
         
         msgField.delegate = self
     }
@@ -167,16 +199,33 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: view.frame.height, height: 80)
+        var height:CGFloat = 150
+        if let text = messages[indexPath.item].text {
+            height = adjustMessageSize(text).height + 20
+        }
+        
+        return CGSize(width: view.frame.width, height: height)
+    }
+    
+    func adjustMessageSize(message: String) -> CGRect {
+        let size = CGSize(width: 200, height: 1200)
+        let options = NSStringDrawingOptions.UsesFontLeading.union(.UsesLineFragmentOrigin)
+        let attributes = [NSFontAttributeName: UIFont.systemFontOfSize(18)]
+        return NSString(string: message).boundingRectWithSize(size, options: options, attributes: attributes, context: nil)
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return messages.count
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath)
-        cell.backgroundColor = UIColor.blueColor()
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath) as! MessageViewCell
+        let actualText = messages[indexPath.item].text
+        cell.messageText.text = actualText
+        
+        // modify the text's size
+        cell.backgroundTextViewWidth?.constant = adjustMessageSize(actualText!).width + 40
+        
         return cell
     }
     

@@ -103,8 +103,8 @@ class MessagesTableViewController: UITableViewController {
                let message = Message()
                 message.setValuesForKeysWithDictionary(dictionary)
                 //self.firstMsg.append(message)
-                if let toId = message.toId {
-                    self.messageGroup[toId] = message
+                if let actualId = message.returnId() {
+                    self.messageGroup[actualId] = message
                     self.firstMsg = Array(self.messageGroup.values)
                     self.firstMsg.sortInPlace({ (firstMessage, secondMessage) -> Bool in
                         return firstMessage.timeStamp > secondMessage.timeStamp
@@ -161,6 +161,7 @@ class MessagesTableViewController: UITableViewController {
             user.email = dictionary["email"] as? String
             user.imageURL = dictionary["imageURL"] as? String
             user.name = dictionary["name"] as? String
+            user.id = otherChatUserId
             self.goToChat(user)
             
             }, withCancelBlock: nil)

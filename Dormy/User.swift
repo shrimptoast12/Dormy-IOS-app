@@ -28,6 +28,7 @@ class User: NSObject {
         imageURL = dictionary["imageURL"] as? String
         name = dictionary["name"] as? String
         roomNumber = dictionary["roomNumber"] as? String
+        id = uid
    }
 }
 
