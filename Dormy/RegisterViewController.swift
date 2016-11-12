@@ -65,7 +65,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                                     "email": self.emailField.text!,
                                     "RA": "false",
                                     "descript": "",
-                                    "imageURL": "",
+                                    "imageURL": "https://firebasestorage.googleapis.com/v0/b/dormy-e6239.appspot.com/o/empty_profile.png?alt=media&token=9fc3f9b8-51cc-4777-beb8-32ef7391c565",
                                     "roommate" : "",
                                     "roomNumber" : "",
                                     "availability" :  ""]
