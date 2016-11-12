@@ -59,7 +59,21 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func getChatID() -> String{
+        let currentUserID: String = (FIRAuth.auth()?.currentUser?.uid)!
         var chatId = ""
+        
+        //check to see if the current user is already in the conversation
+        //if so, no need to add user uid to from of conversation id
+        var userPresent: Bool = false
+        for b in 0 ..< chatPartners.count{
+            if (chatPartners[b].id! == currentUserID) {
+                userPresent = true
+            }
+        }
+        if (!userPresent){
+            chatId += currentUserID
+            chatId += " "
+        }
         for a in 0 ..< chatPartners.count{
             chatId += chatPartners[a].id!
             if (a != chatPartners.count - 1){
