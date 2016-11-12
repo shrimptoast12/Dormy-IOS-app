@@ -1,4 +1,4 @@
- //
+//
 //  MessagesTableViewController.swift
 //  Dormy
 //
@@ -11,10 +11,10 @@ import UIKit
 import Firebase
 
 class MessagesTableViewController: UITableViewController {
-    
-    var msgUsers = [User]()
-    var firstMsg = [Message]()
-    var messageGroup = [String: Message]()
+    var msgUserIdNums = [String]()
+    var msgUsers = [[User]]()
+    var allMessages = [[String]]()
+    var mostRecent = [Message]()
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     //Being used to select for whom to compose a message
@@ -51,85 +51,182 @@ class MessagesTableViewController: UITableViewController {
         tableView.rowHeight = 55
         tableView.registerClass(userMsgCell.self, forCellReuseIdentifier: "cellId")
         
-        //fetchUsers()
-        firstMsg.removeAll()
-        messageGroup.removeAll()
-        tableView.reloadData()
-        fetchUserData()
-        print(msgUsers.count)
+        fetchSingleMessages()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    func fetchUserData() {
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
-            return
-        }
-        let ref = FIRDatabase.database().reference().child("user-messages1").child(uid)
-        ref.observeEventType(.ChildAdded, withBlock: { (snapshot) in
+    
+    //get user data
+    func fetchSingleMessages(){
+        
+        let userId = FIRAuth.auth()?.currentUser?.uid
+        let ref = FIRDatabase.database().reference().child("user-messages").child(userId!)
+        ref.observeEventType(.Value, withBlock: {(snapshot) in
             
-            let messageId = snapshot.key
-            let allMessagesRef = FIRDatabase.database().reference().child("messages1").child(messageId)
-            allMessagesRef.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    let message = Message()
-                    message.setValuesForKeysWithDictionary(dictionary)
-                    //self.firstMsg.append(message)
-                    if let actualId = message.returnId() {
-                        self.messageGroup[actualId] = message
-                        self.firstMsg = Array(self.messageGroup.values)
-                        self.firstMsg.sortInPlace({ (firstMessage, secondMessage) -> Bool in
-                            return firstMessage.timeStamp > secondMessage.timeStamp
-                        })
+            self.msgUserIdNums.removeAll()
+            self.msgUsers.removeAll()
+            self.allMessages.removeAll()
+            self.mostRecent.removeAll()
+            
+            if let dictionary = snapshot.value as? [String: [String:AnyObject]]{
+                
+                //Dictionary keys are the single users that the current user is currently
+                //in a conversation with
+                let keys: [String] = Array(dictionary.keys)
+                for a in 0 ..< keys.count {
+                    if (keys[a] != "group_messages"){
+                        self.msgUserIdNums.append(keys[a])
                     }
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.tableView.reloadData()
-                    })
                 }
-                }, withCancelBlock: nil)
-            
+                
+                //Dictionary value are dictionarys of the message ids
+                for a in 0 ..< (keys.count) - 1{
+                    let temp: [String:AnyObject] = dictionary[self.msgUserIdNums[a]]!
+                    let msgKeys: [String] = Array(temp.keys)
+                    
+                    FIRDatabase.database().reference().child("messages").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                        
+                        if let dictionary = snapshot.value as? [String: [String: AnyObject]]{
+                            var message: String = ""
+                            var latest: NSNumber = 0
+                            for c in 0 ..< msgKeys.count {
+                                let temp: [String: AnyObject] = dictionary[msgKeys[c]]!
+                                let time = temp["timeStamp"] as? NSNumber
+                                if (Int(time!) > Int(latest)){
+                                    message = msgKeys[c]
+                                    latest = time!
+                                }
+                                
+                            }
+                            var mostRecentMsg = Message()
+                            var msgDictionary: [String: AnyObject] = dictionary[message]!
+                            mostRecentMsg.setMsgWithDictionary(msgDictionary)
+                            self.mostRecent.append(mostRecentMsg)
+                        }
+                        if (a == keys.count - 2){
+                            self.fetchGroupMessages()
+                        }
+                        
+                        }, withCancelBlock: nil)
+                }
+            }
             }, withCancelBlock: nil)
     }
     
+    //get the Id numbers of the group messages
+    func fetchGroupMessages(){
+        
+        let userId = FIRAuth.auth()?.currentUser?.uid
+        
+        //Entering in the group_messages node for the current user
+        FIRDatabase.database().reference().child("user-messages").child(userId!).child("group_messages").observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+            
+            //Creating a dictionary with gourp conversation id numbers as the keys and message dictionaries as the values
+            if let dictionary = snapshot.value as? [String: [String:AnyObject]]{
+                
+                //obtain all conversation keys
+                let keys: [String] = Array(dictionary.keys)
+                for a in 0 ..< keys.count{
+                    self.msgUserIdNums.append(keys[a])
+                }
+                
+                //Find the most recent message
+                for b in 0 ..< keys.count{
+                    
+                    let temp: [String:AnyObject] = dictionary[keys[b]]!
+                    let msgKeys: [String] = Array(temp.keys)
+                    FIRDatabase.database().reference().child("messages").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                        
+                        if let dictionary = snapshot.value as? [String: [String: AnyObject]]{
+                            var message: String = ""
+                            var latest: NSNumber = 0
+                            for c in 0 ..< msgKeys.count {
+                                let temp: [String: AnyObject] = dictionary[msgKeys[c]]!
+                                let time = temp["timeStamp"] as? NSNumber
+                                if (Int(time!) > Int(latest)){
+                                    message = msgKeys[c]
+                                    latest = time!
+                                }
+                            }
+                            var mostRecentMsg = Message()
+                            var msgDictionary: [String: AnyObject] = dictionary[message]!
+                            mostRecentMsg.setMsgWithDictionary(msgDictionary)
+                            self.mostRecent.append(mostRecentMsg)
+                        }
+                        if (b == keys.count - 1){
+                            self.fetchUserProfile()
+                        }
+                        
+                        }, withCancelBlock: nil)
+                }
+                
+                
+            } else {
+                
+                //If the current user is not involved in any group conversations then there are
+                //no group conversations to fetch
+                self.fetchUserProfile()
+            }
+            }, withCancelBlock: nil)
+    }
+    
+    //Parse group Id numbers to get ids of individual users
+    func parseKey(groupId: String) -> [String]{
+        
+        let users = groupId.characters.split{$0 == " "}.map(String.init)
+        
+        return users
+    }
+    
+    //Get the user profiles
+    func fetchUserProfile() {
+        for a in 0 ..< msgUserIdNums.count {
+            let userId: [String] = parseKey(msgUserIdNums[a])
+            allMessages.append(userId)
+        }
+        FIRDatabase.database().reference().child("users").observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject]{
+                
+                for b in 0 ..< self.allMessages.count {
+                    var chatUsers = [User]()
+                    for c in 0 ..< self.allMessages[b].count {
+                        if (self.allMessages[b][c] != "group_messages"){
+                            let temp = dictionary[self.allMessages[b][c]] as? [String: AnyObject]
+                            let user = User()
+                            let id = self.allMessages[b][c]
+                            user.id = id
+                            user.setUserWithDictionary(temp!, uid: id)
+                            chatUsers.append(user)
+                        }
+                    }
+                    if (!chatUsers.isEmpty){
+                        self.msgUsers.append(chatUsers)
+                    }
+                }
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+            })
+            }, withCancelBlock: nil)
+    }
     
     //handle the selection of cell
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        let message = firstMsg[indexPath.row]
-        print(message.text, message.toId, message.fromId)
-        
-        guard let otherChatUserId = message.returnId() else {
-            return
-        }
-        
-        let ref = FIRDatabase.database().reference().child("users").child(otherChatUserId)
-        ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: AnyObject] else {
-                return
-            }
-            let user = User()
-            user.RA = dictionary["RA"] as? String
-            user.availability = dictionary["availability"] as? String
-            user.descript = dictionary["descript"] as? String
-            user.email = dictionary["email"] as? String
-            user.imageURL = dictionary["imageURL"] as? String
-            user.name = dictionary["name"] as? String
-            user.id = otherChatUserId
-            self.goToChat(user)
-            
-            }, withCancelBlock: nil)
-        //let user: User = msgUsers[indexPath.row]
-        //goToChat(user)
+        let user: [User] = msgUsers[indexPath.row]
+        goToChat(user)
     }
     
     //go to chat log of selected user
-    func goToChat(user: User){
+    func goToChat(user: [User]){
         let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
         chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MessagesTableViewController.goBack))
         let navController = UINavigationController(rootViewController: chatLog)
-        chatLog.chatPartner = user
+        chatLog.chatPartners = user
         presentViewController(navController, animated: true, completion: nil)
     }
     
@@ -145,27 +242,83 @@ class MessagesTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     //specify number of rows
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return firstMsg.count
+        return msgUsers.count
     }
-
+    
+    func getNames(user: [User]) -> String {
+        var groupNames: String = ""
+        for a in 0 ..< user.count {
+            if (a != user.count - 1){
+                groupNames += user[a].name!
+                groupNames += ", "
+            } else {
+                groupNames += user[a].name!
+            }
+            
+        }
+        return groupNames
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! userMsgCell
-//        
-//        let user = msgUsers[indexPath.row]
-//        cell.textLabel!.text = user.name!
-//        if let profileImageUrl = user.imageURL {
-//            cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
-//        }
-        //let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "cellId")
         let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! userMsgCell
-        let message = firstMsg[indexPath.row]
-        cell.message = message
-        
+        let user = msgUsers[indexPath.row]
+        cell.textLabel!.text = getNames(user)
+        if let profileImageUrl = user[0].imageURL {
+            
+            if (user[0].imageURL == "") {
+                cell.profileImageView.image = UIImage(named: "empty_profile")
+            }
+            else {
+                
+                //If it is a group message
+                if (user.count > 1) {
+                    cell.profileImageView.loadImageUsingCacheWithUrlString("https://firebasestorage.googleapis.com/v0/b/dormy-e6239.appspot.com/o/group_empty_image.png?alt=media&token=2e1c5216-3bd8-4c7c-b8fe-fc7a269bdef4")
+                } else {
+                    cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
+                }
+            }
+        }
+        cell.message = mostRecent[indexPath.row]
         return cell
     }
     
+    
+    /*
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
+    /*
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
+    /*
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
+    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
 }

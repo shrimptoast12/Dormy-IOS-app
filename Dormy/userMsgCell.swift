@@ -11,27 +11,39 @@ import Firebase
 
 class userMsgCell: UITableViewCell {
     
+    
     var message: Message? {
         didSet {
-            
-            if let actualId = message?.returnId() {
-                let ref = FIRDatabase.database().reference().child("users").child(actualId)
+            if let toId = message?.returnId() {
+                
+                var temp: String = ""
+                for a in 0 ..< message!.toId.count{
+                    temp += message!.toId[a]
+                    if (a == message!.toId.count - 1){
+                        
+                    }
+                }
+                let ref = FIRDatabase.database().reference().child("users").child(temp)
                 ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                     if let dictionary = snapshot.value as? [String: AnyObject] {
-                        self.textLabel?.text = dictionary["name"] as? String
-                        
-                        if let imageUrl = dictionary["imageURL"] as? String {
-                            self.profileImageView.loadImageUsingCacheWithUrlString(imageUrl)
-                        }
+                        //                        if let imageUrl = dictionary["imageURL"] as? String {
+                        //                            self.profileImageView.loadImageUsingCacheWithUrlString(imageUrl)
+                        //                        }
                     }
                     
                     }, withCancelBlock: nil)
             }
+            if let seconds = message?.timeStamp!.doubleValue {
+                let timeStampDate = NSDate(timeIntervalSince1970: seconds)
+                
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "hh:mm a MM/dd/yyyy"
+                timeLabel.text = dateFormatter.stringFromDate(timeStampDate)
+            }
             detailTextLabel?.text = message?.text
-            timeLabel.text = message?.timeStamp
         }
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -52,6 +64,7 @@ class userMsgCell: UITableViewCell {
     let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.lightGrayColor()
+        label.font = UIFont.systemFontOfSize(8)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -62,20 +75,21 @@ class userMsgCell: UITableViewCell {
         addSubview(profileImageView)
         addSubview(timeLabel)
         
-        //set up the cell for individual profiles
+        // set up the cell for individual profiles
         profileImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 8).active = true
-        profileImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
-        profileImageView.widthAnchor.constraintEqualToConstant(48).active = true
-        profileImageView.heightAnchor.constraintEqualToConstant(48).active = true
-        
-        timeLabel.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
-        timeLabel.centerYAnchor.constraintEqualToAnchor(textLabel?.centerYAnchor).active = true
-        timeLabel.widthAnchor.constraintEqualToConstant(100).active = true
-        timeLabel.heightAnchor.constraintEqualToAnchor(textLabel?.heightAnchor).active = true
+            profileImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
+            profileImageView.widthAnchor.constraintEqualToConstant(48).active = true
+            profileImageView.heightAnchor.constraintEqualToConstant(48).active = true
+            
+            timeLabel.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+            timeLabel.centerYAnchor.constraintEqualToAnchor(textLabel?.centerYAnchor).active = true
+            timeLabel.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+            timeLabel.widthAnchor.constraintEqualToConstant(100).active = true
+            timeLabel.heightAnchor.constraintEqualToAnchor(textLabel?.heightAnchor).active = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }

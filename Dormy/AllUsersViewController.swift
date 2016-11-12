@@ -13,7 +13,10 @@ class AllUsersViewController: UITableViewController {
     
     var users = [User]()
     
-    // Adds some UI elements to the nav bar to make it look nicer
+    var groupMessage = [User]()
+    
+    var userIdList = [String]()
+    
     func setUpNavBarColor() {
         let nav = self.navigationController?.navigationBar
         nav?.translucent = false
@@ -27,24 +30,25 @@ class AllUsersViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpNavBarColor()
-
+        
         tableView.registerClass(UserCell.self, forCellReuseIdentifier: "cellId")
         tableView.rowHeight = 55
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(handleCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(handleDone))
         fetchUser()
     }
     
-    // Fetches the user from the database and appends the user to a User array
     func fetchUser() {
         FIRDatabase.database().reference().child("users").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User()
-                user.id = snapshot.key
-                
-                user.setUserWithDictionary(dictionary, uid: user.id!)
-
-                self.users.append(user)
+                let id = snapshot.key
+                user.id = id
+                user.setUserWithDictionary(dictionary, uid: id)
+                if (FIRAuth.auth()!.currentUser!.uid != user.id!){
+                    self.users.append(user)
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableView.reloadData()
@@ -52,27 +56,36 @@ class AllUsersViewController: UITableViewController {
                 
             }
             
-        }, withCancelBlock: nil)
+            }, withCancelBlock: nil)
         
+    }
+    
+    func handleDone() {
+        goToChat()
     }
     
     func handleCancel() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // Return number of rows based on how many users there are
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
     
-    // Load the users
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
-        
+        cell.selectionStyle = .None
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
+        if (self.userIdList.contains(user.id!)) {
+            cell.selected = true
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryType.None
+        }
         
-        if user.imageURL == "" {
+        if (user.imageURL == "") {
             cell.profileImageView.image = UIImage(named: "empty_profile")
         }
         else {
@@ -83,18 +96,32 @@ class AllUsersViewController: UITableViewController {
         return cell
     }
     
-    // clicking on a user cell opens up their chat log
+    //
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        let user: User = users[indexPath.row]
-        goToChat(user)
+        //        let user: User = users[indexPath.row]
+        //        goToChat(user)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let msgGroupUser = users[indexPath.row]
+        if (cell?.accessoryType == UITableViewCellAccessoryType.Checkmark){
+            cell!.accessoryType = UITableViewCellAccessoryType.None;
+            self.groupMessage.removeAtIndex(self.groupMessage.indexOf(msgGroupUser)!)
+            self.userIdList.removeAtIndex(self.userIdList.indexOf(msgGroupUser.id!)!)
+        }
+        else{
+            self.groupMessage.append(msgGroupUser)
+            cell!.accessoryType = UITableViewCellAccessoryType.Checkmark;
+            self.userIdList.append(msgGroupUser.id!)
+        }
     }
     
     //go to chat log of selected user
-    func goToChat(user: User){
+    func goToChat(){
+        print(groupMessage[0].name!)
+        print(groupMessage[0].id!)
         let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
         chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AllUsersViewController.goBack))
         let navController = UINavigationController(rootViewController: chatLog)
-        chatLog.chatPartner = user
+        chatLog.chatPartners = groupMessage
         presentViewController(navController, animated: true, completion: nil)
     }
     
@@ -106,7 +133,7 @@ class AllUsersViewController: UITableViewController {
 }
 
 let imageCache = NSCache()
-    
+
 extension UIImageView {
     
     func loadImageUsingCacheWithUrlString(urlString: String) {

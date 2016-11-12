@@ -12,33 +12,9 @@ import Firebase
 
 class ChatLogController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
     
-    var chatPartner: User? {
-        didSet {
-            guard let uid = FIRAuth.auth()?.currentUser?.uid else {
-                return
-            }
-            let ref = FIRDatabase.database().reference().child("user-messages1").child(uid)
-            ref.observeEventType(.ChildAdded, withBlock: { (snapshot) in
-                let id = snapshot.key
-                let messageRef = FIRDatabase.database().reference().child("messages1").child(id)
-                messageRef.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                    let dictionary = snapshot.value as? [String : AnyObject]
-                    let message = Message()
-                    message.setValuesForKeysWithDictionary(dictionary!)
-                    //print("to ID: \(message.toId)")
-                    //print("return ID: \(message.returnId())")
-                    if (self.chatPartner?.id == message.returnId()) {
-                        self.messages.append(message)
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.collectionView?.reloadData()
-                        })
-                    }
-                    }, withCancelBlock: nil)
-                }, withCancelBlock: nil)
-        }
-    }
-    
+    var chatPartners = [User]()
     var messages = [Message]()
+    
     
     let msgField: UITextField = {
         let textField = UITextField()
@@ -47,19 +23,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return textField
     }()
     
-    func setUpNavBarColor() {
-        let nav = self.navigationController?.navigationBar
-        nav?.translucent = false
-        let img = UIImage()
-        self.navigationController?.navigationBar.shadowImage = img
-        self.navigationController?.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.tintColor = AppDelegate().RGB(68.0, g: 176.0,b:80.0)
-        self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavBarColor()
+        
+        collectionView!.registerClass(MessageViewCell.self, forCellWithReuseIdentifier: "cellId")
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatLogController.tapHandler(_:)))
         view.addGestureRecognizer(tapRecognizer)
@@ -67,10 +34,9 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         addNavItems()
         collectionView?.backgroundColor = UIColor.whiteColor()
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
-        collectionView?.registerClass(MessageViewCell.self, forCellWithReuseIdentifier: "cellId")
-        // Allows scrolling
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ChatLogController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatLogController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: self.view.window)
+        
         collectionView?.alwaysBounceVertical = true
         
         // adjust part of message controller and pad it to let messages display nicer
@@ -78,8 +44,66 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
         
         msgField.delegate = self
+        fetchUserMsg()
     }
     
+    func getChatID() -> String{
+        var chatId = ""
+        for a in 0 ..< chatPartners.count{
+            chatId += chatPartners[a].id!
+            if (a != chatPartners.count - 1){
+                chatId += " "
+            }
+            
+        }
+        return chatId
+    }
+    
+    //Gets the user message id numbers
+    func fetchUserMsg(){
+        let currentUserId = FIRAuth.auth()?.currentUser?.uid
+        let chatId = getChatID()
+        if (chatPartners.count == 1){
+            FIRDatabase.database().reference().child("user-messages").child(currentUserId!).child(chatId).observeEventType(.Value, withBlock: {(snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject]{
+                    let keys: [String] = Array(dictionary.keys)
+                    self.getMessages(keys, user: currentUserId!)
+                }
+            })
+        } else {
+            FIRDatabase.database().reference().child("user-messages").child(currentUserId!).child("group_messages").child(chatId).observeEventType(.Value, withBlock: {(snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject]{
+                    let keys: [String] = Array(dictionary.keys)
+                    self.getMessages(keys, user: currentUserId!)
+                }
+            })
+        }
+        
+    }
+    
+    //fetches the message data using the message id numbers passed by fetchUserMsg
+    func getMessages(dict: [String], user: String){
+        FIRDatabase.database().reference().child("messages").observeSingleEventOfType(.Value, withBlock: {(snapshot) in
+            self.messages.removeAll()
+            if let dictionary = snapshot.value as? [String: AnyObject]{
+                for a in 0 ..< dict.count {
+                    let msg = Message()
+                    let temp2 = dict[a]
+                    let temp = dictionary[temp2]
+                    msg.setMsgWithDictionary(temp as! NSDictionary)
+                    self.messages.append(msg)
+                    self.messages.sortInPlace({ (firstMessage, secondMessage) -> Bool in
+                        return secondMessage.timeStamp as! Int > firstMessage.timeStamp as! Int
+                    })
+                }
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                self.collectionView?.reloadData()
+            })
+        })
+    }
     //Handling the keyboard entry
     func keyboardWillShow(sender: NSNotification) {
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
@@ -103,10 +127,57 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         self.view.frame.origin.y += keyboardSize.height
     }
     
+    func getNames() -> String {
+        var groupNames: String = ""
+        for a in 0 ..< chatPartners.count {
+            if (a != chatPartners.count - 1){
+                groupNames += chatPartners[a].name!
+                groupNames += " "
+            } else {
+                groupNames += chatPartners[a].name!
+            }
+            
+        }
+        return groupNames
+    }
+    
+    func getID() -> String {
+        let currentUserID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        var groupUID: String = ""
+        
+        //check to see if the current user is already in the conversation
+        //if so, no need to add user uid to from of conversation id
+        var userPresent: Bool = false
+        for b in 0 ..< chatPartners.count{
+            if (chatPartners[b].id! == currentUserID) {
+                userPresent = true
+            }
+        }
+        if (!userPresent){
+            groupUID += currentUserID
+            groupUID += " "
+        }
+        //Concat user uids
+        for a in 0 ..< chatPartners.count {
+            if (a != chatPartners.count - 1){
+                groupUID += chatPartners[a].id!
+                groupUID += " "
+            } else {
+                groupUID += chatPartners[a].id!
+            }
+            
+        }
+        return groupUID
+    }
+    
     //Format the navigation bar
     func addNavItems(){
-        print((chatPartner?.name)!)
-        self.navigationItem.title = (chatPartner?.name)!
+        
+        if (chatPartners.count == 1){
+            self.navigationItem.title = (chatPartners[0].name)!
+        } else {
+            self.navigationItem.title = getNames()
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool{
@@ -166,36 +237,66 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func sendButtonHandler(){
-        let ref = FIRDatabase.database().reference().child("messages1")
+        
+        let ref = FIRDatabase.database().reference().child("messages")
         let child = ref.childByAutoId()
-        print(chatPartner!.name)
-        print(chatPartner!.id)
-        let toId = chatPartner!.id
-        let fromId = FIRAuth.auth()!.currentUser!.uid
-        let timeStamp = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
-        print(toId)
-        let values: [String: AnyObject] = ["text": msgField.text!,"toId": toId!, "fromId": fromId, "timeStamp": timeStamp]
-        child.updateChildValues(values) { (error, ref) in
-            if error != nil {
-                print (error)
-                return
+        
+        //To handle a message to a single user
+        if (chatPartners.count == 1){
+            let toId = chatPartners[0].id
+            let fromId = FIRAuth.auth()!.currentUser!.uid
+            let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+            let values: [String: AnyObject] = ["text": msgField.text!,"toId": toId!, "fromId": fromId, "timeStamp": timeStamp]
+            child.updateChildValues(values) { (error, ref) in
+                if error != nil {
+                    print (error)
+                    return
+                }
+                
+                let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child(toId!)
+                let messageId = child.key
+                userMessagesRef.updateChildValues([messageId: 1])
+                
+                let recipient = FIRDatabase.database().reference().child("user-messages").child(toId!).child(fromId)
+                recipient.updateChildValues([messageId: 1])
             }
-            let messageRef = FIRDatabase.database().reference().child("user-messages1").child(fromId)
-            let messageId = child.key
-            messageRef.updateChildValues([messageId: 1])
+        } else {
             
-            let recipient = FIRDatabase.database().reference().child("user-messages1").child(toId!)
-            recipient.updateChildValues([messageId: 1])
-//            
-//            let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child(toId!)
-//            let messageId = child.key
-//            userMessagesRef.updateChildValues([messageId: 1])
-//            
-//            let recipient = FIRDatabase.database().reference().child("user-messages").child(toId!).child(fromId)
-//            recipient.updateChildValues([messageId: 1])
+            //Handle a message to a group
+            let toId = getID()
+            let fromId = FIRAuth.auth()!.currentUser!.uid
+            let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+            let values: [String: AnyObject] = ["text": msgField.text!,"toId": toId, "fromId": fromId, "timeStamp": timeStamp]
+            child.updateChildValues(values) { (error, ref) in
+                if error != nil {
+                    print (error)
+                    return
+                }
+                
+                let groupId = self.getID()
+                let groupMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child("group_messages").child(groupId)
+                let messageId = child.key
+                groupMessagesRef.updateChildValues([messageId: 1])
+                
+                //***********************************
+                //ADDED CONDITIONAL TO RECIPIENTS
+                //***********************************
+                
+                for a in 0 ..< self.chatPartners.count {
+                    let recipient = self.chatPartners[a].id!
+                    if (recipient != fromId){
+                        let recipientRef = FIRDatabase.database().reference().child("user-messages").child(recipient).child("group_messages").child(groupId)
+                        recipientRef.updateChildValues([messageId: 1])
+                    }
+                }
+                
+            }
         }
         msgField.resignFirstResponder()
         msgField.text = ""
+        dispatch_async(dispatch_get_main_queue(), {
+            self.collectionView?.reloadData()
+        })
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -203,7 +304,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         if let text = messages[indexPath.item].text {
             height = adjustMessageSize(text).height + 20
         }
-        
         return CGSize(width: view.frame.width, height: height)
     }
     
@@ -214,18 +314,22 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return NSString(string: message).boundingRectWithSize(size, options: options, attributes: attributes, context: nil)
     }
     
-    // return how many message cells to create
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
     
-    // d
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath) as! MessageViewCell
         let actualText = messages[indexPath.item]
         cell.messageText.text = actualText.text
-        // set if it is the sender's message or receiver's message
-        if let imageURL = self.chatPartner?.imageURL {
+        
+        var index: Int = 0
+        for a in 0 ..< chatPartners.count {
+            if(self.chatPartners[a].id! == messages[indexPath.row].fromId!){
+                index = a
+            }
+        }
+        if let imageURL = self.chatPartners[index].imageURL {
             cell.profileImage.loadImageUsingCacheWithUrlString(imageURL)
         }
         
@@ -243,7 +347,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             cell.backgroundTextLeftAnchor?.active = false
             cell.profileImage.hidden = true
         }
-
         
         // modify the text's size
         cell.backgroundTextViewWidth?.constant = adjustMessageSize(actualText.text!).width + 40
