@@ -17,6 +17,8 @@ class MessageViewCell: UICollectionViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = UIColor.clearColor()
         textView.textColor = UIColor.whiteColor()
+        textView.editable = false
+        textView.selectable = false
         return textView
     }()
     
