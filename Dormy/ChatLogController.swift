@@ -65,7 +65,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             if (a != chatPartners.count - 1){
                 chatId += " "
             }
-            
         }
         return chatId
     }
@@ -365,5 +364,4 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         return cell
     }
-    
 }

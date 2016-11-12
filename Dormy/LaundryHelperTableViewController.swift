@@ -245,5 +245,4 @@ class LaundryHelperTableViewController: UITableViewController {
         alertController.addAction(defaultAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-    
 }

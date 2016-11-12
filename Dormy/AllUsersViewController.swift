@@ -96,10 +96,8 @@ class AllUsersViewController: UITableViewController {
         return cell
     }
     
-    //
+    // Function that defines what to do when a cell is selected
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        //        let user: User = users[indexPath.row]
-        //        goToChat(user)
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         let msgGroupUser = users[indexPath.row]
         if (cell?.accessoryType == UITableViewCellAccessoryType.Checkmark){

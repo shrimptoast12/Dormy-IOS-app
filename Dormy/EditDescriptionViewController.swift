@@ -99,9 +99,7 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableView.reloadData()
                 })
-                
             }
-            
             }, withCancelBlock: nil)
         
     }
@@ -139,7 +137,6 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
                 cell.profileImageView.loadImageUsingCacheWithUrlString(profileImageUrl)
             }
         }
-
         return cell
     }
     
@@ -154,7 +151,6 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
         else{
             self.roommatesIdList.append(roommate.id!)
             cell!.accessoryType = UITableViewCellAccessoryType.Checkmark;
-            
         }
     }
     
