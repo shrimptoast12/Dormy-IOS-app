@@ -85,13 +85,10 @@ class MessagesTableViewController: UITableViewController {
                         inGroupMsg = true
                     }
                 }
-                print("size of msgUSerIdNums")
-                print(self.msgUserIdNums.count)
                 //Dictionary value are dictionarys of the message ids
                 for a in 0 ..< (self.msgUserIdNums.count){
                     let temp: [String:AnyObject] = dictionary[self.msgUserIdNums[a]]!
                     let msgKeys: [String] = Array(temp.keys)
-                    print("The value of a : \(a)")
                     FIRDatabase.database().reference().child("messages").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                         
                         if let dictionary = snapshot.value as? [String: [String: AnyObject]]{
@@ -109,7 +106,6 @@ class MessagesTableViewController: UITableViewController {
                             let mostRecentMsg = Message()
                             let msgDictionary: [String: AnyObject] = dictionary[message]!
                             mostRecentMsg.setMsgWithDictionary(msgDictionary)
-                            print("Adding message to mostRecent")
                             self.mostRecent.append(mostRecentMsg)
                         }
                         if (a == self.msgUserIdNums.count - 1){
@@ -292,46 +288,8 @@ class MessagesTableViewController: UITableViewController {
                 }
             }
         }
-        print("Printing mostRecent count")
-        print(mostRecent.count)
-        print(indexPath.row)
         cell.message = mostRecent[indexPath.row]
         return cell
     }
-    
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
+
 }

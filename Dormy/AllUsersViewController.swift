@@ -116,8 +116,6 @@ class AllUsersViewController: UITableViewController {
     
     //go to chat log of selected user
     func goToChat(){
-        print(groupMessage[0].name!)
-        print(groupMessage[0].id!)
         let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
         chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AllUsersViewController.goBack))
         let navController = UINavigationController(rootViewController: chatLog)

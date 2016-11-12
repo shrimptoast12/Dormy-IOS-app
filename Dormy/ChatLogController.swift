@@ -350,6 +350,9 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         // modify the text's size
         cell.backgroundTextViewWidth?.constant = adjustMessageSize(actualText.text!).width + 40
+        dispatch_async(dispatch_get_main_queue(), {
+            self.collectionView?.reloadData()
+        })
         
         return cell
     }

@@ -14,25 +14,6 @@ class userMsgCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-//            if let toId = message?.returnId() {
-//                
-//                var temp: String = ""
-//                for a in 0 ..< message!.toId.count{
-//                    temp += message!.toId[a]
-//                    if (a == message!.toId.count - 1){
-//                        
-//                    }
-//                }
-//                let ref = FIRDatabase.database().reference().child("users").child(temp)
-//                ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//                    if let dictionary = snapshot.value as? [String: AnyObject] {
-//                        //                        if let imageUrl = dictionary["imageURL"] as? String {
-//                        //                            self.profileImageView.loadImageUsingCacheWithUrlString(imageUrl)
-//                        //                        }
-//                    }
-//                    
-//                    }, withCancelBlock: nil)
-//            }
             if let seconds = message?.timeStamp!.doubleValue {
                 let timeStampDate = NSDate(timeIntervalSince1970: seconds)
                 
