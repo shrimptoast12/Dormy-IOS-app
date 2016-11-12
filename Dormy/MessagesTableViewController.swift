@@ -78,46 +78,51 @@ class MessagesTableViewController: UITableViewController {
                 //in a conversation with
                 var inGroupMsg: Bool = false
                 let keys: [String] = Array(dictionary.keys)
-                for a in 0 ..< keys.count {
-                    if (keys[a] != "group_messages"){
-                        self.msgUserIdNums.append(keys[a])
-                    } else {
-                        inGroupMsg = true
-                    }
+                if (keys.count == 1 && keys[0] == "group_messages") {
+                    self.fetchGroupMessages()
                 }
-                //Dictionary value are dictionarys of the message ids
-                for a in 0 ..< (self.msgUserIdNums.count){
-                    let temp: [String:AnyObject] = dictionary[self.msgUserIdNums[a]]!
-                    let msgKeys: [String] = Array(temp.keys)
-                    FIRDatabase.database().reference().child("messages").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                        
-                        if let dictionary = snapshot.value as? [String: [String: AnyObject]]{
-                            var message: String = ""
-                            var latest: NSNumber = 0
-                            for c in 0 ..< msgKeys.count {
-                                let temp: [String: AnyObject] = dictionary[msgKeys[c]]!
-                                let time = temp["timeStamp"] as? NSNumber
-                                if (Int(time!) > Int(latest)){
-                                    message = msgKeys[c]
-                                    latest = time!
+                else {
+                    for a in 0 ..< keys.count {
+                        if (keys[0] != "group_messages"){
+                            self.msgUserIdNums.append(keys[a])
+                        } else {
+                            inGroupMsg = true
+                        }
+                    }
+                    //Dictionary value are dictionarys of the message ids
+                    for a in 0 ..< (self.msgUserIdNums.count){
+                        let temp: [String:AnyObject] = dictionary[self.msgUserIdNums[a]]!
+                        let msgKeys: [String] = Array(temp.keys)
+                        FIRDatabase.database().reference().child("messages").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                            
+                            if let dictionary = snapshot.value as? [String: [String: AnyObject]]{
+                                var message: String = ""
+                                var latest: NSNumber = 0
+                                for c in 0 ..< msgKeys.count {
+                                    let temp: [String: AnyObject] = dictionary[msgKeys[c]]!
+                                    let time = temp["timeStamp"] as? NSNumber
+                                    if (Int(time!) > Int(latest)){
+                                        message = msgKeys[c]
+                                        latest = time!
+                                    }
+                                    
+                                }
+                                let mostRecentMsg = Message()
+                                let msgDictionary: [String: AnyObject] = dictionary[message]!
+                                mostRecentMsg.setMsgWithDictionary(msgDictionary)
+                                self.mostRecent.append(mostRecentMsg)
+                            }
+                            if (a == self.msgUserIdNums.count - 1){
+                                if (inGroupMsg){
+                                    self.fetchGroupMessages()
+                                } else {
+                                    self.fetchUserProfile()
                                 }
                                 
                             }
-                            let mostRecentMsg = Message()
-                            let msgDictionary: [String: AnyObject] = dictionary[message]!
-                            mostRecentMsg.setMsgWithDictionary(msgDictionary)
-                            self.mostRecent.append(mostRecentMsg)
-                        }
-                        if (a == self.msgUserIdNums.count - 1){
-                            if (inGroupMsg){
-                                self.fetchGroupMessages()
-                            } else {
-                                self.fetchUserProfile()
-                            }
                             
-                        }
-                        
                         }, withCancelBlock: nil)
+                    }
                 }
             }
             }, withCancelBlock: nil)

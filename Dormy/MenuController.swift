@@ -24,7 +24,6 @@ class MenuController: UITableViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginViewController = storyboard.instantiateViewControllerWithIdentifier("login") as! ViewController
             self.presentViewController(loginViewController, animated: true, completion: nil)
-
         }
     }
 

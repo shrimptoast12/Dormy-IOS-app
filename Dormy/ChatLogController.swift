@@ -297,7 +297,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                         recipientRef.updateChildValues([messageId: 1])
                     }
                 }
-                
             }
         }
         msgField.resignFirstResponder()
