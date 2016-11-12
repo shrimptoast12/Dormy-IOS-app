@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class userMsgCell: UITableViewCell {
+class UserMsgCell: UITableViewCell {
     
     var message: Message? {
         didSet {
