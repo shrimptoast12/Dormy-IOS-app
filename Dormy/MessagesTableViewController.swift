@@ -76,18 +76,22 @@ class MessagesTableViewController: UITableViewController {
                 
                 //Dictionary keys are the single users that the current user is currently
                 //in a conversation with
+                var inGroupMsg: Bool = false
                 let keys: [String] = Array(dictionary.keys)
                 for a in 0 ..< keys.count {
                     if (keys[a] != "group_messages"){
                         self.msgUserIdNums.append(keys[a])
+                    } else {
+                        inGroupMsg = true
                     }
                 }
-                
+                print("size of msgUSerIdNums")
+                print(self.msgUserIdNums.count)
                 //Dictionary value are dictionarys of the message ids
-                for a in 0 ..< (keys.count) - 1{
+                for a in 0 ..< (self.msgUserIdNums.count){
                     let temp: [String:AnyObject] = dictionary[self.msgUserIdNums[a]]!
                     let msgKeys: [String] = Array(temp.keys)
-                    
+                    print("The value of a : \(a)")
                     FIRDatabase.database().reference().child("messages").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                         
                         if let dictionary = snapshot.value as? [String: [String: AnyObject]]{
@@ -102,13 +106,19 @@ class MessagesTableViewController: UITableViewController {
                                 }
                                 
                             }
-                            var mostRecentMsg = Message()
-                            var msgDictionary: [String: AnyObject] = dictionary[message]!
+                            let mostRecentMsg = Message()
+                            let msgDictionary: [String: AnyObject] = dictionary[message]!
                             mostRecentMsg.setMsgWithDictionary(msgDictionary)
+                            print("Adding message to mostRecent")
                             self.mostRecent.append(mostRecentMsg)
                         }
-                        if (a == keys.count - 2){
-                            self.fetchGroupMessages()
+                        if (a == self.msgUserIdNums.count - 1){
+                            if (inGroupMsg){
+                                self.fetchGroupMessages()
+                            } else {
+                                self.fetchUserProfile()
+                            }
+                            
                         }
                         
                         }, withCancelBlock: nil)
@@ -152,8 +162,8 @@ class MessagesTableViewController: UITableViewController {
                                     latest = time!
                                 }
                             }
-                            var mostRecentMsg = Message()
-                            var msgDictionary: [String: AnyObject] = dictionary[message]!
+                            let mostRecentMsg = Message()
+                            let msgDictionary: [String: AnyObject] = dictionary[message]!
                             mostRecentMsg.setMsgWithDictionary(msgDictionary)
                             self.mostRecent.append(mostRecentMsg)
                         }
@@ -282,6 +292,9 @@ class MessagesTableViewController: UITableViewController {
                 }
             }
         }
+        print("Printing mostRecent count")
+        print(mostRecent.count)
+        print(indexPath.row)
         cell.message = mostRecent[indexPath.row]
         return cell
     }
