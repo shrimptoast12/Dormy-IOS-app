@@ -23,10 +23,21 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return textField
     }()
     
+    func setUpNavBarColor() {
+        let nav = self.navigationController?.navigationBar
+        nav?.translucent = false
+        let img = UIImage()
+        self.navigationController?.navigationBar.shadowImage = img
+        self.navigationController?.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.tintColor = AppDelegate().RGB(68.0, g: 176.0,b:80.0)
+        self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView!.registerClass(MessageViewCell.self, forCellWithReuseIdentifier: "cellId")
+        setUpNavBarColor()
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatLogController.tapHandler(_:)))
         view.addGestureRecognizer(tapRecognizer)
@@ -261,7 +272,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 recipient.updateChildValues([messageId: 1])
             }
         } else {
-            
             //Handle a message to a group
             let toId = getID()
             let fromId = FIRAuth.auth()!.currentUser!.uid
@@ -272,7 +282,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                     print (error)
                     return
                 }
-                
                 let groupId = self.getID()
                 let groupMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId).child("group_messages").child(groupId)
                 let messageId = child.key
