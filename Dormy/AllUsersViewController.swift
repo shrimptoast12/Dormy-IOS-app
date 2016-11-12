@@ -13,6 +13,7 @@ class AllUsersViewController: UITableViewController {
     
     var users = [User]()
     
+    // Adds some UI elements to the nav bar to make it look nicer
     func setUpNavBarColor() {
         let nav = self.navigationController?.navigationBar
         nav?.translucent = false
@@ -33,6 +34,7 @@ class AllUsersViewController: UITableViewController {
         fetchUser()
     }
     
+    // Fetches the user from the database and appends the user to a User array
     func fetchUser() {
         FIRDatabase.database().reference().child("users").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
@@ -58,10 +60,12 @@ class AllUsersViewController: UITableViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // Return number of rows based on how many users there are
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
     
+    // Load the users
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! UserCell
         
@@ -79,7 +83,7 @@ class AllUsersViewController: UITableViewController {
         return cell
     }
     
-    //
+    // clicking on a user cell opens up their chat log
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         let user: User = users[indexPath.row]
         goToChat(user)
@@ -88,7 +92,7 @@ class AllUsersViewController: UITableViewController {
     //go to chat log of selected user
     func goToChat(user: User){
         let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-        chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        chatLog.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AllUsersViewController.goBack))
         let navController = UINavigationController(rootViewController: chatLog)
         chatLog.chatPartner = user
         presentViewController(navController, animated: true, completion: nil)

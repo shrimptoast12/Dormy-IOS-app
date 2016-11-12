@@ -126,7 +126,9 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
         if (self.roommatesIdList.contains(user.id!)) {
             cell.selected = true
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            print(user.name)
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryType.None
         }
         
         if user.imageURL == "" {

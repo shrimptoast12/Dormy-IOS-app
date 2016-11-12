@@ -18,6 +18,7 @@ class UserCell: UITableViewCell {
         detailTextLabel?.frame = CGRectMake(64, detailTextLabel!.frame.origin.y + 2, detailTextLabel!.frame.width, detailTextLabel!.frame.height)
     }
     
+    // Profile Image view
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,8 +33,7 @@ class UserCell: UITableViewCell {
         
         addSubview(profileImageView)
         
-        //ios 9 constraint anchors
-        //need x,y,width,height anchors
+        // Add appropriate constraints to the profie picture in the cell that shows the user
         profileImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 8).active = true
         profileImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
         profileImageView.widthAnchor.constraintEqualToConstant(48).active = true

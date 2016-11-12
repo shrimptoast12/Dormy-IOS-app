@@ -10,6 +10,7 @@ import UIKit
 import Firebase
  
 class MessageViewCell: UICollectionViewCell {
+    // the actual message text for the chat bubbles
     let messageText: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFontOfSize(18)
@@ -19,6 +20,7 @@ class MessageViewCell: UICollectionViewCell {
         return textView
     }()
     
+    // the profile picture for the chat bubbles
     let profileImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +34,7 @@ class MessageViewCell: UICollectionViewCell {
     var backgroundTextRightAnchor: NSLayoutConstraint?
     var backgroundTextLeftAnchor: NSLayoutConstraint?
     
+    // The background for the chat bubbles
     let backgroundTextView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 12

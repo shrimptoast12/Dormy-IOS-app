@@ -94,51 +94,6 @@ class MessagesTableViewController: UITableViewController {
             }, withCancelBlock: nil)
     }
     
-    //get user data
-    func fetchUsers(){
-        
-        let ref = FIRDatabase.database().reference().child("messages1")
-        ref.observeEventType(.ChildAdded, withBlock: { (snapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-               let message = Message()
-                message.setValuesForKeysWithDictionary(dictionary)
-                //self.firstMsg.append(message)
-                if let actualId = message.returnId() {
-                    self.messageGroup[actualId] = message
-                    self.firstMsg = Array(self.messageGroup.values)
-                    self.firstMsg.sortInPlace({ (firstMessage, secondMessage) -> Bool in
-                        return firstMessage.timeStamp > secondMessage.timeStamp
-                    })
-                }
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self.tableView.reloadData()
-                })
-            }
-            
-        }, withCancelBlock: nil)
-//        ref.observeEventType(.ChildAdded, withBlock: {(snapshot) in
-//            
-//            let msgUserId = snapshot.key
-//            print(msgUserId)
-//            let allUsersRef = FIRDatabase.database().reference().child("users").child(msgUserId)
-//            
-//            allUsersRef.observeSingleEventOfType(.Value, withBlock: {(snapshot) in
-//                
-//                if let dictionary = snapshot.value as? [String: AnyObject] {
-//                    let user = User()
-//                    user.id = snapshot.key
-//                    user.setValuesForKeysWithDictionary(dictionary)
-//                    self.msgUsers.append(user)
-//                    print(user.name!)
-//                    print(user.id!)
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        self.tableView.reloadData()
-//                    })
-//                }
-//                
-//            }, withCancelBlock: nil)
-//        })
-    }
     
     //handle the selection of cell
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
@@ -212,40 +167,5 @@ class MessagesTableViewController: UITableViewController {
         
         return cell
     }
-        
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
+    
 }

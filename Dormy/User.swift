@@ -20,6 +20,7 @@ class User: NSObject {
     var roommatesIdList = [String]()
     var id:String?
     
+    // Sets up a User object with the corresponding dictionary
     func setUserWithDictionary(dictionary:NSDictionary, uid:String) {
         RA = dictionary["RA"] as? String
         availability = dictionary["availability"] as? String
@@ -34,11 +35,4 @@ class User: NSObject {
 
 func ==(lhs: User, rhs: User) -> Bool {
     return lhs.id == rhs.id
-//        lhs.RA == rhs.RA &&
-//        lhs.availability == rhs.availability &&
-//        lhs.descript == rhs.descript &&
-//        lhs.email == rhs.email &&
-//        lhs.imageURL == rhs.imageURL &&
-//        lhs.RA == rhs.RA &&
-//        lhs.RA == rhs.RA
 }

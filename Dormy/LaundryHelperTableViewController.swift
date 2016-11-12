@@ -16,6 +16,7 @@ class LaundryHelperTableViewController: UITableViewController {
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var addMachine: UIBarButtonItem!
     
+    // Sets up the UI components for the navigation bars to make it look nicer
     func setUpNavBarColor() {
         let nav = self.navigationController?.navigationBar
         nav?.translucent = false
@@ -35,7 +36,8 @@ class LaundryHelperTableViewController: UITableViewController {
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
-
+        
+        // If you are an RA, then you will be able to see the machine adding button, else you won't
         self.title = "Laundry Helper"
         self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
         let user = FIRAuth.auth()?.currentUser
@@ -55,6 +57,7 @@ class LaundryHelperTableViewController: UITableViewController {
         fetchMachine()
     }
     
+    // grabs corresponding machines and appends it to a machine array
     func fetchMachine() {
         FIRDatabase.database().reference().child("laundry").child("dorm-name").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
@@ -185,6 +188,7 @@ class LaundryHelperTableViewController: UITableViewController {
         // grabs the current time
         let startTime = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         let calender = NSCalendar.currentCalendar()
+        
         // grab the current user's name
         let uid = FIRAuth.auth()?.currentUser?.uid
         FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
@@ -200,6 +204,7 @@ class LaundryHelperTableViewController: UITableViewController {
             }
             }, withCancelBlock: nil)
         
+        // Alert controller that asks the user if he is 100% sure he wants to reserve the machine
         let alertController = UIAlertController(title: "Important", message: "Are you sure you want to reserve?", preferredStyle: .Alert)
         let yesAction = UIAlertAction(title: "Yes", style: .Default) { (action:UIAlertAction) in
             FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("inUseBy").setValue(currentUserName)
@@ -223,6 +228,7 @@ class LaundryHelperTableViewController: UITableViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // Function used to free a laundry machine if it is in use.
     func freeLaundryMachine (sender: UIButton!) {
         let machineNum = "Machine \(sender.tag)"
         
@@ -239,50 +245,5 @@ class LaundryHelperTableViewController: UITableViewController {
         alertController.addAction(defaultAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

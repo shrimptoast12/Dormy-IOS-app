@@ -29,6 +29,7 @@ class AddLaundryMachineViewController: UIViewController {
     }
     
     
+    // Function used for when the RA decides to add a new laundry machine
     @IBAction func addMachineAction(sender: AnyObject) {
         var machineName:String = ""
         var machineIcon:String = ""
