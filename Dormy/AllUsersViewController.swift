@@ -61,7 +61,9 @@ class AllUsersViewController: UITableViewController {
     }
     
     func handleDone() {
-        goToChat()
+        if (groupMessage.count != 0) {
+            goToChat()
+        }
     }
     
     func handleCancel() {

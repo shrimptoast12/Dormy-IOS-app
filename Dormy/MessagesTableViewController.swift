@@ -83,7 +83,9 @@ class MessagesTableViewController: UITableViewController {
                 }
                 else {
                     for a in 0 ..< keys.count {
-                        if (keys[0] != "group_messages"){
+                        if (keys[a] != "group_messages"){
+                            print("Printing before append to msgUserIdNums")
+                            print(keys[a])
                             self.msgUserIdNums.append(keys[a])
                         } else {
                             inGroupMsg = true
@@ -99,6 +101,8 @@ class MessagesTableViewController: UITableViewController {
                                 var message: String = ""
                                 var latest: NSNumber = 0
                                 for c in 0 ..< msgKeys.count {
+                                    print("Printing keys")
+                                    print(msgKeys[c])
                                     let temp: [String: AnyObject] = dictionary[msgKeys[c]]!
                                     let time = temp["timeStamp"] as? NSNumber
                                     if (Int(time!) > Int(latest)){
