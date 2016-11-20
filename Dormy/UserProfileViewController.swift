@@ -296,9 +296,21 @@ class UserProfileViewController: UIViewController, UITextViewDelegate, UIImagePi
         return cell
     }
     
+    // Allows users to look at somone elses profile
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        if (!self.currentUser.roommatesIdList.isEmpty) {
+            let otherProf = self.storyboard?.instantiateViewControllerWithIdentifier("OtherProfile") as! OtherProfileViewController
+            let navController = UINavigationController(rootViewController: otherProf)
+            let otherUserID = self.currentUser.roommatesIdList[indexPath.row]
+            let ref = FIRDatabase.database().reference().child("users").child(otherUserID)
+            let selectedUser = User()
+            ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    selectedUser.setUserWithDictionary(dictionary, uid: otherUserID)
+                    otherProf.currentUser = selectedUser
+                    self.presentViewController(navController, animated: true, completion: nil)
+                }
+                }, withCancelBlock: nil)
+        }
     }
-
-    
 }

@@ -27,6 +27,7 @@
 		F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */; };
 		F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */; };
 		F4E5F5CF1DD290C7004F00E7 /* AddLaundryMachineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E5F5CE1DD290C7004F00E7 /* AddLaundryMachineViewController.swift */; };
+		F4F643EE1DE2498200CB4E0F /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F643ED1DE2498200CB4E0F /* OtherProfileViewController.swift */; };
 		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
 		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
 		F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68842571DBE4B8E00DA9CEC /* Main.storyboard */; };
@@ -63,6 +64,7 @@
 		F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryHelperTableViewController.swift; sourceTree = "<group>"; };
 		F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryTableViewCell.swift; sourceTree = "<group>"; };
 		F4E5F5CE1DD290C7004F00E7 /* AddLaundryMachineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLaundryMachineViewController.swift; sourceTree = "<group>"; };
+		F4F643ED1DE2498200CB4E0F /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		F68842501DBE4B8E00DA9CEC /* Dormy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F68842551DBE4B8E00DA9CEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				F6CD2B451DBE6EBC0078689A /* EditDescriptionViewController.swift */,
 				F6CD2B431DBE4F790078689A /* UserProfileViewController.swift */,
+				F4F643ED1DE2498200CB4E0F /* OtherProfileViewController.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
