@@ -18,6 +18,9 @@
 		785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471051DCAE7AD00A4C35C /* UserCell.swift */; };
 		7875C89B1DCEA05900715A89 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7875C89A1DCEA05900715A89 /* Messages.storyboard */; };
 		7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */; };
+		78FB7F821DE2446100EDD7F1 /* BulletinBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78FB7F811DE2446100EDD7F1 /* BulletinBoard.storyboard */; };
+		78FB7F841DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB7F831DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift */; };
+		78FB7F861DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB7F851DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift */; };
 		F43893AB1DD4151E00C5BB75 /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43893AA1DD4151E00C5BB75 /* LaundryMachine.swift */; };
 		F46466AF1DD6205000DF45DF /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46466AE1DD6205000DF45DF /* MessageViewCell.swift */; };
 		F4DB1BA01DD284BE004BAE24 /* LaundryHelper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */; };
@@ -50,6 +53,9 @@
 		785471051DCAE7AD00A4C35C /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		7875C89A1DCEA05900715A89 /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
 		7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
+		78FB7F811DE2446100EDD7F1 /* BulletinBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BulletinBoard.storyboard; sourceTree = "<group>"; };
+		78FB7F831DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinBoardTableViewController.swift; sourceTree = "<group>"; };
+		78FB7F851DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinThreadTableViewController.swift; sourceTree = "<group>"; };
 		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
 		F43893AA1DD4151E00C5BB75 /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
 		F46466AE1DD6205000DF45DF /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewCell.swift; sourceTree = "<group>"; };
@@ -134,6 +140,16 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
+		78FB7F801DE2443800EDD7F1 /* BulletinBoard */ = {
+			isa = PBXGroup;
+			children = (
+				78FB7F811DE2446100EDD7F1 /* BulletinBoard.storyboard */,
+				78FB7F831DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift */,
+				78FB7F851DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift */,
+			);
+			name = BulletinBoard;
+			sourceTree = "<group>";
+		};
 		F4DB1B961DD28102004BAE24 /* LaundryHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +183,7 @@
 		F68842521DBE4B8E00DA9CEC /* Dormy */ = {
 			isa = PBXGroup;
 			children = (
+				78FB7F801DE2443800EDD7F1 /* BulletinBoard */,
 				F4DB1B961DD28102004BAE24 /* LaundryHelper */,
 				781A9D581DCFDED600EFE1EA /* SWRevealViewController */,
 				785471001DCAB60D00A4C35C /* User */,
@@ -257,6 +274,7 @@
 				F688425E1DBE4B8E00DA9CEC /* LaunchScreen.storyboard in Resources */,
 				F688425B1DBE4B8E00DA9CEC /* Assets.xcassets in Resources */,
 				F68842661DBE4C5700DA9CEC /* GoogleService-Info.plist in Resources */,
+				78FB7F821DE2446100EDD7F1 /* BulletinBoard.storyboard in Resources */,
 				7875C89B1DCEA05900715A89 /* Messages.storyboard in Resources */,
 				F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */,
 			);
@@ -324,9 +342,11 @@
 				5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */,
 				F6CD2B441DBE4F790078689A /* UserProfileViewController.swift in Sources */,
 				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
+				78FB7F841DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift in Sources */,
 				F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */,
 				F43893AB1DD4151E00C5BB75 /* LaundryMachine.swift in Sources */,
 				7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */,
+				78FB7F861DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift in Sources */,
 				785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */,
 				785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */,
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
