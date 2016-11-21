@@ -19,7 +19,6 @@ class OtherProfileViewController: UIViewController, UITextViewDelegate, UIImageP
     @IBOutlet weak var availLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var descriptView: UITextView!
-    @IBOutlet weak var menuButton: UIBarButtonItem!
     
     func setUpNavBarColor() {
         let nav = self.navigationController?.navigationBar
@@ -28,7 +27,12 @@ class OtherProfileViewController: UIViewController, UITextViewDelegate, UIImageP
         self.navigationController?.navigationBar.shadowImage = img
         self.navigationController?.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
+        self.navigationController?.navigationBar.tintColor = AppDelegate().RGB(68.0, g: 176.0,b:80.0)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(OtherProfileViewController.goBack))
         
+    }
+    func goBack() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func viewDidLoad() {

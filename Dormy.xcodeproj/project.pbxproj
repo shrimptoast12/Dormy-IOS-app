@@ -16,6 +16,7 @@
 		785471021DCAB62E00A4C35C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471011DCAB62E00A4C35C /* User.swift */; };
 		785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471031DCADD4C00A4C35C /* AllUsersViewController.swift */; };
 		785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471051DCAE7AD00A4C35C /* UserCell.swift */; };
+		786AC88A1DE26DB30031085A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F643ED1DE2498200CB4E0F /* OtherProfileViewController.swift */; };
 		7875C89B1DCEA05900715A89 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7875C89A1DCEA05900715A89 /* Messages.storyboard */; };
 		7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */; };
 		78FB7F821DE2446100EDD7F1 /* BulletinBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78FB7F811DE2446100EDD7F1 /* BulletinBoard.storyboard */; };
@@ -27,7 +28,6 @@
 		F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA11DD2851B004BAE24 /* LaundryHelperTableViewController.swift */; };
 		F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB1BA31DD28546004BAE24 /* LaundryTableViewCell.swift */; };
 		F4E5F5CF1DD290C7004F00E7 /* AddLaundryMachineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E5F5CE1DD290C7004F00E7 /* AddLaundryMachineViewController.swift */; };
-		F4F643EE1DE2498200CB4E0F /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F643ED1DE2498200CB4E0F /* OtherProfileViewController.swift */; };
 		F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842531DBE4B8E00DA9CEC /* AppDelegate.swift */; };
 		F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68842551DBE4B8E00DA9CEC /* ViewController.swift */; };
 		F68842591DBE4B8E00DA9CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68842571DBE4B8E00DA9CEC /* Main.storyboard */; };
@@ -340,6 +340,7 @@
 			files = (
 				5EFA31AB1DD38EFA008047F2 /* userMsgCell.swift in Sources */,
 				783074C01DD0194700326E0B /* SWRevealViewController.m in Sources */,
+				786AC88A1DE26DB30031085A /* OtherProfileViewController.swift in Sources */,
 				F46466AF1DD6205000DF45DF /* MessageViewCell.swift in Sources */,
 				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,
 				5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */,

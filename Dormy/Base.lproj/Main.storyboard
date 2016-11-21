@@ -816,7 +816,7 @@
         <!--OtherProfile-->
         <scene sceneID="3l5-uG-1aJ">
             <objects>
-                <viewController storyboardIdentifier="OtherProfile" title="OtherProfile" id="xt2-CF-Nys" customClass="OtherProfileViewController" customModule="Dormy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OtherProfile" title="OtherProfile" id="xt2-CF-Nys" customClass="OtherProfileViewController" customModule="Dormy" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EdM-uw-GIp"/>
                         <viewControllerLayoutGuide type="bottom" id="Mid-wn-n5K"/>
@@ -833,7 +833,7 @@
                                         <rect key="frame" x="0.0" y="28" width="344" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iOC-e1-7R3" id="TRY-01-7W9">
-                                            <rect key="frame" x="0.0" y="0.0" width="344" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_profile" translatesAutoresizingMaskIntoConstraints="NO" id="MVO-Ed-laG">
@@ -996,17 +996,12 @@
                             <constraint firstItem="OhW-oW-TKC" firstAttribute="centerX" secondItem="If4-nq-11I" secondAttribute="centerX" id="yVo-I7-Jf5"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="TSS-UT-vfJ">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="XcW-7t-DCN">
-                            <color key="tintColor" red="0.26751551029999998" green="0.688477695" blue="0.31216993929999998" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Profile" id="TSS-UT-vfJ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="availLabel" destination="ggs-RP-UkB" id="Isb-Mm-neE"/>
                         <outlet property="coloredProfileView" destination="ucx-mF-31k" id="Y5D-il-b6I"/>
                         <outlet property="descriptView" destination="ZCZ-Bi-ihw" id="zPW-tb-lK5"/>
-                        <outlet property="menuButton" destination="XcW-7t-DCN" id="tLt-Jt-vFM"/>
                         <outlet property="profPic" destination="liR-gc-7oJ" id="siT-OO-uiu"/>
                         <outlet property="roomNumber" destination="hL8-3W-JP2" id="LOw-VM-3E2"/>
                         <outlet property="tableView" destination="If4-nq-11I" id="9jh-NH-PX5"/>
