@@ -9,11 +9,20 @@
 import UIKit
 import Firebase
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var currentName: UILabel!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
+    @IBAction func changeName(sender: AnyObject) {
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        let ref = FIRDatabase.database().reference().child("users").child(uid!)
+        let name = enterName.text!
+        ref.child("name").setValue(name)
+        currentName.text = enterName.text!
+        enterName.text = ""
+    }
+    @IBOutlet weak var enterName: UITextField!
     func setUpNavBarColor() {
         let nav = self.navigationController?.navigationBar
         nav?.translucent = false
@@ -36,6 +45,9 @@ class SettingsViewController: UIViewController {
                 }
             }
             }, withCancelBlock: nil)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatLogController.tapHandler(_:)))
+        view.addGestureRecognizer(tapRecognizer)
+        enterName.delegate = self
         
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
@@ -49,7 +61,14 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        enterName.resignFirstResponder()
+        return true
+    }
+    
+    func tapHandler(gesture: UITapGestureRecognizer){
+        enterName.resignFirstResponder()
+    }
     /*
     // MARK: - Navigation
 
