@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
+		5E2D7A871DE4F80900368679 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2D7A861DE4F80900368679 /* SettingsViewController.swift */; };
 		5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */; };
 		5EFA31AB1DD38EFA008047F2 /* userMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA31AA1DD38EFA008047F2 /* userMsgCell.swift */; };
 		5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA31AC1DD390F6008047F2 /* Message.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.release.xcconfig"; sourceTree = "<group>"; };
 		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E2D7A861DE4F80900368679 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		5EFA31AA1DD38EFA008047F2 /* userMsgCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userMsgCell.swift; sourceTree = "<group>"; };
 		5EFA31AC1DD390F6008047F2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				F688425A1DBE4B8E00DA9CEC /* Assets.xcassets */,
 				F688425F1DBE4B8E00DA9CEC /* Info.plist */,
 				F68842651DBE4C5700DA9CEC /* GoogleService-Info.plist */,
+				5E2D7A861DE4F80900368679 /* SettingsViewController.swift */,
 			);
 			path = Dormy;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				78FB7F861DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift in Sources */,
 				785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */,
 				785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */,
+				5E2D7A871DE4F80900368679 /* SettingsViewController.swift in Sources */,
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
 				F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */,
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
