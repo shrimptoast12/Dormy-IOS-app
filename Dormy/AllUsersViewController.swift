@@ -144,11 +144,10 @@ extension UIImageView {
             return
         }
         
-        //otherwise fire off a new download
+        //otherwise download
         let url = NSURL(string: urlString)
         NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
             
-            //download hit an error so lets return out
             if error != nil {
                 print(error)
                 return
