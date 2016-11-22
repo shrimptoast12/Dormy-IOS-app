@@ -12,9 +12,21 @@ import Firebase
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var currentName: UILabel!
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     
+    func setUpNavBarColor() {
+        let nav = self.navigationController?.navigationBar
+        nav?.translucent = false
+        let img = UIImage()
+        self.navigationController?.navigationBar.shadowImage = img
+        self.navigationController?.navigationBar.setBackgroundImage(img,forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
+        self.navigationController?.navigationBar.tintColor = AppDelegate().RGB(68.0, g: 176.0,b:80.0)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpNavBarColor()
+        
         let uid = FIRAuth.auth()?.currentUser?.uid
         let ref = FIRDatabase.database().reference().child("users").child(uid!)
         ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
@@ -25,7 +37,11 @@ class SettingsViewController: UIViewController {
             }
             }, withCancelBlock: nil)
         
-        // Do any additional setup after loading the view.
+        if self.revealViewController() != nil {
+            menuButton.target = self.revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
     }
 
     override func didReceiveMemoryWarning() {
