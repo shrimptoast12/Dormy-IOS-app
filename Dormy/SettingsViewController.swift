@@ -21,14 +21,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         ref.child("name").setValue(name)
         currentName.text = enterName.text!
         enterName.text = ""
-//        ref.observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//            if let dictionary = snapshot.value as? [String: AnyObject] {
-//                if let name = dictionary["name"] as? String {
-//                    self.currentName.text = name
-//                }
-//            }
-//            }, withCancelBlock: nil)
-
     }
     @IBOutlet weak var enterName: UITextField!
     func setUpNavBarColor() {
