@@ -52,7 +52,6 @@ class MessagesTableViewController: UITableViewController {
         tableView.registerClass(userMsgCell.self, forCellReuseIdentifier: "cellId")
         
         fetchSingleMessages()
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         

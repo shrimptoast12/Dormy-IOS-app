@@ -53,7 +53,6 @@ class BulletinBoardTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        print("COUNT: \(posts.count)")
         return posts.count
     }
 
@@ -76,11 +75,16 @@ class BulletinBoardTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableCell", forIndexPath: indexPath) as! PostTableViewCell
         let post = posts[indexPath.row]
-        print("PrintPost: \(post.title!)")
-        print("PrintCell: \(cell.titleOfPost?.text)")
         cell.titleOfPost?.text = post.title!
-        print("Cell: \(cell)")
-        print("PrintCell2: \(cell.titleOfPost?.text)")
+        cell.userName?.text = post.owner!
+        cell.postDescription?.text = post.description!
+        let timeStampDate = NSDate(timeIntervalSince1970: post.timeStamp!.doubleValue)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "h:mm a MM/dd/yyyy"
+        cell.timeStamp?.text = dateFormatter.stringFromDate(timeStampDate)
+        if (post.postType! == "event") {
+            cell.postImage?.image = UIImage(named: "event")
+        }
         return cell
     }
 

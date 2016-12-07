@@ -23,7 +23,7 @@ class Post {
     var title: String?
     
     func setPostWithDictionary(dict: [String: AnyObject]) {
-        description = dict["descripion"] as? String
+        description = dict["description"] as? String
         endDate = dict["endDate"] as? String
         image = dict["image"] as? String
         owner = dict["owner"] as? String
