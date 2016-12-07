@@ -6,6 +6,8 @@
 //  Copyright © 2016 cs378. All rights reserved.
 //
 import UIKit
+import Firebase
+
 class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate{
     
     var whichField:Bool?
@@ -14,6 +16,49 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     
+    // Create the bulletin post
+    @IBAction func doneAction(sender: AnyObject) {
+        if(titleTextField.text != "" || descriptionTextView.text != "") {
+            let ref = FIRDatabase.database().reference().child("bulletin")
+            let child = ref.childByAutoId()
+            let uid = FIRAuth.auth()?.currentUser?.uid
+            
+            
+            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    
+                    let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                    let values: [String: AnyObject] = ["owner": (dictionary["name"] as? String)!,
+                        "profileImage": (dictionary["imageURL"] as? String)!,
+                        "description": self.descriptionTextView.text,
+                        "startDate": self.startDateTextField.text!,
+                        "endDate": self.endDateTextField.text!,
+                        "image": "",
+                        "timeStamp": timeStamp,
+                        "postType": "event",
+                        "title": self.titleTextField.text!]
+                    
+                    child.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                        if err != nil {
+                            print(err)
+                            return
+                        }
+                    })
+                    let bulletin = self.storyboard?.instantiateViewControllerWithIdentifier("Bulletin") as! BulletinBoardTableViewController
+                    let navController = UINavigationController(rootViewController: bulletin)
+                    self.presentViewController(navController, animated: true, completion: nil)
+                }
+                }, withCancelBlock: nil)
+        }
+        else {
+            // Warn the user one of the fields is missing
+            let alertController = UIAlertController(title: "Oops!", message: "Please enter a title or description!", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -21,6 +66,11 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         descriptionTextView.delegate = self
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatLogController.tapHandler(_:)))
         view.addGestureRecognizer(tapRecognizer)
+        
+        //Setting up textView UI
+        self.descriptionTextView.layer.borderWidth = 1
+        self.descriptionTextView.layer.borderColor = AppDelegate().RGB(80.0, g: 186.0, b: 99.0).CGColor
+        self.descriptionTextView.layer.cornerRadius = 5
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

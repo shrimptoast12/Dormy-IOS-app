@@ -24,6 +24,11 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         titleOfPost.delegate = self
         post.delegate = self
         
+        //Setting up textView UI
+        self.post.layer.borderWidth = 1
+        self.post.layer.borderColor = AppDelegate().RGB(80.0, g: 186.0, b: 99.0).CGColor
+        self.post.layer.cornerRadius = 5
+
     }
 
     override func didReceiveMemoryWarning() {

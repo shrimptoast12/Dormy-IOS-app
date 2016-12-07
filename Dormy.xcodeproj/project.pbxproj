@@ -15,6 +15,8 @@
 		5EB891851DF75BD5005736C2 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB891841DF75BD5005736C2 /* AlertViewController.swift */; };
 		5EB891871DF75BE3005736C2 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB891861DF75BE3005736C2 /* QuestionViewController.swift */; };
 		5EB8918A1DF76204005736C2 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB891891DF76204005736C2 /* EventViewController.swift */; };
+		5EB8918E1DF776E9005736C2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB8918D1DF776E9005736C2 /* Post.swift */; };
+		5EB891901DF77EBC005736C2 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB8918F1DF77EBC005736C2 /* PostTableViewCell.swift */; };
 		5EFA31AB1DD38EFA008047F2 /* userMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA31AA1DD38EFA008047F2 /* userMsgCell.swift */; };
 		5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFA31AC1DD390F6008047F2 /* Message.swift */; };
 		781A9D5E1DCFE08700EFE1EA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781A9D5D1DCFE08700EFE1EA /* MenuController.swift */; };
@@ -55,6 +57,8 @@
 		5EB891841DF75BD5005736C2 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		5EB891861DF75BE3005736C2 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		5EB891891DF76204005736C2 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		5EB8918D1DF776E9005736C2 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		5EB8918F1DF77EBC005736C2 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		5EFA31AA1DD38EFA008047F2 /* userMsgCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userMsgCell.swift; sourceTree = "<group>"; };
 		5EFA31AC1DD390F6008047F2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		781A9D591DCFDEF200EFE1EA /* Dormy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dormy-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 				5EB891841DF75BD5005736C2 /* AlertViewController.swift */,
 				5EB891861DF75BE3005736C2 /* QuestionViewController.swift */,
 				5EB891891DF76204005736C2 /* EventViewController.swift */,
+				5EB8918D1DF776E9005736C2 /* Post.swift */,
+				5EB8918F1DF77EBC005736C2 /* PostTableViewCell.swift */,
 			);
 			name = BulletinBoard;
 			sourceTree = "<group>";
@@ -373,11 +379,13 @@
 				7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */,
 				78FB7F861DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift in Sources */,
 				785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */,
+				5EB891901DF77EBC005736C2 /* PostTableViewCell.swift in Sources */,
 				785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */,
 				5EB891871DF75BE3005736C2 /* QuestionViewController.swift in Sources */,
 				5E2D7A871DE4F80900368679 /* SettingsViewController.swift in Sources */,
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
 				F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */,
+				5EB8918E1DF776E9005736C2 /* Post.swift in Sources */,
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,
 				F4E5F5CF1DD290C7004F00E7 /* AddLaundryMachineViewController.swift in Sources */,
 				5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */,
