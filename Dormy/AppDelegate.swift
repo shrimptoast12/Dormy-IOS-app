@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if statusBar.respondsToSelector(Selector("setBackgroundColor:")) {
             statusBar.backgroundColor = RGB(240.0,g: 208.0,b: 138.0)
         }
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: nil))
+
         return true
     }
 

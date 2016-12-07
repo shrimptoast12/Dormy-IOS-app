@@ -12,6 +12,7 @@ import Firebase
 class LaundryHelperTableViewController: UITableViewController {
     
     var machines = [LaundryMachine]()
+    var timer = NSTimer()
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var addMachine: UIBarButtonItem!
@@ -57,6 +58,25 @@ class LaundryHelperTableViewController: UITableViewController {
         fetchMachine()
     }
     
+    // function to send a local notification to the user to remind user to free up washer
+    func washerNotification() {
+        let notification = UILocalNotification()
+        notification.alertBody = "Please free up your washer!"
+        notification.fireDate = NSDate(timeIntervalSinceNow: 1800)
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        timer.invalidate()
+        
+    }
+    
+    // function to send a local notification to remind user to free up dryer
+    func dryerNotification() {
+        let notification = UILocalNotification()
+        notification.alertBody = "Please free up your washer!"
+        notification.fireDate = NSDate(timeIntervalSinceNow: 3600)
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        timer.invalidate()
+    }
+    
     // grabs corresponding machines and appends it to a machine array
     func fetchMachine() {
         FIRDatabase.database().reference().child("laundry").child("dorm-name").observeEventType(.ChildAdded, withBlock: { (snapshot) in
@@ -91,8 +111,7 @@ class LaundryHelperTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return machines.count
     }
-    
-    
+ 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // set the cell as a custom Laundry cell
         let cell = tableView.dequeueReusableCellWithIdentifier("laundryCell", forIndexPath: indexPath) as! LaundryTableViewCell
@@ -214,11 +233,13 @@ class LaundryHelperTableViewController: UITableViewController {
                 let date = calender.dateByAddingUnit(.Hour, value: 1, toDate: NSDate(), options: [])
                 let endTime = NSDateFormatter.localizedStringFromDate(date!, dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
                 FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("endTime").setValue(endTime)
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(LaundryHelperTableViewController.dryerNotification), userInfo: nil, repeats: true)
             }
             else if (machineType == "Washer") {
                 let date = calender.dateByAddingUnit(.Minute, value: 30, toDate: NSDate(), options: [])
                 let endTime = NSDateFormatter.localizedStringFromDate(date!, dateStyle: NSDateFormatterStyle.NoStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
                 FIRDatabase.database().reference().child("laundry").child("dorm-name").child(machineNum).child("endTime").setValue(endTime)
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(LaundryHelperTableViewController.washerNotification), userInfo: nil, repeats: true)
             }
             self.tableView.reloadData()
         }
