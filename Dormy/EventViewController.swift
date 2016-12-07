@@ -122,6 +122,8 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
     func tapHandler(gesture: UITapGestureRecognizer){
         titleTextField.resignFirstResponder()
         descriptionTextView.resignFirstResponder()
+        startDateTextField.resignFirstResponder()
+        endDateTextField.resignFirstResponder()
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {

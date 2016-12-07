@@ -69,18 +69,18 @@ class BulletinBoardTableViewController: UITableViewController {
                 })
             }
             }, withCancelBlock: nil)
-        sortPosts()
     }
     
     func sortPosts() {
         posts.sortInPlace { (post1:Post, post2:Post) -> Bool in
-            post1.timeStamp!.doubleValue < post2.timeStamp!.doubleValue
+            post1.timeStamp!.doubleValue > post2.timeStamp!.doubleValue
         }
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableCell", forIndexPath: indexPath) as! PostTableViewCell
+        sortPosts()
         let post = posts[indexPath.row]
         cell.titleOfPost?.text = post.title!
         cell.userName?.text = post.owner!
