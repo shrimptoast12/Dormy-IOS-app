@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
@@ -14,6 +15,46 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     @IBOutlet weak var titleOfPost: UITextField!
     @IBOutlet weak var post: UITextView!
     
+    @IBAction func doneAction(sender: AnyObject) {
+        if(titleOfPost.text != "" || post.text != "") {
+            let ref = FIRDatabase.database().reference().child("bulletin")
+            let child = ref.childByAutoId()
+            let uid = FIRAuth.auth()?.currentUser?.uid
+            
+            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    
+                    let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                    let values: [String: AnyObject] = ["owner": (dictionary["name"] as? String)!,
+                        "profileImage": (dictionary["imageURL"] as? String)!,
+                        "description": self.post.text,
+                        "startDate": "",
+                        "endDate": "",
+                        "image": "",
+                        "timeStamp": timeStamp,
+                        "postType": "alert",
+                        "title": self.titleOfPost.text!]
+                    
+                    child.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                        if err != nil {
+                            print(err)
+                            return
+                        }
+                    })
+                    let bulletin = self.storyboard?.instantiateViewControllerWithIdentifier("Bulletin") as! BulletinBoardTableViewController
+                    let navController = UINavigationController(rootViewController: bulletin)
+                    self.presentViewController(navController, animated: true, completion: nil)
+                }
+                }, withCancelBlock: nil)
+        }
+        else {
+            // Warn the user one of the fields is missing
+            let alertController = UIAlertController(title: "Oops!", message: "Please enter a title or description!", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,7 +79,6 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         titleOfPost.resignFirstResponder()
-        post.resignFirstResponder()
         return true
     }
     
@@ -48,11 +88,8 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if(text == "\n") {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
+        let maxChar: Int = 432
+        return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
     
     /*

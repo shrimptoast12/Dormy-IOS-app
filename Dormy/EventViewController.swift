@@ -57,7 +57,6 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
-
     }
     override func viewDidLoad() {
         super.viewDidLoad()

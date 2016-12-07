@@ -80,10 +80,16 @@ class BulletinBoardTableViewController: UITableViewController {
         cell.postDescription?.text = post.description!
         let timeStampDate = NSDate(timeIntervalSince1970: post.timeStamp!.doubleValue)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "h:mm a MM/dd/yyyy"
+        dateFormatter.dateFormat = "h:mm a MM/dd/yy"
         cell.timeStamp?.text = dateFormatter.stringFromDate(timeStampDate)
         if (post.postType! == "event") {
             cell.postImage?.image = UIImage(named: "event")
+        }
+        else if (post.postType! == "alert") {
+            cell.postImage?.image = UIImage(named: "alert")
+        }
+        else if (post.postType! == "question") {
+            cell.postImage?.image = UIImage(named: "question")
         }
         return cell
     }
