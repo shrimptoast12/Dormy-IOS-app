@@ -24,6 +24,7 @@
 		785471021DCAB62E00A4C35C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471011DCAB62E00A4C35C /* User.swift */; };
 		785471041DCADD4C00A4C35C /* AllUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471031DCADD4C00A4C35C /* AllUsersViewController.swift */; };
 		785471061DCAE7AD00A4C35C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785471051DCAE7AD00A4C35C /* UserCell.swift */; };
+		785D13F61DF89F3000D45B0E /* NewBulletinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D13F51DF89F3000D45B0E /* NewBulletinViewController.swift */; };
 		786AC88A1DE26DB30031085A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F643ED1DE2498200CB4E0F /* OtherProfileViewController.swift */; };
 		7875C89B1DCEA05900715A89 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7875C89A1DCEA05900715A89 /* Messages.storyboard */; };
 		7875C89D1DCEA08300715A89 /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */; };
@@ -69,6 +70,7 @@
 		785471011DCAB62E00A4C35C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		785471031DCADD4C00A4C35C /* AllUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllUsersViewController.swift; sourceTree = "<group>"; };
 		785471051DCAE7AD00A4C35C /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		785D13F51DF89F3000D45B0E /* NewBulletinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewBulletinViewController.swift; sourceTree = "<group>"; };
 		7875C89A1DCEA05900715A89 /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
 		7875C89C1DCEA08300715A89 /* MessagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
 		78FB7F811DE2446100EDD7F1 /* BulletinBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BulletinBoard.storyboard; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				5EB8918D1DF776E9005736C2 /* Post.swift */,
 				5EB8918F1DF77EBC005736C2 /* PostTableViewCell.swift */,
 				F411D4681DF884590067ABEB /* ThreadPostTableViewCell.swift */,
+				785D13F51DF89F3000D45B0E /* NewBulletinViewController.swift */,
 			);
 			name = BulletinBoard;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 			files = (
 				5EFA31AB1DD38EFA008047F2 /* userMsgCell.swift in Sources */,
 				783074C01DD0194700326E0B /* SWRevealViewController.m in Sources */,
+				785D13F61DF89F3000D45B0E /* NewBulletinViewController.swift in Sources */,
 				786AC88A1DE26DB30031085A /* OtherProfileViewController.swift in Sources */,
 				F46466AF1DD6205000DF45DF /* MessageViewCell.swift in Sources */,
 				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,

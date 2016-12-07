@@ -41,9 +41,8 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
                             return
                         }
                     })
-                    let bulletin = self.storyboard?.instantiateViewControllerWithIdentifier("Bulletin") as! BulletinBoardTableViewController
-                    let navController = UINavigationController(rootViewController: bulletin)
-                    self.presentViewController(navController, animated: true, completion: nil)
+                    //Post successful, Segue back to the main Bulletin Page
+                    self.segueToBulletinWithSWReveal()
                 }
                 }, withCancelBlock: nil)
         }
@@ -55,6 +54,16 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
+    
+    func segueToBulletinWithSWReveal() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let sw = storyboard.instantiateViewControllerWithIdentifier("SWRevealViewController") as! SWRevealViewController
+        self.view.window?.rootViewController = sw
+        let bulletin = self.storyboard?.instantiateViewControllerWithIdentifier("Bulletin") as! BulletinBoardTableViewController
+        let navController = UINavigationController(rootViewController: bulletin)
+        sw.pushFrontViewController(navController, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
