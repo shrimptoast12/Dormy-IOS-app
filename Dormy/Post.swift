@@ -21,8 +21,9 @@ class Post {
     var startDate: String?
     var timeStamp: NSNumber?
     var title: String?
+    var postId: String?
     
-    func setPostWithDictionary(dict: [String: AnyObject]) {
+    func setPostWithDictionary(dict: [String: AnyObject], postId: String) {
         description = dict["description"] as? String
         endDate = dict["endDate"] as? String
         image = dict["image"] as? String
@@ -32,5 +33,6 @@ class Post {
         startDate = dict["startDate"] as? String
         timeStamp = dict["timeStamp"] as? NSNumber
         title = dict["title"] as? String
+        self.postId = postId
     }
 }

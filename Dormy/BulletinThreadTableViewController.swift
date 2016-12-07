@@ -11,6 +11,7 @@ import Firebase
 class BulletinThreadTableViewController: UITableViewController {
 
     var post = Post()
+    var comments = [Comment]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +20,25 @@ class BulletinThreadTableViewController: UITableViewController {
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Bulletin Board", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
         self.navigationItem.leftBarButtonItem = newBackButton
+        
+        fetchComments()
     }
 
+    func fetchComments() {
+        FIRDatabase.database().reference().child("bulletin").child(post.postId!).child("comments").observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let comment = Comment()
+                comment.setCommentWithDictionary(dictionary, commentId: snapshot.key, type: false)
+                self.comments.append(comment)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
+            }
+            }, withCancelBlock: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -33,7 +51,7 @@ class BulletinThreadTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return comments.count + 1
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -42,27 +60,46 @@ class BulletinThreadTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("threadCell", forIndexPath: indexPath) as! ThreadPostTableViewCell
-        // Configure the cell...
-        cell.postTitleLabel?.text = post.title!
-        cell.nameLabel?.text = post.owner!
-        let timeStampDate = NSDate(timeIntervalSince1970: post.timeStamp!.doubleValue)
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "h:mm a MM/dd/yy"
-        cell.timeStampLabel?.text = dateFormatter.stringFromDate(timeStampDate)
-        cell.descriptionLabel?.text = post.description!
-        let url = NSURL(string: post.profileImage!)
-        NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
-            if (error != nil) {
-                print(error)
-                return
-            }
-            dispatch_async(dispatch_get_main_queue(), { 
-                cell.userImage?.image = UIImage(data: data!)
-            })
-        }).resume()
-        
-        return cell
+        if (indexPath.row == 0) {
+            let cell = tableView.dequeueReusableCellWithIdentifier("threadCell", forIndexPath: indexPath) as! ThreadPostTableViewCell
+            // Configure the cell...
+            cell.postTitleLabel?.text = post.title!
+            cell.nameLabel?.text = post.owner!
+            let timeStampDate = NSDate(timeIntervalSince1970: post.timeStamp!.doubleValue)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "h:mm a MM/dd/yy"
+            cell.timeStampLabel?.text = dateFormatter.stringFromDate(timeStampDate)
+            cell.descriptionLabel?.text = post.description!
+            let url = NSURL(string: post.profileImage!)
+            NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
+                if (error != nil) {
+                    print(error)
+                    return
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.userImage?.image = UIImage(data: data!)
+                })
+            }).resume()
+            return cell
+        }
+        else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("commentId", forIndexPath: indexPath) as! CommentCell
+            let comment = comments[indexPath.row - 1]
+            let url = NSURL(string: comment.profileImage!)
+            NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
+                if (error != nil) {
+                    print(error)
+                    return
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.profileImage?.image = UIImage(data: data!)
+                })
+            }).resume()
+
+            cell.nameLabel?.text = comment.user!
+            cell.commentLabel?.text = comment.comment!
+            return cell
+        }
     }
  
     func back(sender: UIBarButtonItem) {
@@ -114,6 +151,13 @@ class BulletinThreadTableViewController: UITableViewController {
         if (segue.identifier == "writeCommentSegue") {
             let destination = segue.destinationViewController as? WriteCommentViewController
             destination?.post = post
+            destination?.nested = false
+        }
+        
+        if (segue.identifier == "nestedCommentSegue") {
+            let destination = segue.destinationViewController as? WriteCommentViewController
+            destination?.post = post
+            destination?.nested = true
         }
     }
  

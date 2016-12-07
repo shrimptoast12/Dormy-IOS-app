@@ -61,7 +61,7 @@ class BulletinBoardTableViewController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let post = Post()
-                post.setPostWithDictionary(dictionary)
+                post.setPostWithDictionary(dictionary, postId: snapshot.key)
                 self.posts.append(post)
                 
                 dispatch_async(dispatch_get_main_queue(), { 

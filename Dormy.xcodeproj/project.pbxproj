@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
+		5E02ABA01DF8B72200C85337 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E02AB9F1DF8B72200C85337 /* Comment.swift */; };
 		5E2D7A871DE4F80900368679 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2D7A861DE4F80900368679 /* SettingsViewController.swift */; };
 		5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */; };
 		5EB891811DF74900005736C2 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB891801DF74900005736C2 /* CommentCell.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		11E955876CC6DB50ABE08B2D /* Pods-Dormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.release.xcconfig"; sourceTree = "<group>"; };
 		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E02AB9F1DF8B72200C85337 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		5E2D7A861DE4F80900368679 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		5EB891801DF74900005736C2 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				F411D4681DF884590067ABEB /* ThreadPostTableViewCell.swift */,
 				785D13F51DF89F3000D45B0E /* NewBulletinViewController.swift */,
 				F411D46A1DF8A83D0067ABEB /* WriteCommentViewController.swift */,
+				5E02AB9F1DF8B72200C85337 /* Comment.swift */,
 			);
 			name = BulletinBoard;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				785D13F61DF89F3000D45B0E /* NewBulletinViewController.swift in Sources */,
 				786AC88A1DE26DB30031085A /* OtherProfileViewController.swift in Sources */,
 				F46466AF1DD6205000DF45DF /* MessageViewCell.swift in Sources */,
+				5E02ABA01DF8B72200C85337 /* Comment.swift in Sources */,
 				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,
 				5EB891831DF74946005736C2 /* SubCommentCell.swift in Sources */,
 				5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */,
