@@ -30,6 +30,7 @@
 		78FB7F821DE2446100EDD7F1 /* BulletinBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78FB7F811DE2446100EDD7F1 /* BulletinBoard.storyboard */; };
 		78FB7F841DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB7F831DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift */; };
 		78FB7F861DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB7F851DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift */; };
+		F411D4691DF884590067ABEB /* ThreadPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F411D4681DF884590067ABEB /* ThreadPostTableViewCell.swift */; };
 		F43893AB1DD4151E00C5BB75 /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43893AA1DD4151E00C5BB75 /* LaundryMachine.swift */; };
 		F46466AF1DD6205000DF45DF /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46466AE1DD6205000DF45DF /* MessageViewCell.swift */; };
 		F4DB1BA01DD284BE004BAE24 /* LaundryHelper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */; };
@@ -74,6 +75,7 @@
 		78FB7F831DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinBoardTableViewController.swift; sourceTree = "<group>"; };
 		78FB7F851DE2563F00EDD7F1 /* BulletinThreadTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletinThreadTableViewController.swift; sourceTree = "<group>"; };
 		9D6EA82844CFDF0D2D72BF82 /* Pods-Dormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dormy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dormy/Pods-Dormy.debug.xcconfig"; sourceTree = "<group>"; };
+		F411D4681DF884590067ABEB /* ThreadPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadPostTableViewCell.swift; sourceTree = "<group>"; };
 		F43893AA1DD4151E00C5BB75 /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
 		F46466AE1DD6205000DF45DF /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewCell.swift; sourceTree = "<group>"; };
 		F4DB1B9F1DD284BE004BAE24 /* LaundryHelper.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaundryHelper.storyboard; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				5EB891891DF76204005736C2 /* EventViewController.swift */,
 				5EB8918D1DF776E9005736C2 /* Post.swift */,
 				5EB8918F1DF77EBC005736C2 /* PostTableViewCell.swift */,
+				F411D4681DF884590067ABEB /* ThreadPostTableViewCell.swift */,
 			);
 			name = BulletinBoard;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				5EB891871DF75BE3005736C2 /* QuestionViewController.swift in Sources */,
 				5E2D7A871DE4F80900368679 /* SettingsViewController.swift in Sources */,
 				785471021DCAB62E00A4C35C /* User.swift in Sources */,
+				F411D4691DF884590067ABEB /* ThreadPostTableViewCell.swift in Sources */,
 				F4DB1BA21DD2851B004BAE24 /* LaundryHelperTableViewController.swift in Sources */,
 				5EB8918E1DF776E9005736C2 /* Post.swift in Sources */,
 				F68842541DBE4B8E00DA9CEC /* AppDelegate.swift in Sources */,

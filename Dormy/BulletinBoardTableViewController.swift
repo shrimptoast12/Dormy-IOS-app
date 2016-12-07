@@ -93,5 +93,17 @@ class BulletinBoardTableViewController: UITableViewController {
         }
         return cell
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showThread" {
+            let destination = segue.destinationViewController as? BulletinThreadTableViewController
+            let index = tableView.indexPathForSelectedRow?.row
+            destination?.post = posts[index!]
+        }
+    }
 
 }

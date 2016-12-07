@@ -28,6 +28,7 @@ class MessagesTableViewController: UITableViewController {
         self.viewAllUsers()
     }
     
+    // function to set up how the navigation bar looks
     func setUpNavBarColor() {
         let nav = self.navigationController?.navigationBar
         nav?.translucent = false
@@ -48,15 +49,12 @@ class MessagesTableViewController: UITableViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
+        // Change some table view attributes
         tableView.rowHeight = 55
         tableView.registerClass(userMsgCell.self, forCellReuseIdentifier: "cellId")
         
+        // Start fetching the messages for the table view
         fetchSingleMessages()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     //get user data

@@ -7,26 +7,14 @@
 //
 
 import UIKit
-
+import Firebase
 class BulletinThreadTableViewController: UITableViewController {
 
-    @IBOutlet weak var image2: UIImageView!
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var bodyTextLabel: UILabel!
+    var post = Post()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        bodyTextLabel.text = "Come on over to the basement TV lounge and we'll go over some beginning of the year information. This meeting is mandatory but there will be cookies!! \n\nTopics included will be bathroom codes, laundry ettiquette, fire inspections, damage reports, free food and fun around campus! Its today at 5:00pm."
-        
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.layer.cornerRadius = 24
-        image.layer.masksToBounds = true
-        image.contentMode = .ScaleAspectFill
-        
-        image2.translatesAutoresizingMaskIntoConstraints = false
-        image2.layer.cornerRadius = 24
-        image2.layer.masksToBounds = true
-        image2.contentMode = .ScaleAspectFill
-
+        tableView.rowHeight = 264
 
 
         // Uncomment the following line to preserve selection between presentations
@@ -47,32 +35,47 @@ class BulletinThreadTableViewController: UITableViewController {
 //        }
 //        return 0
 //    }
+   
     
-    // MARK: - Table view data source
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
     
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 1
-//    }
-//    
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        return 2
-//    }
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 1
+    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("threadCell", forIndexPath: indexPath) as! ThreadPostTableViewCell
         // Configure the cell...
-
+        cell.postTitleLabel?.text = post.title!
+        cell.nameLabel?.text = post.owner!
+        let timeStampDate = NSDate(timeIntervalSince1970: post.timeStamp!.doubleValue)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "h:mm a MM/dd/yy"
+        cell.timeStampLabel?.text = dateFormatter.stringFromDate(timeStampDate)
+        cell.descriptionLabel?.text = post.description!
+        let url = NSURL(string: post.profileImage!)
+        NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
+            if (error != nil) {
+                print(error)
+                return
+            }
+            dispatch_async(dispatch_get_main_queue(), { 
+                cell.userImage?.image = UIImage(data: data!)
+            })
+        }).resume()
+        
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
