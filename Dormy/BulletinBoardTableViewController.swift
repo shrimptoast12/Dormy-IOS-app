@@ -69,6 +69,13 @@ class BulletinBoardTableViewController: UITableViewController {
                 })
             }
             }, withCancelBlock: nil)
+        sortPosts()
+    }
+    
+    func sortPosts() {
+        posts.sortInPlace { (post1:Post, post2:Post) -> Bool in
+            post1.timeStamp!.doubleValue < post2.timeStamp!.doubleValue
+        }
     }
     
     
