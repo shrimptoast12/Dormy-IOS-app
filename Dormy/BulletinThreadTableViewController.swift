@@ -41,26 +41,17 @@ class BulletinThreadTableViewController: UITableViewController {
                         let temp2 = temp![tempKey[a]] as? [String: AnyObject]
                         subComment.setCommentWithDictionary(temp2!, commentId: tempKey[a], type: true)
                         subComments.append(subComment)
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.reloadData()
-                        })
                     }
                     subComments.sortInPlace({ (comment1, comment2) -> Bool in
                         comment1.timeStamp!.doubleValue < comment2.timeStamp!.doubleValue
                     })
                     self.comments += subComments
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.tableView.reloadData()
-                    })
                 }
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.tableView.reloadData()
                     })
             }
             }, withCancelBlock: nil)
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableView.reloadData()
-            })
     }
     
     override func didReceiveMemoryWarning() {
@@ -82,7 +73,7 @@ class BulletinThreadTableViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
-    
+    // load the table view for the post/comment thread
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Sets the original post as the first cell
         if (indexPath.row == 0) {
@@ -157,7 +148,8 @@ class BulletinThreadTableViewController: UITableViewController {
             return cell
         }
     }
- 
+    
+    // Function that allows you to go back to the bulletin board when you're in the thread post
     func back(sender: UIBarButtonItem) {
         performSegueWithIdentifier("backToBoard", sender: sender)
     }

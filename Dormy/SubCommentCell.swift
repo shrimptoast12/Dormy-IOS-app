@@ -27,25 +27,6 @@ class SubCommentCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 24
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .ScaleAspectFill
-        return imageView
-    }()
-    
-    let timeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.lightGrayColor()
-        label.font = UIFont.systemFontOfSize(8)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
 }

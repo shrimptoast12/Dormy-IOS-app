@@ -23,7 +23,6 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
             let child = ref.childByAutoId()
             let uid = FIRAuth.auth()?.currentUser?.uid
             
-            
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     
@@ -113,7 +112,7 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         }
     }
     
-    // functions to dismiss keyboards and text fields
+    // functions below this are to dismiss keyboards and text fields
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         titleTextField.resignFirstResponder()
         return true
@@ -130,13 +129,4 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         let maxChar: Int = 432
         return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
-    
-    /*
-     // MARK: - Navigation
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
 }

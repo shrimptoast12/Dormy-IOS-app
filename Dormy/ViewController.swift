@@ -11,7 +11,6 @@ import Firebase
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
-    
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -70,7 +69,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
     
     @IBAction func createAccountAction(sender: AnyObject) {
     }

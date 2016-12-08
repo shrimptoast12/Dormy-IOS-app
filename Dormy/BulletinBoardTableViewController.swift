@@ -37,8 +37,7 @@ class BulletinBoardTableViewController: UITableViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         tableView.rowHeight = 187
-
-        
+        // fetch the all bulletin posts and reload table data
         fetchPosts()
         dispatch_async(dispatch_get_main_queue(), {
             self.tableView.reloadData()
@@ -55,6 +54,7 @@ class BulletinBoardTableViewController: UITableViewController {
         return posts.count
     }
 
+    // function to fetch all bulletin posts to load into the table view
     func fetchPosts() {
         FIRDatabase.database().reference().child("bulletin").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
@@ -70,12 +70,14 @@ class BulletinBoardTableViewController: UITableViewController {
             }, withCancelBlock: nil)
     }
     
+    // function used to sort posts based on the time they were created
     func sortPosts() {
         posts.sortInPlace { (post1:Post, post2:Post) -> Bool in
             post1.timeStamp!.doubleValue > post2.timeStamp!.doubleValue
         }
     }
     
+    // loads the posts into the table view
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableCell", forIndexPath: indexPath) as! PostTableViewCell
         sortPosts()
@@ -110,5 +112,4 @@ class BulletinBoardTableViewController: UITableViewController {
             destination?.post = posts[index!]
         }
     }
-
 }

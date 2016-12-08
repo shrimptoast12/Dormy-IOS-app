@@ -11,7 +11,6 @@ import Firebase
 
 class userMsgCell: UITableViewCell {
     
-    
     var message: Message? {
         didSet {
             if let seconds = message?.timeStamp!.doubleValue {

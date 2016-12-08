@@ -15,7 +15,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var chatPartners = [User]()
     var messages = [Message]()
     
-    
     let msgField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter Message"
@@ -263,7 +262,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func sendButtonHandler(){
-        
         let ref = FIRDatabase.database().reference().child("messages")
         let child = ref.childByAutoId()
         

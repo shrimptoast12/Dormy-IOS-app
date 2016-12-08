@@ -11,10 +11,10 @@ import Firebase
 
 class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
 
-   
     @IBOutlet weak var titleOfPost: UITextField!
     @IBOutlet weak var post: UITextView!
     
+    // Saves the alert post after you press done
     @IBAction func doneAction(sender: AnyObject) {
         if(titleOfPost.text != "" || post.text != "") {
             let ref = FIRDatabase.database().reference().child("bulletin")
@@ -86,6 +86,7 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         // Dispose of any resources that can be recreated.
     }
     
+    // functions below this helps deal with the keyboard
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         titleOfPost.resignFirstResponder()
         return true

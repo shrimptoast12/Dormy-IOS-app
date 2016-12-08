@@ -66,8 +66,6 @@ class OtherProfileViewController: UIViewController, UITextViewDelegate, UIImageP
         self.profPic.clipsToBounds = true
         
         self.setUpNavBarColor()
-        
-        
     }
     
     override func didReceiveMemoryWarning() {

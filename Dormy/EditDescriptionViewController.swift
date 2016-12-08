@@ -68,7 +68,6 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
             let descript = self.myTextView.text!
             let roomNumber = self.roomNumberTextField.text!
             
-            
             let ref = FIRDatabase.database().reference().child("users").child(uid!).child("roommates")
             ref.removeValue()
             for id in self.roommatesIdList {
@@ -103,7 +102,6 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
             }, withCancelBlock: nil)
         
     }
-
 
     // Makes the keyboard go away when you touch anywhere outside the text field or keyboard
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -153,17 +151,4 @@ class EditDescriptionViewController: UIViewController, UITextViewDelegate, UITab
             cell!.accessoryType = UITableViewCellAccessoryType.Checkmark;
         }
     }
-    
-
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
