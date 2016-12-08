@@ -24,25 +24,30 @@ class BulletinThreadTableViewController: UITableViewController {
         FIRDatabase.database().reference().child("bulletin").child(post.postId!).child("comments").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
+                // appends comments to the comment array to load in table view
                 let comment = Comment()
                 let key = snapshot.key
                 comment.setCommentWithDictionary(dictionary, commentId: key, type: false)
                 self.comments.append(comment)
+                // appends nested sub-comments if they exist
                 if(dictionary["nested"] != nil) {
                     let temp = dictionary["nested"] as? [String: AnyObject]
                     let tempKey: [String] = Array(temp!.keys)
                     for a in 0 ..< tempKey.count {
-                        let comment2 = Comment()
+                        let subComment = Comment()
                         let temp2 = temp![tempKey[a]] as? [String: AnyObject]
-                        comment2.setCommentWithDictionary(temp2!, commentId: tempKey[a], type: true)
-                        self.comments.append(comment2)
+                        subComment.setCommentWithDictionary(temp2!, commentId: tempKey[a], type: true)
+                        self.comments.append(subComment)
+                        self.tableView.reloadData()
                     }
+                        self.tableView.reloadData()
                 }
                     dispatch_async(dispatch_get_main_queue(), {
                         self.tableView.reloadData()
                     })
             }
             }, withCancelBlock: nil)
+            self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
