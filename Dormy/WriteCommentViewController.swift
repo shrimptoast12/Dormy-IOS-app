@@ -5,16 +5,15 @@
 //  Created by Pritchett, Samuel B on 12/7/16.
 //  Copyright © 2016 cs378. All rights reserved.
 //
-
 import UIKit
 import Firebase
-
 class WriteCommentViewController: UIViewController {
     
     @IBOutlet weak var writePost: UITextView!
     var post = Post()
     var nested = false
     var commentId = ""
+    var table = BulletinThreadTableViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +54,7 @@ class WriteCommentViewController: UIViewController {
                     }
                 })
                 // succesfully added comment
+                NSNotificationCenter.defaultCenter().postNotificationName("notification", object: nil)
             }
             }, withCancelBlock: nil)
     }
@@ -83,21 +83,21 @@ class WriteCommentViewController: UIViewController {
             let uid = FIRAuth.auth()?.currentUser?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                
                     
-                        let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
-                        let comment: [String: AnyObject] = ["comment": self.writePost.text,
-                            "user": (dictionary["name"] as? String)!,
-                            "profileImage": (dictionary["imageURL"] as? String)!,
-                            "timeStamp": timeStamp]
                     
-                        child.updateChildValues(comment, withCompletionBlock: { (err, ref) in
-                            if(err != nil) {
-                                print(err)
-                                return
-                            }
-                        })
-                        // succesfully added comment
+                    let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                    let comment: [String: AnyObject] = ["comment": self.writePost.text,
+                        "user": (dictionary["name"] as? String)!,
+                        "profileImage": (dictionary["imageURL"] as? String)!,
+                        "timeStamp": timeStamp]
+                    
+                    child.updateChildValues(comment, withCompletionBlock: { (err, ref) in
+                        if(err != nil) {
+                            print(err)
+                            return
+                        }
+                    })
+                    // succesfully added comment
                 }
                 }, withCancelBlock: nil)
         }

@@ -5,11 +5,9 @@
 //  Created by Benjamin Lee on 11/20/16.
 //  Copyright © 2016 cs378. All rights reserved.
 //
-
 import UIKit
 import Firebase
 class BulletinThreadTableViewController: UITableViewController {
-
     var post = Post()
     var comments = [Comment]()
     
@@ -18,7 +16,16 @@ class BulletinThreadTableViewController: UITableViewController {
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Bulletin Board", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(BulletinThreadTableViewController.back(_:)))
         self.navigationItem.leftBarButtonItem = newBackButton
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("loadList:"), name: "notification", object: nil)
         fetchComments()
+    }
+    
+    // Fixes a bug that caused the new subComment to not appear after.
+    func loadList(notification:NSNotification) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        comments.removeAll()
+        fetchComments()
+        self.tableView.reloadData()
     }
     
     // function used to fetch comments to load into the table vieiw
@@ -47,9 +54,9 @@ class BulletinThreadTableViewController: UITableViewController {
                     })
                     self.comments += subComments
                 }
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.tableView.reloadData()
-                    })
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                })
             }
             }, withCancelBlock: nil)
     }
@@ -72,7 +79,6 @@ class BulletinThreadTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-
     // load the table view for the post/comment thread
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Sets the original post as the first cell
@@ -80,6 +86,20 @@ class BulletinThreadTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier("threadCell", forIndexPath: indexPath) as! ThreadPostTableViewCell
             // Configure the cell...
             tableView.rowHeight = 264
+            if (post.postType == "event"){
+                cell.startTimeLabel.text = post.startDate!
+                cell.endTimeLabel.text = post.endDate!
+                cell.startLabel.hidden = false
+                cell.endLabel.hidden = false
+                cell.startTimeLabel.hidden = false
+                cell.endTimeLabel.hidden = false
+                
+            } else {
+                cell.startLabel.hidden = true
+                cell.endLabel.hidden = true
+                cell.startTimeLabel.hidden = true
+                cell.endTimeLabel.hidden = true
+            }
             cell.postTitleLabel?.text = post.title!
             cell.nameLabel?.text = post.owner!
             let timeStampDate = NSDate(timeIntervalSince1970: post.timeStamp!.doubleValue)
@@ -155,7 +175,6 @@ class BulletinThreadTableViewController: UITableViewController {
     }
     
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
@@ -172,6 +191,7 @@ class BulletinThreadTableViewController: UITableViewController {
             destination?.post = post
             destination?.nested = true
             destination?.commentId = comments[index].commentId!
+            destination?.table = self
         }
     }
 }

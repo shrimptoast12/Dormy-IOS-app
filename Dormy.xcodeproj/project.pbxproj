@@ -10,6 +10,8 @@
 		2D7233E0286D6A6F1A0511FA /* Pods_Dormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */; };
 		5E02ABA01DF8B72200C85337 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E02AB9F1DF8B72200C85337 /* Comment.swift */; };
 		5E2D7A871DE4F80900368679 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2D7A861DE4F80900368679 /* SettingsViewController.swift */; };
+		5E5F04241DF9DD99001846F3 /* PreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5F04231DF9DD99001846F3 /* PreviewTableViewCell.swift */; };
+		5E5F04261DF9E5A5001846F3 /* PreviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5F04251DF9E5A5001846F3 /* PreviewTableViewController.swift */; };
 		5E7DF18F1DCC457A007DFF95 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */; };
 		5EB891811DF74900005736C2 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB891801DF74900005736C2 /* CommentCell.swift */; };
 		5EB891831DF74946005736C2 /* SubCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB891821DF74946005736C2 /* SubCommentCell.swift */; };
@@ -56,6 +58,8 @@
 		241EEFFCABF2498EA13FD635 /* Pods_Dormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E02AB9F1DF8B72200C85337 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		5E2D7A861DE4F80900368679 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5E5F04231DF9DD99001846F3 /* PreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewTableViewCell.swift; sourceTree = "<group>"; };
+		5E5F04251DF9E5A5001846F3 /* PreviewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewTableViewController.swift; sourceTree = "<group>"; };
 		5E7DF18E1DCC457A007DFF95 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		5EB891801DF74900005736C2 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		5EB891821DF74946005736C2 /* SubCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubCommentCell.swift; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 				785D13F51DF89F3000D45B0E /* NewBulletinViewController.swift */,
 				F411D46A1DF8A83D0067ABEB /* WriteCommentViewController.swift */,
 				5E02AB9F1DF8B72200C85337 /* Comment.swift */,
+				5E5F04231DF9DD99001846F3 /* PreviewTableViewCell.swift */,
+				5E5F04251DF9E5A5001846F3 /* PreviewTableViewController.swift */,
 			);
 			name = BulletinBoard;
 			sourceTree = "<group>";
@@ -382,9 +388,11 @@
 				5E02ABA01DF8B72200C85337 /* Comment.swift in Sources */,
 				F6CD2B421DBE4F620078689A /* RegisterViewController.swift in Sources */,
 				5EB891831DF74946005736C2 /* SubCommentCell.swift in Sources */,
+				5E5F04241DF9DD99001846F3 /* PreviewTableViewCell.swift in Sources */,
 				5EFA31AD1DD390F6008047F2 /* Message.swift in Sources */,
 				F6CD2B441DBE4F790078689A /* UserProfileViewController.swift in Sources */,
 				F68842561DBE4B8E00DA9CEC /* ViewController.swift in Sources */,
+				5E5F04261DF9E5A5001846F3 /* PreviewTableViewController.swift in Sources */,
 				5EB8918A1DF76204005736C2 /* EventViewController.swift in Sources */,
 				78FB7F841DE2459A00EDD7F1 /* BulletinBoardTableViewController.swift in Sources */,
 				F4DB1BA41DD28546004BAE24 /* LaundryTableViewCell.swift in Sources */,

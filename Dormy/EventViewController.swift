@@ -129,4 +129,31 @@ class EventViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         let maxChar: Int = 432
         return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "eventPreview"){
+            let uid = FIRAuth.auth()?.currentUser?.uid
+        
+            FIRDatabase.database().reference().child("users").child(uid!).observeEventType(.Value, withBlock: { (snapshot) in
+            
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let eventPost = Post()
+                    let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                    let values: [String: AnyObject] = ["owner": dictionary["name"]!,
+                        "profileImage": dictionary["imageURL"]!,
+                        "description": self.descriptionTextView.text,
+                        "startDate": self.startDateTextField.text!,
+                        "endDate": self.endDateTextField.text!,
+                        "image": "",
+                        "timeStamp": timeStamp,
+                        "postType": "event",
+                        "title": self.titleTextField.text!]
+                    eventPost.setPostWithDictionary(values, postId: "")
+                    let destination = segue.destinationViewController as? PreviewTableViewController
+                    destination!.post = eventPost
+                }
+                NSNotificationCenter.defaultCenter().postNotificationName("load", object: nil)
+            }, withCancelBlock: nil)
+        }
+    }
 }

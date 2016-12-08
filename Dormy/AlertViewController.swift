@@ -102,14 +102,31 @@ class AlertViewController: UIViewController, UITextFieldDelegate, UITextViewDele
         return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "alertPreview"){
+            let uid = FIRAuth.auth()?.currentUser?.uid
+            
+            FIRDatabase.database().reference().child("users").child(uid!).observeEventType(.Value, withBlock: { (snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let eventPost = Post()
+                    let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                    let values: [String: AnyObject] = ["owner": dictionary["name"]!,
+                        "profileImage": dictionary["imageURL"]!,
+                        "description": self.post.text,
+                        "startDate": "",
+                        "endDate": "",
+                        "image": "",
+                        "timeStamp": timeStamp,
+                        "postType": "alert",
+                        "title": self.titleOfPost.text!]
+                    eventPost.setPostWithDictionary(values, postId: "")
+                    let destination = segue.destinationViewController as? PreviewTableViewController
+                    destination!.post = eventPost
+                }
+                NSNotificationCenter.defaultCenter().postNotificationName("load", object: nil)
+                }, withCancelBlock: nil)
+        }
     }
-    */
 
 }

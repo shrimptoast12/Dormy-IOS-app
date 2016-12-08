@@ -101,4 +101,31 @@ class QuestionViewController: UIViewController, UITextFieldDelegate, UITextViewD
         let maxChar: Int = 432
         return textView.text.characters.count + (text.characters.count - range.length) <= maxChar
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "questionPreview"){
+            let uid = FIRAuth.auth()?.currentUser?.uid
+            
+            FIRDatabase.database().reference().child("users").child(uid!).observeEventType(.Value, withBlock: { (snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let eventPost = Post()
+                    let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                    let values: [String: AnyObject] = ["owner": dictionary["name"]!,
+                        "profileImage": dictionary["imageURL"]!,
+                        "description": self.post.text,
+                        "startDate": "",
+                        "endDate": "",
+                        "image": "",
+                        "timeStamp": timeStamp,
+                        "postType": "question",
+                        "title": self.titleOfPost.text!]
+                    eventPost.setPostWithDictionary(values, postId: "")
+                    let destination = segue.destinationViewController as? PreviewTableViewController
+                    destination!.post = eventPost
+                }
+                NSNotificationCenter.defaultCenter().postNotificationName("load", object: nil)
+                }, withCancelBlock: nil)
+        }
+    }
 }
