@@ -20,6 +20,8 @@ class BulletinThreadTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
         fetchComments()
     }
+    
+    // function used to fetch comments to load into the table vieiw
     func fetchComments() {
         FIRDatabase.database().reference().child("bulletin").child(post.postId!).child("comments").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
@@ -82,6 +84,7 @@ class BulletinThreadTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // Sets the original post as the first cell
         if (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCellWithIdentifier("threadCell", forIndexPath: indexPath) as! ThreadPostTableViewCell
             // Configure the cell...
@@ -106,6 +109,7 @@ class BulletinThreadTableViewController: UITableViewController {
             return cell
         }
         else if(comments[indexPath.row - 1].commentType == false){
+            // Sets regular comment cells
             let cell = tableView.dequeueReusableCellWithIdentifier("commentId", forIndexPath: indexPath) as! CommentCell
             tableView.rowHeight = 150
             let comment = comments[indexPath.row - 1]
@@ -129,6 +133,7 @@ class BulletinThreadTableViewController: UITableViewController {
             cell.commentLabel?.text = comment.comment!
             return cell
         } else {
+            // Sets sub-comment cells
             let cell = tableView.dequeueReusableCellWithIdentifier("subCommentId", forIndexPath: indexPath) as! SubCommentCell
             tableView.rowHeight = 150
             let comment = comments[indexPath.row - 1]

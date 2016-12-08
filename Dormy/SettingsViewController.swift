@@ -13,7 +13,35 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var currentName: UILabel!
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    @IBOutlet weak var notificationSwitch: UISwitch!
+    @IBOutlet weak var soundSwitch: UISwitch!
     
+    @IBAction func notifcationAction(sender: AnyObject) {
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        var notificationOn = true
+        if (notificationSwitch.on) {
+            notificationOn = true
+        }
+        else {
+            notificationOn = false
+        }
+        if (uid != nil) {
+            FIRDatabase.database().reference().child("settings").child(uid!).child("notifications").setValue(notificationOn)
+        }
+    }
+    @IBAction func soundAction(sender: AnyObject) {
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        var soundOn = true
+        if (soundSwitch.on) {
+            soundOn = true
+        }
+        else {
+            soundOn = false
+        }
+        if (uid != nil) {
+            FIRDatabase.database().reference().child("settings").child(uid!).child("sound").setValue(soundOn)
+        }
+    }
     @IBAction func changeName(sender: AnyObject) {
         let uid = FIRAuth.auth()?.currentUser?.uid
         let ref = FIRDatabase.database().reference().child("users").child(uid!)
