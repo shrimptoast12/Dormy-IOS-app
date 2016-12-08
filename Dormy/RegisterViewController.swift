@@ -72,6 +72,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
                     let ref = FIRDatabase.database().reference()
                     let userRef = ref.child("users").child(uid)
+                    FIRDatabase.database().reference().child("settings").child(uid).child("sound").setValue(true)
+                    FIRDatabase.database().reference().child("settings").child(uid).child("notifications").setValue(true)
                     userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                         if err != nil {
                             print(err)

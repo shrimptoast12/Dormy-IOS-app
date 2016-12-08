@@ -60,23 +60,40 @@ class LaundryHelperTableViewController: UITableViewController {
     
     // function to send a local notification to the user to remind user to free up washer
     func washerNotification() {
-        let notification = UILocalNotification()
-        notification.alertBody = "Please free up your washer!"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.fireDate = NSDate(timeIntervalSinceNow: 1800)
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        timer.invalidate()
-        
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        FIRDatabase.database().reference().child("settings").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                if ((dictionary["notifications"] as? Bool)!) {
+                    let notification = UILocalNotification()
+                    notification.alertBody = "Please free up your washer!"
+                    if ((dictionary["sound"] as? Bool)!) {
+                        notification.soundName = UILocalNotificationDefaultSoundName
+                    }
+                    notification.fireDate = NSDate(timeIntervalSinceNow: 1800)
+                    UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                    self.timer.invalidate()
+                }
+            }
+            }, withCancelBlock: nil)
     }
     
     // function to send a local notification to remind user to free up dryer
     func dryerNotification() {
-        let notification = UILocalNotification()
-        notification.alertBody = "Please free up your washer!"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.fireDate = NSDate(timeIntervalSinceNow: 3600)
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        timer.invalidate()
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        FIRDatabase.database().reference().child("settings").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                if((dictionary["notifications"] as? Bool)!) {
+                    let notification = UILocalNotification()
+                    notification.alertBody = "Please free up your dryer!"
+                    if ((dictionary["sound"] as? Bool)!) {
+                        notification.soundName = UILocalNotificationDefaultSoundName
+                    }
+                    notification.fireDate = NSDate(timeIntervalSinceNow: 3600)
+                    UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                    self.timer.invalidate()
+                }
+            }
+            }, withCancelBlock: nil)
     }
     
     // grabs corresponding machines and appends it to a machine array
@@ -94,8 +111,6 @@ class LaundryHelperTableViewController: UITableViewController {
             }
             }, withCancelBlock: nil)
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

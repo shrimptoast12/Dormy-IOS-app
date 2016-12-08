@@ -42,6 +42,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             FIRDatabase.database().reference().child("settings").child(uid!).child("sound").setValue(soundOn)
         }
     }
+    // Function that changes the current user's name after he does so in settings
     @IBAction func changeName(sender: AnyObject) {
         let uid = FIRAuth.auth()?.currentUser?.uid
         let ref = FIRDatabase.database().reference().child("users").child(uid!)
@@ -76,6 +77,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatLogController.tapHandler(_:)))
         view.addGestureRecognizer(tapRecognizer)
         enterName.delegate = self
+        
+        // Set the switches to their correct boolean value in settings
+        FIRDatabase.database().reference().child("settings").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                self.notificationSwitch.on = (dictionary["notifications"] as? Bool)!
+                self.soundSwitch.on = (dictionary["sound"] as? Bool)!
+            }
+            }, withCancelBlock: nil)
         
         if self.revealViewController() != nil {
             menuButton.target = self.revealViewController()
