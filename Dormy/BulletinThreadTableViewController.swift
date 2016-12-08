@@ -12,7 +12,6 @@ class BulletinThreadTableViewController: UITableViewController {
 
     var post = Post()
     var comments = [Comment]()
-    var my_group = dispatch_group_create()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,34 +25,22 @@ class BulletinThreadTableViewController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let comment = Comment()
-                comment.setCommentWithDictionary(dictionary, commentId: snapshot.key, type: false)
+                let key = snapshot.key
+                comment.setCommentWithDictionary(dictionary, commentId: key, type: false)
                 self.comments.append(comment)
-                print("Comments Array1: \(self.comments.count)")
-                dispatch_group_enter(self.my_group)
-                FIRDatabase.database().reference().child("bulletin").child(self.post.postId!).child("comments").child(snapshot.key).child("nested").observeEventType(.ChildAdded, withBlock: { (snapshot2) in
-                    if let dictionary = snapshot2.value as? [String: AnyObject] {
-                        let comment = Comment()
-                        comment.setCommentWithDictionary(dictionary, commentId: snapshot2.key, type: true)
-                        self.comments.append(comment)
-                        print("Comments Array2: \(self.comments.count)")
-//                        dispatch_group_leave(self.my_group)
-//                        dispatch_async(dispatch_get_main_queue(), {
-//                            self.tableView.reloadData()
-//                        })
-
+                if(dictionary["nested"] != nil) {
+                    let temp = dictionary["nested"] as? [String: AnyObject]
+                    let tempKey: [String] = Array(temp!.keys)
+                    for a in 0 ..< tempKey.count {
+                        let comment2 = Comment()
+                        let temp2 = temp![tempKey[a]] as? [String: AnyObject]
+                        comment2.setCommentWithDictionary(temp2!, commentId: tempKey[a], type: true)
+                        self.comments.append(comment2)
                     }
-                    dispatch_group_leave(self.my_group)
-                    dispatch_group_notify(self.my_group, dispatch_get_main_queue(), {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.tableView.reloadData()
-                        })
+                }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.tableView.reloadData()
                     })
-                    }, withCancelBlock: nil)
-//                dispatch_group_notify(self.my_group, dispatch_get_main_queue(), {
-////                    dispatch_async(dispatch_get_main_queue(), {
-////                        self.tableView.reloadData()
-////                    })
-//                })
             }
             }, withCancelBlock: nil)
     }
@@ -103,7 +90,6 @@ class BulletinThreadTableViewController: UITableViewController {
             return cell
         }
         else if(comments[indexPath.row - 1].commentType == false){
-            print("Getting cell, count = \(comments.count)")
             let cell = tableView.dequeueReusableCellWithIdentifier("commentId", forIndexPath: indexPath) as! CommentCell
             tableView.rowHeight = 150
             let comment = comments[indexPath.row - 1]
@@ -178,6 +164,4 @@ class BulletinThreadTableViewController: UITableViewController {
             destination?.commentId = comments[index].commentId!
         }
     }
- 
-
 }
