@@ -14,6 +14,7 @@ class WriteCommentViewController: UIViewController {
     @IBOutlet weak var writePost: UITextView!
     var post = Post()
     var nested = false
+    var commentId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,39 +31,65 @@ class WriteCommentViewController: UIViewController {
     }
     
     
-    
+    func makeNestedComment() {
+        let ref = FIRDatabase.database().reference().child("bulletin").child(self.post.postId!).child("comments").child(commentId).child("nested")
+        let child = ref.childByAutoId()
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        
+        FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                
+                
+                let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                let comment: [String: AnyObject] = ["comment": self.writePost.text,
+                    "user": (dictionary["name"] as? String)!,
+                    "profileImage": (dictionary["imageURL"] as? String)!,
+                    "timeStamp": timeStamp]
+                
+                child.updateChildValues(comment, withCompletionBlock: { (err, ref) in
+                    if(err != nil) {
+                        print(err)
+                        return
+                    }
+                })
+                // succesfully added comment
+            }
+            }, withCancelBlock: nil)
+
+    }
     
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let ref = FIRDatabase.database().reference().child("bulletin").child(self.post.postId!).child("comments")
-        let child = ref.childByAutoId()
-        let uid = FIRAuth.auth()?.currentUser?.uid
-        FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                //Add comment to Firebase
-                if (self.nested) {
-                    //FIRDatabase.database().reference().child("bulletin").child(post.postId)
+        //Add comment to Firebase
+        if (self.nested) {
+            makeNestedComment()
+        } else {
+        
+            let ref = FIRDatabase.database().reference().child("bulletin").child(self.post.postId!).child("comments")
+            let child = ref.childByAutoId()
+            let uid = FIRAuth.auth()?.currentUser?.uid
+            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                
                     
-                } else {
+                        let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
+                        let comment: [String: AnyObject] = ["comment": self.writePost.text,
+                            "user": (dictionary["name"] as? String)!,
+                            "profileImage": (dictionary["imageURL"] as? String)!,
+                            "timeStamp": timeStamp]
                     
-                    let timeStamp: NSNumber = Int(NSDate().timeIntervalSince1970)
-                    let comment: [String: AnyObject] = ["comment": self.writePost.text,
-                        "user": (dictionary["name"] as? String)!,
-                        "profileImage": (dictionary["imageURL"] as? String)!,
-                        "timeStamp": timeStamp]
-                    
-                    child.updateChildValues(comment, withCompletionBlock: { (err, ref) in
-                        if(err != nil) {
-                            print(err)
-                            return
-                        }
-                    })
-                    // succesfully added comment
+                        child.updateChildValues(comment, withCompletionBlock: { (err, ref) in
+                            if(err != nil) {
+                                print(err)
+                                return
+                            }
+                        })
+                        // succesfully added comment
                 }
-            }
-            }, withCancelBlock: nil)
+                }, withCancelBlock: nil)
+        }
         if (segue.identifier == "postComment") {
             let destination = segue.destinationViewController as? BulletinThreadTableViewController
             destination?.post = self.post

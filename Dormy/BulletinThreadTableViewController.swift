@@ -12,18 +12,15 @@ class BulletinThreadTableViewController: UITableViewController {
 
     var post = Post()
     var comments = [Comment]()
+    var my_group = dispatch_group_create()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 264
-        
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Bulletin Board", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
         self.navigationItem.leftBarButtonItem = newBackButton
-        
         fetchComments()
     }
-
     func fetchComments() {
         FIRDatabase.database().reference().child("bulletin").child(post.postId!).child("comments").observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
@@ -31,10 +28,32 @@ class BulletinThreadTableViewController: UITableViewController {
                 let comment = Comment()
                 comment.setCommentWithDictionary(dictionary, commentId: snapshot.key, type: false)
                 self.comments.append(comment)
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.reloadData()
-                })
+                print("Comments Array1: \(self.comments.count)")
+                dispatch_group_enter(self.my_group)
+                FIRDatabase.database().reference().child("bulletin").child(self.post.postId!).child("comments").child(snapshot.key).child("nested").observeEventType(.ChildAdded, withBlock: { (snapshot2) in
+                    if let dictionary = snapshot2.value as? [String: AnyObject] {
+                        let comment = Comment()
+                        comment.setCommentWithDictionary(dictionary, commentId: snapshot2.key, type: true)
+                        self.comments.append(comment)
+                        print("Comments Array2: \(self.comments.count)")
+//                        dispatch_group_leave(self.my_group)
+//                        dispatch_async(dispatch_get_main_queue(), {
+//                            self.tableView.reloadData()
+//                        })
+
+                    }
+                    dispatch_group_leave(self.my_group)
+                    dispatch_group_notify(self.my_group, dispatch_get_main_queue(), {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.tableView.reloadData()
+                        })
+                    })
+                    }, withCancelBlock: nil)
+//                dispatch_group_notify(self.my_group, dispatch_get_main_queue(), {
+////                    dispatch_async(dispatch_get_main_queue(), {
+////                        self.tableView.reloadData()
+////                    })
+//                })
             }
             }, withCancelBlock: nil)
     }
@@ -63,6 +82,7 @@ class BulletinThreadTableViewController: UITableViewController {
         if (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCellWithIdentifier("threadCell", forIndexPath: indexPath) as! ThreadPostTableViewCell
             // Configure the cell...
+            tableView.rowHeight = 264
             cell.postTitleLabel?.text = post.title!
             cell.nameLabel?.text = post.owner!
             let timeStampDate = NSDate(timeIntervalSince1970: post.timeStamp!.doubleValue)
@@ -82,10 +102,17 @@ class BulletinThreadTableViewController: UITableViewController {
             }).resume()
             return cell
         }
-        else {
+        else if(comments[indexPath.row - 1].commentType == false){
+            print("Getting cell, count = \(comments.count)")
             let cell = tableView.dequeueReusableCellWithIdentifier("commentId", forIndexPath: indexPath) as! CommentCell
+            tableView.rowHeight = 150
             let comment = comments[indexPath.row - 1]
             let url = NSURL(string: comment.profileImage!)
+            let timeStampDate = NSDate(timeIntervalSince1970: comment.timeStamp!.doubleValue)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "h:mm a MM/dd/yy"
+            cell.timeStamp?.text = dateFormatter.stringFromDate(timeStampDate)
+            
             NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
                 if (error != nil) {
                     print(error)
@@ -95,52 +122,41 @@ class BulletinThreadTableViewController: UITableViewController {
                     cell.profileImage?.image = UIImage(data: data!)
                 })
             }).resume()
-
+            cell.replyButton.tag = indexPath.row - 1
             cell.nameLabel?.text = comment.user!
             cell.commentLabel?.text = comment.comment!
             return cell
+        } else {
+            
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("subCommentId", forIndexPath: indexPath) as! SubCommentCell
+            tableView.rowHeight = 150
+            let comment = comments[indexPath.row - 1]
+            let url = NSURL(string: comment.profileImage!)
+            let timeStampDate = NSDate(timeIntervalSince1970: comment.timeStamp!.doubleValue)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "h:mm a MM/dd/yy"
+            cell.timeStamp?.text = dateFormatter.stringFromDate(timeStampDate)
+            
+            NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) in
+                if (error != nil) {
+                    print(error)
+                    return
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.imageProfile?.image = UIImage(data: data!)
+                })
+            }).resume()
+            cell.nameLabel?.text = comment.user!
+            cell.commentLabel?.text = comment.comment!
+            return cell
+
         }
     }
  
     func back(sender: UIBarButtonItem) {
         performSegueWithIdentifier("backToBoard", sender: sender)
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -148,6 +164,7 @@ class BulletinThreadTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let index = sender!.tag
         if (segue.identifier == "writeCommentSegue") {
             let destination = segue.destinationViewController as? WriteCommentViewController
             destination?.post = post
@@ -158,6 +175,7 @@ class BulletinThreadTableViewController: UITableViewController {
             let destination = segue.destinationViewController as? WriteCommentViewController
             destination?.post = post
             destination?.nested = true
+            destination?.commentId = comments[index].commentId!
         }
     }
  

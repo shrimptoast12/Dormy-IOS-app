@@ -20,7 +20,7 @@ class ThreadPostTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         userImage.translatesAutoresizingMaskIntoConstraints = false
-        userImage.layer.cornerRadius = 24
+        userImage.layer.cornerRadius = 25
         userImage.layer.masksToBounds = true
         userImage.contentMode = .ScaleAspectFill
     }

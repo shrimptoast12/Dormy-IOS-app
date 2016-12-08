@@ -10,9 +10,19 @@ import UIKit
 
 class SubCommentCell: UITableViewCell {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var imageProfile: UIImageView!
+    @IBOutlet weak var timeStamp: UILabel!
+    @IBOutlet weak var commentLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
+        imageProfile.translatesAutoresizingMaskIntoConstraints = false
+        imageProfile.layer.cornerRadius = 25
+        imageProfile.layer.masksToBounds = true
+        imageProfile.contentMode = .ScaleAspectFill
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
