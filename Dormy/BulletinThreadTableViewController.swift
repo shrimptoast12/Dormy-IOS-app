@@ -17,7 +17,7 @@ class BulletinThreadTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "Bulletin Board", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
+        let newBackButton = UIBarButtonItem(title: "Bulletin Board", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(BulletinThreadTableViewController.back(_:)))
         self.navigationItem.leftBarButtonItem = newBackButton
         fetchComments()
     }
