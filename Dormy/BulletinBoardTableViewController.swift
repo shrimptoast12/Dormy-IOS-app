@@ -27,7 +27,6 @@ class BulletinBoardTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barTintColor = AppDelegate().RGB(240.0,g: 208.0,b: 138.0)
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavBarColor()
@@ -76,7 +75,6 @@ class BulletinBoardTableViewController: UITableViewController {
             post1.timeStamp!.doubleValue > post2.timeStamp!.doubleValue
         }
     }
-    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableCell", forIndexPath: indexPath) as! PostTableViewCell

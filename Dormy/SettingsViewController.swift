@@ -69,6 +69,29 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     func tapHandler(gesture: UITapGestureRecognizer){
         enterName.resignFirstResponder()
     }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        animateViewMoving(true, moveValue: 150)
+        
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        animateViewMoving(false, moveValue: 150)
+    }
+    
+    // function used to move the text field up so keyboard doesn't cover it
+    func animateViewMoving (up:Bool, moveValue :CGFloat){
+        let movementDuration:NSTimeInterval = 0.3
+        let movement:CGFloat = ( up ? -moveValue : moveValue)
+        
+        UIView.beginAnimations("animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration)
+        
+        self.view.frame = CGRectOffset(self.view.frame, 0, movement)
+        UIView.commitAnimations()
+    }
+
     /*
     // MARK: - Navigation
 

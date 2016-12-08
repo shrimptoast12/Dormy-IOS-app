@@ -62,6 +62,7 @@ class LaundryHelperTableViewController: UITableViewController {
     func washerNotification() {
         let notification = UILocalNotification()
         notification.alertBody = "Please free up your washer!"
+        notification.soundName = UILocalNotificationDefaultSoundName
         notification.fireDate = NSDate(timeIntervalSinceNow: 1800)
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
         timer.invalidate()
@@ -72,6 +73,7 @@ class LaundryHelperTableViewController: UITableViewController {
     func dryerNotification() {
         let notification = UILocalNotification()
         notification.alertBody = "Please free up your washer!"
+        notification.soundName = UILocalNotificationDefaultSoundName
         notification.fireDate = NSDate(timeIntervalSinceNow: 3600)
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
         timer.invalidate()

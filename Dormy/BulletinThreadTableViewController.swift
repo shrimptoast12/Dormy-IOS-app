@@ -33,21 +33,32 @@ class BulletinThreadTableViewController: UITableViewController {
                 if(dictionary["nested"] != nil) {
                     let temp = dictionary["nested"] as? [String: AnyObject]
                     let tempKey: [String] = Array(temp!.keys)
+                    var subComments = [Comment]()
                     for a in 0 ..< tempKey.count {
                         let subComment = Comment()
                         let temp2 = temp![tempKey[a]] as? [String: AnyObject]
                         subComment.setCommentWithDictionary(temp2!, commentId: tempKey[a], type: true)
-                        self.comments.append(subComment)
-                        self.tableView.reloadData()
+                        subComments.append(subComment)
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.reloadData()
+                        })
                     }
+                    subComments.sortInPlace({ (comment1, comment2) -> Bool in
+                        comment1.timeStamp!.doubleValue < comment2.timeStamp!.doubleValue
+                    })
+                    self.comments += subComments
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.tableView.reloadData()
+                    })
                 }
-                    dispatch_async(dispatch_get_main_queue(), {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.tableView.reloadData()
                     })
             }
             }, withCancelBlock: nil)
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadData()
+            })
     }
     
     override func didReceiveMemoryWarning() {
@@ -118,8 +129,6 @@ class BulletinThreadTableViewController: UITableViewController {
             cell.commentLabel?.text = comment.comment!
             return cell
         } else {
-            
-            
             let cell = tableView.dequeueReusableCellWithIdentifier("subCommentId", forIndexPath: indexPath) as! SubCommentCell
             tableView.rowHeight = 150
             let comment = comments[indexPath.row - 1]
@@ -141,7 +150,6 @@ class BulletinThreadTableViewController: UITableViewController {
             cell.nameLabel?.text = comment.user!
             cell.commentLabel?.text = comment.comment!
             return cell
-
         }
     }
  
